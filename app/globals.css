@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-anton);
+  --font-serif: var(--font-playfair);
+  --font-script: var(--font-great-vibes);
+
+  /* Elvora Media brand palette */
+  --color-ivory-cream: #faeee0;
+  --color-warm-beige: #d4bea2;
+  --color-luxury-gold: #b58c56;
+  --color-deep-black: #000000;
+  --color-muted-grey: #655d62;
+  --color-soft-sand: #e8d9c5;
+  --color-champagne-gold: #e0c38a;
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  ::selection {
+    background: var(--color-champagne-gold);
+    color: var(--color-deep-black);
+  }
+
+  img,
+  button,
+  input,
+  a {
+    border-radius: 0;
+  }
+}
+
+body.elvora-cursor-active,
+body.elvora-cursor-active * {
+  cursor: none !important;
+}
