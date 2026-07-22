@@ -17,6 +17,7 @@ const CLIENT_LOGOS: ClientLogo[] = [
     { name: "Verve Global", tagline: "E-Commerce", symbol: "▲" },
     { name: "Code Hostels", tagline: "Tech Living", symbol: "⬡" },
     { name: "The Engineers Club", tagline: "Developer Community", symbol: "⚡" },
+    { name: "Nature One", tagline: "Fresh Produce Exporter", symbol: "🌿" },
 ];
 
 export function ClientMarquee() {
