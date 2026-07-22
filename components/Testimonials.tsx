@@ -29,11 +29,11 @@ const TESTIMONIALS: Testimonial[] = [
     {
         id: "2",
         quote: "The speed and visual standard of their editing team is unmatched. Every single video cut feels premium, sharp, and algorithm-optimized.",
-        author: "Rohan Verma",
-        role: "Managing Partner",
-        company: "WeCrafted Media",
+        author: "Shreevardhan Rathore",
+        role: "Managing Director",
+        company: "Elvora Media",
         metricBadge: "3.4M Organic Views",
-        imageSrc: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80",
+        imageSrc: "/IMG-20260702-WA0000.jpg.jpeg",
     },
 ];
 

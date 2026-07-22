@@ -112,7 +112,7 @@ export function Hero() {
                         transition={{
                             opacity: { duration: 1, delay: 0.6 },
                             x: {
-                                duration: 14,
+                                duration: 32,
                                 repeat: Infinity,
                                 ease: "linear",
                             },

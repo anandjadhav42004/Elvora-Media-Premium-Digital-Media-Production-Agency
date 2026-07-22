@@ -15,12 +15,14 @@ const CLIENT_LOGOS: ClientLogo[] = [
     { name: "WeCrafted", tagline: "Digital Media", symbol: "❖" },
     { name: "Somsbliss", tagline: "Aesthetic Brand", symbol: "◈" },
     { name: "Verve Global", tagline: "E-Commerce", symbol: "▲" },
+    { name: "Code Hostels", tagline: "Tech Living", symbol: "⬡" },
+    { name: "The Engineers Club", tagline: "Developer Community", symbol: "⚡" },
 ];
 
 export function ClientMarquee() {
     const [isHovered, setIsHovered] = useState(false);
-    // Duplicate 4x for seamless infinite looping with 4 partners
-    const marqueeItems = [...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS];
+    // Duplicate for seamless infinite looping
+    const marqueeItems = [...CLIENT_LOGOS, ...CLIENT_LOGOS, ...CLIENT_LOGOS];
 
     return (
         <section className="relative overflow-hidden border-y border-black/10 bg-[#faf7f0] py-8 sm:py-12">
