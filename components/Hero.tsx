@@ -156,13 +156,17 @@ export function Hero() {
                                 variants={popIn}
                                 type="button"
                                 onClick={() => setIsShowreelOpen(true)}
-                                whileHover={{ scale: 1.03 }}
-                                className="group flex items-center gap-2 rounded-full border border-black/20 bg-white/80 px-5 py-2.5 text-sm font-semibold text-deep-black backdrop-blur-xs transition-colors hover:border-luxury-gold hover:bg-white focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                whileHover={{ scale: 1.04 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="group relative flex items-center gap-3 rounded-full border border-luxury-gold/40 bg-deep-black/95 px-6 py-3 text-sm font-semibold text-ivory-cream shadow-[0_8px_25px_rgba(0,0,0,0.2)] backdrop-blur-md transition-all duration-300 hover:border-luxury-gold hover:shadow-[0_0_25px_rgba(181,140,86,0.35)] focus:outline-none focus:ring-2 focus:ring-luxury-gold"
                             >
-                                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-luxury-gold/20 text-[10px] text-luxury-gold transition-transform group-hover:scale-110">
-                                    ▶
+                                <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-luxury-gold text-deep-black transition-transform duration-300 group-hover:scale-110 shadow-[0_0_12px_rgba(181,140,86,0.6)]">
+                                    <span className="absolute inset-0 rounded-full bg-luxury-gold/50 animate-ping" />
+                                    <svg viewBox="0 0 24 24" fill="currentColor" className="relative h-3.5 w-3.5 ml-0.5" aria-hidden="true">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
                                 </span>
-                                Showreel
+                                <span className="font-display font-bold uppercase tracking-wider text-xs sm:text-sm">Watch Showreel</span>
                             </motion.button>
 
                             <motion.a
