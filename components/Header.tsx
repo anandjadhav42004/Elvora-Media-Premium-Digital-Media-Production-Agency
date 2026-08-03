@@ -28,7 +28,11 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
     );
 }
 
-export function Header() {
+type HeaderProps = {
+    onOpenInquiry?: () => void;
+};
+
+export function Header({ onOpenInquiry }: HeaderProps) {
     const { scrollY } = useScroll();
     const [hidden, setHidden] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -93,6 +97,15 @@ export function Header() {
                                 {label}
                             </a>
                         ))}
+                        {onOpenInquiry && (
+                            <button
+                                type="button"
+                                onClick={onOpenInquiry}
+                                className="rounded-full bg-deep-black px-4 py-2 text-xs font-bold uppercase tracking-wider text-ivory-cream transition-all duration-300 hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-luxury-gold cursor-pointer"
+                            >
+                                Start a Project
+                            </button>
+                        )}
                     </nav>
 
                     {/* Mobile Hamburger Button */}

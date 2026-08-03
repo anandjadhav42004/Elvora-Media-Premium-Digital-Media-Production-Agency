@@ -15,7 +15,11 @@ function CloseIcon() {
     );
 }
 
-export function Hero() {
+type HeroProps = {
+    onOpenInquiry?: () => void;
+};
+
+export function Hero({ onOpenInquiry }: HeroProps) {
     const [isShowreelOpen, setIsShowreelOpen] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
     const embedUrl = getEmbedUrl(SHOWREEL_VIDEO_URL);
@@ -169,19 +173,18 @@ export function Hero() {
                                 <span className="font-display font-bold uppercase tracking-wider text-xs sm:text-sm">Watch Showreel</span>
                             </motion.button>
 
-                            <motion.a
+                            <motion.button
                                 variants={popIn}
-                                href={WHATSAPP_LINK}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                type="button"
+                                onClick={onOpenInquiry ? onOpenInquiry : () => window.open(WHATSAPP_LINK, "_blank")}
                                 whileHover={{ scale: 1.03 }}
-                                className="group flex items-center gap-3 rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-2.5 pl-6 pr-2.5 text-sm font-semibold text-deep-black transition-[filter] duration-300 hover:brightness-95"
+                                className="group flex items-center gap-3 rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-2.5 pl-6 pr-2.5 text-sm font-semibold text-deep-black transition-[filter] duration-300 hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-luxury-gold cursor-pointer"
                             >
                                 Start a Project
                                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-deep-black text-ivory-cream transition-transform group-hover:translate-x-0.5">
                                     &rarr;
                                 </span>
-                            </motion.a>
+                            </motion.button>
                         </div>
 
                         <motion.span

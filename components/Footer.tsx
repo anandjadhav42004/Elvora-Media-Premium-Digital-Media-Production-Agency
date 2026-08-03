@@ -251,7 +251,7 @@ export function Footer() {
                                 <span>
                                     Designed & Developed by{" "}
                                     <a
-                                        href="https://portfolio-three-swart-hx117dkm48.vercel.app"
+                                        href="https://portfolio-eosin-seven-23.vercel.app"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="font-semibold text-luxury-gold underline decoration-luxury-gold/50 underline-offset-4 transition-colors hover:text-ivory-cream"
