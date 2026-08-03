@@ -32,7 +32,7 @@ export function ScopeEstimator() {
     const [selectedTimeline, setSelectedTimeline] = useState(TIMELINE_OPTIONS[1]);
     const [selectedBudget, setSelectedBudget] = useState(BUDGET_OPTIONS[1]);
 
-    const generatedMessage = `Hi Elvora Media! I used your Scope Estimator on the website:\n- Service: ${selectedService.title}\n- Timeline: ${selectedTimeline.title}\n- Budget Range: ${selectedBudget.title}\n\nI'd like to schedule a discovery discussion for this project.`;
+    const generatedMessage = `Hi Elvora Media, I'm interested in ${selectedService.title} with a ${selectedTimeline.title} timeline and budget of ${selectedBudget.title}. Let's discuss!`;
     const whatsappLink = buildCustomWhatsAppLink(generatedMessage);
 
     return (
@@ -46,13 +46,13 @@ export function ScopeEstimator() {
                     className="mx-auto max-w-4xl rounded-3xl border border-black/10 bg-white p-6 sm:p-12 shadow-xl"
                 >
                     <motion.div variants={fadeUp} className="text-center">
-                        <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-luxury-gold">
+                        <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold">
                             Interactive Project Wizard
                         </span>
                         <h2 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-deep-black sm:text-4xl">
                             Estimate Your Scope & Launch
                         </h2>
-                        <p className="mt-2 text-sm text-neutral-600">
+                        <p className="mt-2 text-sm text-neutral-800 font-medium">
                             Configure your project goals in 3 simple steps to get an instant tailored inquiry setup.
                         </p>
                     </motion.div>
@@ -69,7 +69,7 @@ export function ScopeEstimator() {
                                         ? "bg-deep-black text-ivory-cream ring-2 ring-luxury-gold"
                                         : step > num
                                         ? "bg-luxury-gold text-deep-black"
-                                        : "bg-neutral-100 text-neutral-400"
+                                        : "bg-neutral-200 text-neutral-700"
                                 }`}
                             >
                                 {step > num ? "✓" : num}
@@ -93,11 +93,11 @@ export function ScopeEstimator() {
                                             className={`flex flex-col text-left p-4 rounded-2xl border transition-all duration-300 ${
                                                 selectedService.id === opt.id
                                                     ? "border-luxury-gold bg-luxury-gold/10 shadow-md"
-                                                    : "border-black/10 bg-neutral-50 hover:border-black/30"
+                                                    : "border-black/15 bg-neutral-50 hover:border-black/30"
                                             }`}
                                         >
                                             <span className="font-display text-sm font-bold text-deep-black">{opt.title}</span>
-                                            <span className="font-mono text-xs text-neutral-500 mt-1">{opt.desc}</span>
+                                            <span className="font-mono text-xs text-neutral-700 font-medium mt-1">{opt.desc}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -118,7 +118,7 @@ export function ScopeEstimator() {
                                             className={`flex flex-col items-center justify-center text-center p-5 rounded-2xl border transition-all duration-300 ${
                                                 selectedTimeline.id === opt.id
                                                     ? "border-luxury-gold bg-luxury-gold/10 shadow-md"
-                                                    : "border-black/10 bg-neutral-50 hover:border-black/30"
+                                                    : "border-black/15 bg-neutral-50 hover:border-black/30"
                                             }`}
                                         >
                                             <span className="font-display text-sm font-bold text-deep-black">{opt.title}</span>
@@ -142,11 +142,11 @@ export function ScopeEstimator() {
                                             className={`flex flex-col text-left p-4 rounded-2xl border transition-all duration-300 ${
                                                 selectedBudget.id === opt.id
                                                     ? "border-luxury-gold bg-luxury-gold/10 shadow-md"
-                                                    : "border-black/10 bg-neutral-50 hover:border-black/30"
+                                                    : "border-black/15 bg-neutral-50 hover:border-black/30"
                                             }`}
                                         >
                                             <span className="font-display text-base font-bold text-luxury-gold">{opt.title}</span>
-                                            <span className="font-mono text-xs text-neutral-500 mt-1">{opt.desc}</span>
+                                            <span className="font-mono text-xs text-neutral-700 font-medium mt-1">{opt.desc}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -184,7 +184,7 @@ export function ScopeEstimator() {
                                 rel="noopener noreferrer"
                                 className="mt-4 sm:mt-0 flex items-center gap-3 rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-3 px-8 text-sm font-bold text-deep-black shadow-lg transition-transform hover:scale-105"
                             >
-                                Send via WhatsApp &rarr;
+                                Book Call With This Estimate 💬 &rarr;
                             </a>
                         )}
                     </div>

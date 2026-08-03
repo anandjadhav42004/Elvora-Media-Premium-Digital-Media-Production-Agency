@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "./Container";
 import { fadeUp, stagger } from "@/lib/motion";
+import { getEmbedUrl } from "@/lib/showreel";
 
 
 type Category = "All" | "Branding" | "Video" | "Social" | "Performance Ads";
@@ -17,6 +18,7 @@ type CaseStudy = {
     metric: string;
     metricLabel: string;
     imageSrc: string;
+    videoPreview?: string;
     summary: string;
     challenge: string;
     solution: string;
@@ -53,7 +55,7 @@ const CASE_STUDIES: CaseStudy[] = [
         challenge: "Elevating brand perception through high-end cinematic visuals and color science.",
         solution: "Shot and edited with luxury lighting, smooth camera movement, and evocative color tones.",
         results: ["1.8M+ organic reach across Instagram", "Expanded luxury brand authority", "98% positive sentiment"],
-        instagramUrl: "https://www.instagram.com/reel/Dao2vIMoNLF/",
+        instagramUrl: "https://www.instagram.com/reel/DbSz8RVxikh/",
         isReel: true,
     },
     {
@@ -118,6 +120,7 @@ function CloseIcon() {
 export function CaseStudies() {
     const [selectedCategory, setSelectedCategory] = useState<Category>("All");
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [hoveredId, setHoveredId] = useState<string | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
 
     const filteredStudies =
@@ -193,10 +196,10 @@ export function CaseStudies() {
                                     key={cat}
                                     type="button"
                                     onClick={() => setSelectedCategory(cat)}
-                                    className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                                    className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
                                         isActive
                                             ? "bg-deep-black text-ivory-cream shadow-md"
-                                            : "border border-black/10 bg-white/50 text-neutral-600 hover:border-luxury-gold/50 hover:bg-white"
+                                            : "border border-black/20 bg-white/80 text-neutral-800 hover:border-luxury-gold/50 hover:bg-white"
                                     }`}
                                 >
                                     {cat}
@@ -220,6 +223,8 @@ export function CaseStudies() {
                             variants={fadeUp}
                             layoutId={`card-${study.id}`}
                             onClick={() => setSelectedId(study.id)}
+                            onMouseEnter={() => setHoveredId(study.id)}
+                            onMouseLeave={() => setHoveredId(null)}
                             tabIndex={0}
                             role="button"
                             onKeyDown={(e) => {
@@ -231,13 +236,24 @@ export function CaseStudies() {
                             className="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-luxury-gold/50 hover:shadow-xl hover:shadow-luxury-gold/10 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
                         >
                             <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl bg-neutral-100">
-                                <Image
-                                    src={study.imageSrc}
-                                    alt={study.title}
-                                    fill
-                                    sizes="(max-width: 640px) 100vw, 50vw"
-                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                />
+                                {study.videoPreview && hoveredId === study.id ? (
+                                    <video
+                                        src={study.videoPreview}
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="h-full w-full object-cover"
+                                    />
+                                ) : (
+                                    <Image
+                                        src={study.imageSrc}
+                                        alt={study.title}
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, 50vw"
+                                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    />
+                                )}
                                 <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-deep-black/90 px-3.5 py-1.5 backdrop-blur-md">
                                     <span className="font-display text-sm font-bold text-luxury-gold">{study.metric}</span>
                                     <span className="font-mono text-[10px] uppercase text-ivory-cream">{study.metricLabel}</span>
@@ -246,17 +262,17 @@ export function CaseStudies() {
 
                             <div className="mt-6 flex flex-col gap-2">
                                 <div className="flex items-center justify-between">
-                                    <span className="font-mono text-xs font-semibold uppercase tracking-wider text-luxury-gold">
+                                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-luxury-gold">
                                         {study.client} &middot; {study.category}
                                     </span>
-                                    <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 transition-colors group-hover:text-deep-black">
+                                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 transition-colors group-hover:text-deep-black">
                                         View Case &rarr;
                                     </span>
                                 </div>
                                 <h3 className="font-display text-xl font-bold leading-snug text-deep-black sm:text-2xl">
                                     {study.title}
                                 </h3>
-                                <p className="text-sm leading-relaxed text-neutral-600 line-clamp-2">
+                                <p className="text-sm leading-relaxed text-neutral-800 font-medium line-clamp-2">
                                     {study.summary}
                                 </p>
                             </div>
@@ -294,7 +310,7 @@ export function CaseStudies() {
                                     <CloseIcon />
                                 </button>
 
-                                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-luxury-gold">
+                                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-luxury-gold font-bold">
                                     <span>{activeStudy.client}</span>
                                     <span>&middot;</span>
                                     <span>{activeStudy.category}</span>
@@ -309,20 +325,35 @@ export function CaseStudies() {
                                     <span className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-700">{activeStudy.metricLabel}</span>
                                 </div>
 
+                                {/* Inline Reel Embed Player */}
+                                {activeStudy.instagramUrl && (
+                                    <div className="mt-6 flex flex-col items-center">
+                                        <div className="relative w-full max-w-[340px] aspect-[9/16] overflow-hidden rounded-2xl border border-black/10 bg-black shadow-lg">
+                                            <iframe
+                                                src={getEmbedUrl(activeStudy.instagramUrl)}
+                                                className="h-full w-full border-0"
+                                                allowFullScreen
+                                                title={activeStudy.title}
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="mt-6 space-y-4">
                                     <div>
-                                        <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-400">The Challenge</h4>
-                                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">{activeStudy.challenge}</p>
+                                        <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-700">The Challenge</h4>
+                                        <p className="mt-1 text-sm leading-relaxed text-neutral-800 font-medium">{activeStudy.challenge}</p>
                                     </div>
                                     <div>
-                                        <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-400">The Solution</h4>
-                                        <p className="mt-1 text-sm leading-relaxed text-neutral-700">{activeStudy.solution}</p>
+                                        <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-700">The Solution</h4>
+                                        <p className="mt-1 text-sm leading-relaxed text-neutral-800 font-medium">{activeStudy.solution}</p>
                                     </div>
                                     <div>
-                                        <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-400">Key Results Achieved</h4>
+                                        <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-700">Key Results Achieved</h4>
                                         <ul className="mt-2 space-y-1.5">
                                             {activeStudy.results.map((res, i) => (
-                                                <li key={i} className="flex items-center gap-2 text-sm font-medium text-deep-black">
+                                                <li key={i} className="flex items-center gap-2 text-sm font-semibold text-deep-black">
                                                     <span className="text-luxury-gold">✓</span> {res}
                                                 </li>
                                             ))}
@@ -330,14 +361,15 @@ export function CaseStudies() {
                                     </div>
                                 </div>
 
-                                <div className="mt-6 border-t border-neutral-100 pt-4 flex justify-end">
+                                <div className="mt-6 border-t border-neutral-100 pt-4 flex items-center justify-between">
+                                    <span className="font-mono text-xs text-neutral-700 font-semibold">Direct Instagram Media</span>
                                     <a
                                         href={activeStudy.instagramUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 rounded-full bg-deep-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-luxury-gold transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                        className="flex items-center gap-1.5 rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-semibold text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
                                     >
-                                        <span>{activeStudy.isReel ? "Watch Reel on Instagram ▶" : "View Post on Instagram ↗"}</span>
+                                        <span>View on Instagram ↗</span>
                                     </a>
                                 </div>
                             </motion.div>

@@ -37,7 +37,7 @@ export function ClientMarquee() {
                 >
                     <motion.span
                         variants={fadeUp}
-                        className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500"
+                        className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-neutral-800"
                     >
                         Trusted by High-Growth Brands & Leaders
                     </motion.span>
@@ -67,16 +67,16 @@ export function ClientMarquee() {
                     {marqueeItems.map((client, index) => (
                         <div
                             key={`${client.name}-${index}`}
-                            className="group/item flex shrink-0 items-center gap-3 rounded-full border border-black/10 bg-white/60 px-5 py-2.5 backdrop-blur-xs transition-all duration-300 hover:border-luxury-gold/50 hover:bg-white hover:shadow-md hover:shadow-luxury-gold/10"
+                            className="group/item flex shrink-0 items-center gap-3 rounded-full border border-black/15 bg-white/80 px-5 py-2.5 backdrop-blur-xs transition-all duration-300 hover:border-luxury-gold/50 hover:bg-white hover:shadow-md hover:shadow-luxury-gold/10"
                         >
                             <span className="text-base text-luxury-gold transition-transform duration-300 group-hover/item:scale-125">
                                 {client.symbol}
                             </span>
                             <div className="flex flex-col text-left">
-                                <span className="font-display text-sm font-bold uppercase tracking-wider text-neutral-800 transition-colors duration-300 group-hover/item:text-black">
+                                <span className="font-display text-sm font-bold uppercase tracking-wider text-neutral-900 transition-colors duration-300 group-hover/item:text-black">
                                     {client.name}
                                 </span>
-                                <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-400">
+                                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-700">
                                     {client.tagline}
                                 </span>
                             </div>

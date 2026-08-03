@@ -259,19 +259,19 @@ export function ServicesShowcase() {
                             >
                                 <span className="flex items-baseline gap-2 sm:gap-6">
                                     <span
-                                        className={`whitespace-nowrap text-lg font-medium transition-colors duration-300 sm:text-3xl ${
+                                        className={`whitespace-nowrap text-lg font-bold transition-colors duration-300 sm:text-3xl ${
                                             isActive
                                                 ? "text-luxury-gold"
-                                                : "text-muted-grey"
+                                                : "text-neutral-500"
                                         }`}
                                     >
                                         {service.number}
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap text-lg font-medium transition-colors duration-300 sm:text-3xl ${
+                                        className={`whitespace-nowrap text-lg font-bold transition-colors duration-300 sm:text-3xl ${
                                             isActive
                                                 ? "text-deep-black"
-                                                : "text-muted-grey"
+                                                : "text-neutral-600 hover:text-deep-black"
                                         }`}
                                     >
                                         {service.title}
@@ -291,8 +291,8 @@ export function ServicesShowcase() {
                 </div>
 
                 <div className="pointer-events-auto flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                    <span className="text-sm text-muted-grey">
-                        Have other idea?
+                    <span className="text-sm font-semibold text-neutral-800">
+                        Have another idea?
                     </span>
                     <a
                         href={WHATSAPP_LINK}

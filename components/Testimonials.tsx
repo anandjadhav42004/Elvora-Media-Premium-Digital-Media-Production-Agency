@@ -60,7 +60,7 @@ export function Testimonials() {
                     variants={stagger(0.12)}
                     className="flex flex-col items-center text-center"
                 >
-                    <motion.span variants={fadeUp} className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-luxury-gold">
+                    <motion.span variants={fadeUp} className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold">
                         Client Testimonials
                     </motion.span>
                     <motion.h2 variants={fadeUp} className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-deep-black sm:text-5xl">
@@ -80,7 +80,7 @@ export function Testimonials() {
                             initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
-                            className="relative cursor-grab active:cursor-grabbing flex flex-col items-center rounded-3xl border border-black/10 bg-[#faf7f0] p-8 sm:p-12 shadow-sm"
+                            className="relative cursor-grab active:cursor-grabbing flex flex-col items-center rounded-3xl border border-black/15 bg-[#faf7f0] p-8 sm:p-12 shadow-sm"
                         >
                             {/* Stars */}
                             <div className="flex gap-1 text-luxury-gold text-lg">
@@ -88,7 +88,7 @@ export function Testimonials() {
                             </div>
 
                             {/* Quote */}
-                            <p className="mt-6 font-serif text-lg italic leading-relaxed text-neutral-800 sm:text-2xl">
+                            <p className="mt-6 font-serif text-lg italic leading-relaxed text-deep-black sm:text-2xl font-medium">
                                 &ldquo;{current.quote}&rdquo;
                             </p>
 
@@ -107,8 +107,8 @@ export function Testimonials() {
                                     <h4 className="font-display text-base font-bold text-deep-black">
                                         {current.author}
                                     </h4>
-                                    <p className="font-mono text-xs uppercase tracking-wider text-neutral-500">
-                                        {current.role} &middot; <span className="text-luxury-gold font-semibold">{current.company}</span>
+                                    <p className="font-mono text-xs uppercase tracking-wider text-neutral-700 font-semibold">
+                                        {current.role} &middot; <span className="text-luxury-gold font-bold">{current.company}</span>
                                     </p>
                                 </div>
                                 <div className="sm:ml-4 rounded-full bg-deep-black px-3.5 py-1 text-xs font-semibold text-luxury-gold">

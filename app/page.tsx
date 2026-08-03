@@ -4,9 +4,11 @@ import { Hero } from "@/components/Hero";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { ServicesShowcase } from "@/components/ServicesShowcase";
 import { CaseStudies } from "@/components/CaseStudies";
+import { Testimonials } from "@/components/Testimonials";
 import { ScopeEstimator } from "@/components/ScopeEstimator";
 import { TeamAccordion } from "@/components/TeamAccordion";
 import { Footer } from "@/components/Footer";
+import { FloatingCTA } from "@/components/FloatingCTA";
 
 export default function Home() {
     return (
@@ -17,6 +19,7 @@ export default function Home() {
                 <ClientMarquee />
                 <ServicesShowcase />
                 <CaseStudies />
+                <Testimonials />
                 <ScopeEstimator />
 
                 <section id="team">
@@ -26,6 +29,7 @@ export default function Home() {
                 </section>
             </main>
             <Footer />
+            <FloatingCTA />
         </>
     );
 }

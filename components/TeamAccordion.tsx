@@ -254,7 +254,7 @@ export function TeamAccordion() {
             >
                 <motion.p
                     variants={fadeUp}
-                    className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400"
+                    className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold"
                 >
                     Directors
                 </motion.p>
@@ -377,7 +377,7 @@ export function TeamAccordion() {
 
                 <motion.p
                     variants={fadeUp}
-                    className="mb-4 mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400"
+                    className="mb-4 mt-8 font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold"
                 >
                     Team Leads
                 </motion.p>
