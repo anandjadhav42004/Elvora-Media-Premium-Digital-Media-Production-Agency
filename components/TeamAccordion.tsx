@@ -71,6 +71,13 @@ const LEADS: TeamMember[] = [
         byline: "",
         photoSrc: "/jay-patil.jpeg",
     },
+    {
+        id: "editing-director",
+        name: "Anshita Pahade",
+        title: "Editing Director",
+        byline: "",
+        photoSrc: "/anshita.jpg",
+    },
 ];
 
 const EXPANDED_WIDTH = 34;
@@ -143,7 +150,7 @@ function LeadCard({
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
                 style={{ objectPosition: member.imagePosition }}
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                className="object-cover grayscale transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0"
             />
             <div
                 className="pointer-events-none absolute inset-0"
@@ -316,7 +323,7 @@ export function TeamAccordion() {
                                             objectPosition:
                                                 member.imagePosition,
                                         }}
-                                        className="object-cover"
+                                        className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
                                     />
                                 </div>
                                 {selectedId !== member.id && (
