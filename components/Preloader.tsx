@@ -4,9 +4,19 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Preloader() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
+        const hasVisited = sessionStorage.getItem("elvora_visited");
+        if (hasVisited) {
+            return; // Skip preloader if already visited in this session
+        }
+
+        sessionStorage.setItem("elvora_visited", "true");
+        setIsLoading(true);
+        setShouldRender(true);
+        
         // Prevent scrolling while loading
         document.body.style.overflow = "hidden";
         
@@ -21,8 +31,10 @@ export function Preloader() {
         };
     }, []);
 
+    if (!shouldRender) return null;
+
     return (
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={() => setShouldRender(false)}>
             {isLoading && (
                 <motion.div
                     key="preloader"

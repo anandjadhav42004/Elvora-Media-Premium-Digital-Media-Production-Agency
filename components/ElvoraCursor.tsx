@@ -32,9 +32,9 @@ function clamp(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));
 }
 
-function isInteractiveElement(el: Element | null) {
-    if (!el) return false;
-    return !!el.closest(INTERACTIVE_SELECTOR);
+function isInteractiveElement(el: Element | null): Element | null {
+    if (!el) return null;
+    return el.closest(INTERACTIVE_SELECTOR);
 }
 
 function getHoveredElement(x: number, y: number): Element | null {

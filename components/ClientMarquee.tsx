@@ -67,7 +67,7 @@ export function ClientMarquee() {
                     {marqueeItems.map((client, index) => (
                         <div
                             key={`${client.name}-${index}`}
-                            className="group/item flex shrink-0 items-center gap-3 rounded-full border border-black/15 bg-white/80 px-5 py-2.5 backdrop-blur-xs transition-all duration-300 hover:border-luxury-gold/50 hover:bg-white hover:shadow-md hover:shadow-luxury-gold/10"
+                            className="group/item flex shrink-0 items-center gap-3 rounded-full border border-black/15 bg-white/80 px-5 py-2.5 backdrop-blur-xs transition-all duration-300 md:grayscale hover:border-luxury-gold/50 hover:bg-white hover:shadow-md hover:shadow-luxury-gold/10 hover:grayscale-0"
                         >
                             <span className="text-base text-luxury-gold transition-transform duration-300 group-hover/item:scale-125">
                                 {client.symbol}
