@@ -63,15 +63,7 @@ const LEADS: TeamMember[] = [
         description:
             "The visual voice of Elvora Media. Bansi shapes the brand's media direction across every platform, curating each release into a consistent, high-end story that keeps audiences engaged.",
     },
-    {
-        id: "editing-director",
-        name: "Soham Bhoyate",
-        title: "Editing Director",
-        byline: "evmsoham@gmail.com",
-        photoSrc: "/IMG-20260705-WA0000.jpg.jpeg",
-        description:
-            "The final word on every edit. Soham leads the editing department, sharpening raw footage into polished, publish-ready cuts that carry Elvora Media's signature look from first frame to last.",
-    },
+
     {
         id: "operation-director",
         name: "Jay Patil",
