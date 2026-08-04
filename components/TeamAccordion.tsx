@@ -150,7 +150,7 @@ function LeadCard({
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
                 style={{ objectPosition: member.imagePosition }}
-                className="object-cover grayscale transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                className="object-cover transition-all duration-500 ease-out md:grayscale group-hover:scale-105 group-hover:grayscale-0"
             />
             <div
                 className="pointer-events-none absolute inset-0"
@@ -323,7 +323,7 @@ export function TeamAccordion() {
                                             objectPosition:
                                                 member.imagePosition,
                                         }}
-                                        className="object-cover grayscale transition-all duration-500 ease-out group-hover:grayscale-0"
+                                        className="object-cover transition-all duration-500 ease-out md:grayscale group-hover:grayscale-0"
                                     />
                                 </div>
                                 {selectedId !== member.id && (
