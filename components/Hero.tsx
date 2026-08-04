@@ -73,36 +73,63 @@ export function Hero({ onOpenInquiry }: HeroProps) {
 
             <Container className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-between py-6 sm:py-8">
                 {/* giant headline */}
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={stagger(0.15, 0.1)}
-                    className="py-6 sm:py-4"
-                >
-                    <h1 className="font-display uppercase tracking-[-0.02em]">
-                        <motion.span
-                            variants={fadeUp}
-                            className="block text-[clamp(3.25rem,19vw,14rem)] leading-[0.9] text-deep-black"
-                        >
-                            Elvora
-                        </motion.span>
-                        <motion.span
-                            variants={fadeUp}
-                            className="mt-1 block text-[clamp(3.25rem,19vw,14rem)] leading-[0.9] text-luxury-gold sm:mt-2"
-                        >
-                            Media
-                            <sup className="ml-1 align-super text-[0.28em] text-luxury-gold"></sup>
-                        </motion.span>
-                    </h1>
-
-                    <motion.p
-                        variants={fadeUp}
-                        className="mt-3 pl-1 font-script text-[clamp(1.5rem,6.5vw,4.75rem)] leading-none text-deep-black sm:mt-4 sm:pl-2"
+                {/* 60/40 Asymmetrical Grid */}
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 py-6 sm:py-4">
+                    {/* Left: 60% */}
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={stagger(0.15, 0.1)}
+                        className="flex flex-col justify-center lg:col-span-7 xl:col-span-8"
                     >
-                        Made{" "}
-                        <span className="text-luxury-gold">Unforgettable.</span>
-                    </motion.p>
-                </motion.div>
+                        <h1 className="font-display uppercase tracking-[-0.02em]">
+                            <motion.span
+                                variants={fadeUp}
+                                className="block text-[clamp(3.25rem,14vw,11rem)] leading-[0.9] text-deep-black"
+                            >
+                                Elvora
+                            </motion.span>
+                            <motion.span
+                                variants={fadeUp}
+                                className="mt-1 block text-[clamp(3.25rem,14vw,11rem)] leading-[0.9] text-luxury-gold sm:mt-2"
+                            >
+                                Media
+                            </motion.span>
+                        </h1>
+                        <motion.p
+                            variants={fadeUp}
+                            className="mt-4 pl-1 font-script text-[clamp(1.75rem,5vw,4rem)] leading-none text-deep-black sm:pl-2"
+                        >
+                            Made <span className="text-luxury-gold">Unforgettable.</span>
+                        </motion.p>
+                    </motion.div>
+
+                    {/* Right: 40% Frosted Glass Frame */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative hidden items-center justify-end lg:col-span-5 lg:flex xl:col-span-4"
+                    >
+                        <div 
+                            className="group relative aspect-[4/5] w-full max-w-sm cursor-pointer overflow-hidden rounded-2xl border border-white/40 bg-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] backdrop-blur-xl" 
+                            onClick={() => setIsShowreelOpen(true)}
+                        >
+                            <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-luxury-gold/20 to-transparent mix-blend-overlay" />
+                            {/* Visual Placeholder */}
+                            <img src="/services1.png" alt="Showreel Preview" className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0" />
+                            
+                            {/* Play Button Overlay */}
+                            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-deep-black/90 text-luxury-gold shadow-2xl backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-6 w-6">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
 
                 {/* horizontal ELVORA marquee — phones only (sm+ uses the vertical one on the right) */}
                 <div

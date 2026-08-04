@@ -37,13 +37,14 @@ function isInteractiveElement(el: Element | null) {
     return !!el.closest(INTERACTIVE_SELECTOR);
 }
 
-function isNearInteractive(x: number, y: number) {
+function getHoveredElement(x: number, y: number): Element | null {
     for (const [dx, dy] of PROBE_OFFSETS) {
-        if (isInteractiveElement(document.elementFromPoint(x + dx, y + dy))) {
-            return true;
+        const interactiveEl = isInteractiveElement(document.elementFromPoint(x + dx, y + dy));
+        if (interactiveEl) {
+            return interactiveEl;
         }
     }
-    return false;
+    return null;
 }
 
 export function ElvoraCursor() {
@@ -101,13 +102,26 @@ export function ElvoraCursor() {
             const dt = Math.min(now - lastTime, 48);
             lastTime = now;
 
-            isOverInteractive.current = isNearInteractive(
+            const hoveredEl = getHoveredElement(
                 target.current.x,
                 target.current.y
             );
+            isOverInteractive.current = !!hoveredEl;
 
-            pos.current.x += (target.current.x - pos.current.x) * FOLLOW_EASE;
-            pos.current.y += (target.current.y - pos.current.y) * FOLLOW_EASE;
+            let magneticTargetX = target.current.x;
+            let magneticTargetY = target.current.y;
+
+            if (hoveredEl) {
+                const rect = hoveredEl.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                // Magnetic pull: move the target 35% closer to the center of the element
+                magneticTargetX = target.current.x + (centerX - target.current.x) * 0.35;
+                magneticTargetY = target.current.y + (centerY - target.current.y) * 0.35;
+            }
+
+            pos.current.x += (magneticTargetX - pos.current.x) * FOLLOW_EASE;
+            pos.current.y += (magneticTargetY - pos.current.y) * FOLLOW_EASE;
 
             const dx = pos.current.x - prevPos.current.x;
             const dy = pos.current.y - prevPos.current.y;
