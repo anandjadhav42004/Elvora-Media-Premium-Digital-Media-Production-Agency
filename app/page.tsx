@@ -9,6 +9,7 @@ import { ServicesShowcase } from "@/components/ServicesShowcase";
 import { CaseStudies } from "@/components/CaseStudies";
 import { Testimonials } from "@/components/Testimonials";
 import { Pricing } from "@/components/Pricing";
+import { CustomPlanBuilder } from "@/components/CustomPlanBuilder";
 import { TeamAccordion } from "@/components/TeamAccordion";
 import { Footer } from "@/components/Footer";
 import { FloatingCTA } from "@/components/FloatingCTA";
@@ -30,6 +31,7 @@ export default function Home() {
                 <CaseStudies />
                 <Testimonials />
                 <Pricing />
+                <CustomPlanBuilder />
 
                 <section id="team">
                     <Container className="py-12 sm:py-16">

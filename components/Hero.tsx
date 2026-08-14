@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "./Container";
 import { fadeUp, popIn, stagger } from "@/lib/motion";
 import { WHATSAPP_LINK } from "@/lib/whatsapp";
@@ -22,6 +22,11 @@ type HeroProps = {
 export function Hero({ onOpenInquiry }: HeroProps) {
     const [isShowreelOpen, setIsShowreelOpen] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
+    const { scrollY } = useScroll();
+    const y1 = useTransform(scrollY, [0, 1000], [0, 300]); // Downwards
+    const y2 = useTransform(scrollY, [0, 1000], [0, -150]); // Upwards
+    const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
     const embedUrl = getEmbedUrl(SHOWREEL_VIDEO_URL);
 
     // Non-breaking spaces so the separators never collapse; two identical
@@ -53,7 +58,8 @@ export function Hero({ onOpenInquiry }: HeroProps) {
 
     return (
         <section className="relative w-full overflow-hidden bg-[#faf7f0] text-deep-black">
-            <div
+            <motion.div
+                style={{ y: y1, opacity }}
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-y-0 right-6 hidden w-40 select-none items-center justify-center overflow-hidden sm:right-10 sm:flex lg:right-16 lg:w-64"
             >
@@ -69,7 +75,7 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                 >
                     Apni Marketing Agency
                 </motion.span>
-            </div>
+            </motion.div>
 
             <Container className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-between py-6 sm:py-8">
                 {/* giant headline */}
@@ -109,6 +115,7 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ y: y2 }}
                         className="relative hidden items-center justify-end lg:col-span-5 lg:flex xl:col-span-4"
                     >
                         <div 
