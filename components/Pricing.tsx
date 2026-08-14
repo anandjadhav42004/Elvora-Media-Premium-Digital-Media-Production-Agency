@@ -97,9 +97,9 @@ export function Pricing() {
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                    variants={stagger(0.15)}
-                    className="flex flex-col items-center text-center mb-16 sm:mb-24"
+                    viewport={{ once: true, margin: "-50px" }}
+                    variants={stagger(0.1)}
+                    className="flex flex-col items-center text-center mb-16 sm:mb-24 px-4"
                 >
                     <motion.div variants={fadeUp} className="relative mb-6">
                         <span className="font-script text-4xl sm:text-5xl text-neutral-600 -rotate-6 inline-block mr-2 transform origin-bottom-right">
@@ -130,10 +130,10 @@ export function Pricing() {
                     {plans.map((plan, idx) => (
                         <motion.div
                             key={plan.num}
-                            initial={{ opacity: 0, y: 50 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.1 }}
-                            transition={{ duration: 0.6, delay: idx * 0.2 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.4, delay: idx * 0.1, type: "spring", stiffness: 100 }}
                             className={`relative w-full rounded-[2rem] p-8 sm:p-10 shadow-2xl ${plan.bgClass} ${plan.popular ? 'lg:-translate-y-8 z-10 border-2 border-white ring-4 ring-black/5' : 'border border-black/5'} overflow-hidden`}
                         >
                             {plan.popular && (
@@ -185,9 +185,9 @@ export function Pricing() {
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.5 }}
-                    variants={stagger(0.15)}
-                    className="mt-20 sm:mt-32 flex flex-col items-center text-center relative"
+                    viewport={{ once: true, margin: "-50px" }}
+                    variants={stagger(0.1)}
+                    className="mt-20 sm:mt-32 flex flex-col items-center text-center relative px-4"
                 >
                     <div className="absolute top-0 right-0 lg:-right-10 origin-bottom-right -rotate-90 hidden lg:block text-[9px] font-bold tracking-[0.15em] text-neutral-400 uppercase w-[500px] text-right">
                         *AD SPEND, INFLUENCER FEES AND PRODUCTION COSTS ARE SEPARATE.
