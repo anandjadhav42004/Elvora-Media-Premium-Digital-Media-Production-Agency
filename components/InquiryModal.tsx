@@ -18,10 +18,10 @@ const SERVICES = [
 ];
 
 const BUDGET_RANGES = [
-    "Under $2,000 / ₹1,50,000",
-    "$2,000 - $5,000",
-    "$5,000 - $10,000",
-    "$10,000+",
+    "₹30K - ₹50K (Base Plan)",
+    "₹51K - ₹70K (Mid Plan)",
+    "₹71K - ₹1L (Premium Plan)",
+    "Custom / Enterprise",
 ];
 
 function CloseIcon() {
