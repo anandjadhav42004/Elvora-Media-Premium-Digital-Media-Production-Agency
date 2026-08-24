@@ -97,7 +97,7 @@ function LinkedInIcon() {
 function BackFaceContent({ member }: { member: TeamMember }) {
     return (
         <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center bg-deep-black p-6 text-center shadow-inner"
-            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
             <h3 className="font-display text-2xl font-bold text-luxury-gold sm:text-3xl">
                 {member.name}
             </h3>
@@ -169,7 +169,7 @@ function LeadCard({
                 {/* Front Face */}
                 <div
                     className="absolute inset-0 h-full w-full bg-neutral-100"
-                    style={{ backfaceVisibility: "hidden" }}
+                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                 >
                     <Image
                         src={member.photoSrc}
@@ -289,7 +289,7 @@ export function TeamAccordion() {
                                     {/* Front Face */}
                                     <div
                                         className="absolute inset-0 h-full w-full bg-neutral-100"
-                                        style={{ backfaceVisibility: "hidden" }}
+                                        style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                                     >
                                         <div
                                             className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
