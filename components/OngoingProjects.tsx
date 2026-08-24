@@ -37,7 +37,6 @@ const ONGOING_PROJECTS: OngoingProject[] = [
         challenge: "Creating a modern chai brand that still feels like a warm hug in a cup while standing out digitally.",
         solution: "Developed a rustic, warm aesthetic with nostalgic typography, custom coffee cup designs, and engaging social media posters.",
         results: ["Established a highly relatable brand voice", "Created cohesive visual assets for social media", "Strong local community engagement"],
-        instagramUrl: "https://www.instagram.com/reel/DbnTJ58C_Ro/",
     },
     {
         id: "code-hostel-tiffin",
