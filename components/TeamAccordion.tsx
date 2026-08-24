@@ -96,7 +96,7 @@ function LinkedInIcon() {
 
 function BackFaceContent({ member }: { member: TeamMember }) {
     return (
-        <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center bg-deep-black p-6 text-center shadow-inner"
+        <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center bg-deep-black p-6 text-center shadow-inner rounded-3xl sm:rounded-none overflow-hidden"
             style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
             <h3 className="font-display text-2xl font-bold text-luxury-gold sm:text-3xl">
                 {member.name}
@@ -161,14 +161,14 @@ function LeadCard({
             }}
         >
             <motion.div
-                className="relative h-full w-full rounded-3xl sm:rounded-none overflow-hidden sm:border-l sm:border-black/5"
+                className="relative h-full w-full sm:border-l sm:border-black/5"
                 style={{ transformStyle: "preserve-3d" }}
                 animate={{ rotateY: isFlipped ? 180 : 0 }}
                 transition={SPRING_TRANSITION}
             >
                 {/* Front Face */}
                 <div
-                    className="absolute inset-0 h-full w-full bg-neutral-100"
+                    className="absolute inset-0 h-full w-full bg-neutral-100 rounded-3xl sm:rounded-none overflow-hidden"
                     style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                 >
                     <Image
@@ -281,14 +281,14 @@ export function TeamAccordion() {
                                 className="group relative aspect-square w-full shrink-0 cursor-pointer sm:aspect-auto sm:h-full sm:w-auto transition-all duration-500 ease-in-out rounded-3xl sm:rounded-none overflow-visible"
                             >
                                 <motion.div
-                                    className="relative h-full w-full rounded-3xl sm:rounded-none overflow-hidden sm:border-l sm:border-black/5"
+                                    className="relative h-full w-full sm:border-l sm:border-black/5"
                                     style={{ transformStyle: "preserve-3d" }}
                                     animate={{ rotateY: isFlipped ? 180 : 0 }}
                                     transition={SPRING_TRANSITION}
                                 >
                                     {/* Front Face */}
                                     <div
-                                        className="absolute inset-0 h-full w-full bg-neutral-100"
+                                        className="absolute inset-0 h-full w-full bg-neutral-100 rounded-3xl sm:rounded-none overflow-hidden"
                                         style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                                     >
                                         <div
