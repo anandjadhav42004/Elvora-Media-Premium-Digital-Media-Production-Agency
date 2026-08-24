@@ -29,6 +29,21 @@ type CaseStudy = {
 
 const CASE_STUDIES: CaseStudy[] = [
     {
+        id: "chai-bistro-branding",
+        title: "Chai Bistro: Where Friends Become Stories",
+        client: "Chai Bistro",
+        category: "Branding",
+        metric: "Authentic",
+        metricLabel: "Brand Vibe",
+        imageSrc: "/chai-bistro/image1.png", 
+        summary: "Crafting a nostalgic and welcoming brand identity for Chai Bistro, focusing on good chai, great people, and unforgettable moments.",
+        challenge: "Creating a modern chai brand that still feels like a warm hug in a cup while standing out digitally.",
+        solution: "Developed a rustic, warm aesthetic with nostalgic typography, custom coffee cup designs, and engaging social media posters.",
+        results: ["Established a highly relatable brand voice", "Created cohesive visual assets for social media", "Strong local community engagement"],
+        instagramUrl: "https://www.instagram.com/chaibistro.in",
+        isReel: false,
+    },
+    {
         id: "elvora-commercial-reel",
         title: "High-Paced Commercial Reel & Brand Motion Edit",
         client: "Elvora Media Production",
