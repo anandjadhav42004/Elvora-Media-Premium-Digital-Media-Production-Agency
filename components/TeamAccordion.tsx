@@ -134,15 +134,26 @@ function CloseIcon() {
 function LeadCard({
     member,
     style,
+    onClick,
 }: {
     member: TeamMember;
     style?: React.CSSProperties;
+    onClick?: () => void;
 }) {
     return (
         <motion.div
             variants={fadeUp}
             style={style}
-            className="group relative aspect-square w-full shrink-0 overflow-hidden border border-transparent transition-all duration-300 hover:border-luxury-gold/40 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] sm:aspect-auto sm:h-full"
+            onClick={onClick}
+            role={onClick ? "button" : undefined}
+            tabIndex={onClick ? 0 : undefined}
+            onKeyDown={(e) => {
+                if (onClick && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    onClick();
+                }
+            }}
+            className={`group relative aspect-square w-full shrink-0 overflow-hidden border border-transparent transition-all duration-300 hover:border-luxury-gold/40 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] sm:aspect-auto sm:h-full ${onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-luxury-gold/60' : ''}`}
         >
             <Image
                 src={member.photoSrc}
@@ -178,7 +189,7 @@ export function TeamAccordion() {
     const modalRef = useRef<HTMLDivElement>(null);
 
     const selectedMember =
-        DIRECTORS.find((member) => member.id === selectedId) ?? null;
+        [...DIRECTORS, ...LEADS].find((member) => member.id === selectedId) ?? null;
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(min-width: 640px)");
@@ -273,7 +284,12 @@ export function TeamAccordion() {
                                 aria-expanded={isActive}
                                 onMouseEnter={() => setActiveIndex(index)}
                                 onFocus={() => setActiveIndex(index)}
-                                onClick={() => setActiveIndex(index)}
+                                onClick={() => {
+                                    setActiveIndex(index);
+                                    if (!isDesktopAccordion) {
+                                        openModal(member);
+                                    }
+                                }}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter" || e.key === " ") {
                                         e.preventDefault();
@@ -394,6 +410,7 @@ export function TeamAccordion() {
                             <LeadCard
                                 key={member.id}
                                 member={member}
+                                onClick={() => openModal(member)}
                                 style={
                                     isDesktopAccordion
                                         ? { flex: "1 1 0%" }
