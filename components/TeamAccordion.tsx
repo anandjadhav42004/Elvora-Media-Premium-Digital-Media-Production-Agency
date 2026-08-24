@@ -84,7 +84,7 @@ const LEADS: TeamMember[] = [
 const EXPANDED_WIDTH = 34;
 const RESTING_WIDTH = (100 - EXPANDED_WIDTH) / (DIRECTORS.length - 1);
 const TRANSITION = { duration: 0.45, ease: EASE };
-const SPRING_TRANSITION = { type: "spring", stiffness: 260, damping: 20 };
+const SPRING_TRANSITION = { type: "spring", stiffness: 260, damping: 20 } as const;
 
 function LinkedInIcon() {
     return (
