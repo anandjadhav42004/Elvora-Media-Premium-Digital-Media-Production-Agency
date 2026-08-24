@@ -108,31 +108,59 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                         >
                             Made <span className="text-luxury-gold">Unforgettable.</span>
                         </motion.p>
+                        
+                        {/* Mobile Tagline Fallback */}
+                        <motion.div variants={fadeUp} className="mt-8 flex flex-col lg:hidden pl-1 sm:pl-2">
+                             <h2 className="font-display text-2xl uppercase leading-none tracking-tight text-deep-black">
+                                Apni Marketing Agency
+                            </h2>
+                            <span className="mt-1 font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-luxury-gold">
+                                Branding &middot; Content &middot; Strategy
+                            </span>
+                        </motion.div>
                     </motion.div>
 
-                    {/* Right: 40% Frosted Glass Frame */}
+                    {/* Right: 40% Frosted Glass Frame & Tagline */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         style={{ y: y2 }}
-                        className="relative hidden items-center justify-end lg:col-span-5 lg:flex xl:col-span-4"
+                        className="relative hidden flex-col items-center justify-end lg:col-span-5 lg:flex xl:col-span-4"
                     >
+                        {/* Desktop Tagline Block - Overlapping */}
+                        <div className="absolute -top-10 -left-12 z-30 flex flex-col">
+                            <h2 className="font-display text-5xl uppercase leading-[0.9] tracking-tight text-deep-black drop-shadow-xl bg-white/60 backdrop-blur-md px-6 py-4 rounded-xl border border-white/50">
+                                Apni <br />
+                                Marketing <br />
+                                Agency
+                            </h2>
+                            <span className="mt-3 ml-6 font-mono text-sm font-bold uppercase tracking-[0.18em] text-luxury-gold drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
+                                Branding &middot; Content &middot; Strategy
+                            </span>
+                        </div>
+
                         <div 
                             className="group relative aspect-[4/5] w-full max-w-sm cursor-pointer overflow-hidden rounded-2xl border border-white/40 bg-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] backdrop-blur-xl" 
-                            onClick={() => setIsShowreelOpen(true)}
+                            onClick={() => {
+                                // TODO: Connect to BTS video when footage is ready
+                                alert("BTS video coming soon!");
+                            }}
                         >
                             <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-luxury-gold/20 to-transparent mix-blend-overlay" />
                             {/* Visual Placeholder */}
-                            <img src="/services1.png" alt="Showreel Preview" className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0" />
+                            <img src="/hero-camera-hires.jpg" alt="BTS Video Placeholder" className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0" />
                             
-                            {/* Play Button Overlay */}
-                            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+                            {/* Play Button Overlay (BTS Video) */}
+                            <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
                                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-deep-black/90 text-luxury-gold shadow-2xl backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
                                     <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-6 w-6">
                                         <path d="M8 5v14l11-7z" />
                                     </svg>
                                 </div>
+                                <span className="rounded-full bg-deep-black/80 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-ivory-cream backdrop-blur-md shadow-lg">
+                                    How We Work
+                                </span>
                             </div>
                         </div>
                     </motion.div>
@@ -220,13 +248,6 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                                 </span>
                             </motion.button>
                         </div>
-
-                        <motion.span
-                            variants={fadeUp}
-                            className="font-mono text-xs uppercase tracking-[0.18em] text-muted-grey sm:text-sm"
-                        >
-                            Branding &middot; Content &middot; Strategy
-                        </motion.span>
                     </motion.div>
                 </motion.div>
             </Container>
