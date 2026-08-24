@@ -111,14 +111,7 @@ export function ElvoraCursor() {
             let magneticTargetX = target.current.x;
             let magneticTargetY = target.current.y;
 
-            if (hoveredEl) {
-                const rect = hoveredEl.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                // Magnetic pull: move the target 35% closer to the center of the element
-                magneticTargetX = target.current.x + (centerX - target.current.x) * 0.35;
-                magneticTargetY = target.current.y + (centerY - target.current.y) * 0.35;
-            }
+            // Magnetic pull removed for better click accuracy
 
             pos.current.x += (magneticTargetX - pos.current.x) * FOLLOW_EASE;
             pos.current.y += (magneticTargetY - pos.current.y) * FOLLOW_EASE;
