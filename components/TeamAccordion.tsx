@@ -327,9 +327,6 @@ export function TeamAccordion() {
                                         >
                                             <p className="text-sm font-medium text-white">{member.name}</p>
                                             <p className="text-xs font-medium uppercase tracking-wide text-luxury-gold">{member.title}</p>
-                                            <div className="flex items-center gap-2 rounded-[100px] border border-white/30 bg-black/20 backdrop-blur-sm px-4 py-1.5 text-xs font-medium text-white transition-colors group-hover:bg-white group-hover:text-black">
-                                                <span>{isFlipped ? "Close" : "Know more"}</span>
-                                            </div>
                                         </div>
                                     </div>
 
