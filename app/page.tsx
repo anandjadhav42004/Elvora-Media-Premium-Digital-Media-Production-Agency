@@ -6,6 +6,7 @@ import { Container } from "@/components/Container";
 import { Hero } from "@/components/Hero";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { ServicesShowcase } from "@/components/ServicesShowcase";
+import { OngoingProjects } from "@/components/OngoingProjects";
 import { CaseStudies } from "@/components/CaseStudies";
 import { Testimonials } from "@/components/Testimonials";
 import { Pricing } from "@/components/Pricing";
@@ -28,6 +29,7 @@ export default function Home() {
                 <Hero onOpenInquiry={handleOpenInquiry} />
                 <ClientMarquee />
                 <ServicesShowcase />
+                <OngoingProjects />
                 <CaseStudies />
                 <Testimonials />
                 <Pricing />
