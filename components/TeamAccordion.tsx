@@ -96,8 +96,7 @@ function LinkedInIcon() {
 
 function BackFaceContent({ member }: { member: TeamMember }) {
     return (
-        <div className="absolute inset-0 flex h-full w-full flex-col items-center justify-center bg-deep-black p-6 text-center shadow-inner rounded-3xl sm:rounded-none overflow-hidden"
-            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+        <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center shadow-inner">
             <h3 className="font-display text-2xl font-bold text-luxury-gold sm:text-3xl">
                 {member.name}
             </h3>
@@ -160,16 +159,18 @@ function LeadCard({
                 }
             }}
         >
-            <motion.div
-                className="relative h-full w-full sm:border-l sm:border-black/5"
-                style={{ transformStyle: "preserve-3d" }}
-                animate={{ rotateY: isFlipped ? 180 : 0 }}
-                transition={SPRING_TRANSITION}
-            >
+            <div className="relative h-full w-full sm:border-l sm:border-black/5">
                 {/* Front Face */}
-                <div
+                <motion.div
                     className="absolute inset-0 h-full w-full bg-neutral-100 rounded-3xl sm:rounded-none overflow-hidden"
-                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                    initial={false}
+                    animate={{ 
+                        rotateY: isFlipped ? 180 : 0,
+                        opacity: isFlipped ? 0 : 1,
+                        zIndex: isFlipped ? 0 : 10
+                    }}
+                    transition={SPRING_TRANSITION}
+                    style={{ transformOrigin: "center" }}
                 >
                     <Image
                         src={member.photoSrc}
@@ -194,11 +195,23 @@ function LeadCard({
                             {member.title}
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Back Face */}
-                <BackFaceContent member={member} />
-            </motion.div>
+                <motion.div
+                    className="absolute inset-0 h-full w-full bg-deep-black rounded-3xl sm:rounded-none overflow-hidden"
+                    initial={false}
+                    animate={{ 
+                        rotateY: isFlipped ? 0 : -180,
+                        opacity: isFlipped ? 1 : 0,
+                        zIndex: isFlipped ? 10 : 0
+                    }}
+                    transition={SPRING_TRANSITION}
+                    style={{ transformOrigin: "center" }}
+                >
+                    <BackFaceContent member={member} />
+                </motion.div>
+            </div>
         </motion.div>
     );
 }
@@ -280,16 +293,18 @@ export function TeamAccordion() {
                                 }}
                                 className="group relative aspect-square w-full shrink-0 cursor-pointer sm:aspect-auto sm:h-full sm:w-auto transition-all duration-500 ease-in-out rounded-3xl sm:rounded-none overflow-visible"
                             >
-                                <motion.div
-                                    className="relative h-full w-full sm:border-l sm:border-black/5"
-                                    style={{ transformStyle: "preserve-3d" }}
-                                    animate={{ rotateY: isFlipped ? 180 : 0 }}
-                                    transition={SPRING_TRANSITION}
-                                >
+                                <div className="relative h-full w-full sm:border-l sm:border-black/5">
                                     {/* Front Face */}
-                                    <div
+                                    <motion.div
                                         className="absolute inset-0 h-full w-full bg-neutral-100 rounded-3xl sm:rounded-none overflow-hidden"
-                                        style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                                        initial={false}
+                                        animate={{ 
+                                            rotateY: isFlipped ? 180 : 0,
+                                            opacity: isFlipped ? 0 : 1,
+                                            zIndex: isFlipped ? 0 : 10
+                                        }}
+                                        transition={SPRING_TRANSITION}
+                                        style={{ transformOrigin: "center" }}
                                     >
                                         <div
                                             className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
@@ -328,11 +343,23 @@ export function TeamAccordion() {
                                             <p className="text-sm font-medium text-white">{member.name}</p>
                                             <p className="text-xs font-medium uppercase tracking-wide text-luxury-gold">{member.title}</p>
                                         </div>
-                                    </div>
+                                    </motion.div>
 
                                     {/* Back Face */}
-                                    <BackFaceContent member={member} />
-                                </motion.div>
+                                    <motion.div
+                                        className="absolute inset-0 h-full w-full bg-deep-black rounded-3xl sm:rounded-none overflow-hidden"
+                                        initial={false}
+                                        animate={{ 
+                                            rotateY: isFlipped ? 0 : -180,
+                                            opacity: isFlipped ? 1 : 0,
+                                            zIndex: isFlipped ? 10 : 0
+                                        }}
+                                        transition={SPRING_TRANSITION}
+                                        style={{ transformOrigin: "center" }}
+                                    >
+                                        <BackFaceContent member={member} />
+                                    </motion.div>
+                                </div>
                             </div>
                         );
                     })}
