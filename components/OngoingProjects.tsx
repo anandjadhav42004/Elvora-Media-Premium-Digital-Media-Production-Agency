@@ -170,30 +170,23 @@ export function OngoingProjects() {
                             className="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-luxury-gold/50 hover:shadow-xl hover:shadow-luxury-gold/10 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
                         >
                             <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl bg-neutral-100">
-                                {study.videoPreview && hoveredId === study.id ? (
+                                {study.videoPreview ? (
                                     <video
                                         src={study.videoPreview}
                                         autoPlay
                                         loop
                                         muted
                                         playsInline
-                                        className="h-full w-full object-cover"
+                                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                     />
                                 ) : (
-                                    study.imageSrc ? (
+                                    study.imageSrc && (
                                         <Image
                                             src={study.imageSrc}
                                             alt={study.title}
                                             fill
                                             sizes="(max-width: 640px) 100vw, 33vw"
                                             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                        />
-                                    ) : (
-                                        <video
-                                            src={study.videoPreview}
-                                            muted
-                                            playsInline
-                                            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                         />
                                     )
                                 )}
