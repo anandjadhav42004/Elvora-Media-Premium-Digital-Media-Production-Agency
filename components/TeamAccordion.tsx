@@ -51,6 +51,18 @@ const DIRECTORS: TeamMember[] = [
         linkedin:
             "https://www.linkedin.com/in/shree-vardhan-singh-rathore-99b126420?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
     },
+    {
+        id: "creative-director",
+        name: "Daksh Chandgaonkar",
+        title: "Creative Director & Marketing",
+        byline: "",
+        photoSrc: "/daksh-chandgaonkar.jpg",
+        imagePosition: "center 25%",
+        description:
+            "With a vision to make Elvora Media a creative powerhouse, Daksh brings expertise in creative strategy, branding, and marketing. A former Founder & CEO of WeCrafted Media (WCM), he combines entrepreneurial experience with a strong passion for impactful storytelling and innovative ideas.",
+        linkedin:
+            "https://www.linkedin.com/in/daksh-chandgaonkar-113320428?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+    },
 ];
 
 const LEADS: TeamMember[] = [
@@ -481,9 +493,11 @@ export function TeamAccordion() {
                                     <p className="mt-1 text-sm font-medium text-luxury-gold">
                                         {selectedMember.title}
                                     </p>
-                                    <p className="mt-2 text-sm font-medium text-neutral-500">
-                                        {selectedMember.byline}
-                                    </p>
+                                    {selectedMember.byline && (
+                                        <p className="mt-2 text-sm font-medium text-neutral-500">
+                                            {selectedMember.byline}
+                                        </p>
+                                    )}
                                     {selectedMember.description && (
                                         <p className="mt-6 text-base leading-relaxed text-neutral-700">
                                             {selectedMember.description}

@@ -18,15 +18,6 @@ type Testimonial = {
 
 const TESTIMONIALS: Testimonial[] = [
     {
-        id: "1",
-        quote: "Elvora Media transformed our brand presence completely. Their content strategy and video production brought us high-ticket clients we couldn't reach before.",
-        author: "Somya Patel",
-        role: "Founder & Director",
-        company: "Sculptura",
-        metricBadge: "+280% Revenue Growth",
-        imageSrc: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
-    },
-    {
         id: "2",
         quote: "The speed and visual standard of their editing team is unmatched. Every single video cut feels premium, sharp, and algorithm-optimized.",
         author: "Shreevardhan Rathore",
@@ -118,37 +109,39 @@ export function Testimonials() {
                         </motion.div>
 
                         {/* Navigation controls */}
-                        <div className="mt-6 flex items-center justify-center gap-4">
-                            <button
-                                type="button"
-                                onClick={prevSlide}
-                                aria-label="Previous testimonial"
-                                className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
-                            >
-                                &larr;
-                            </button>
-                            <div className="flex gap-2">
-                                {TESTIMONIALS.map((_, idx) => (
-                                    <button
-                                        key={idx}
-                                        type="button"
-                                        onClick={() => setCurrentIndex(idx)}
-                                        aria-label={`Go to slide ${idx + 1}`}
-                                        className={`h-2 rounded-full transition-all ${
-                                            idx === currentIndex ? "w-6 bg-luxury-gold" : "w-2 bg-neutral-300"
-                                        }`}
-                                    />
-                                ))}
+                        {TESTIMONIALS.length > 1 && (
+                            <div className="mt-6 flex items-center justify-center gap-4">
+                                <button
+                                    type="button"
+                                    onClick={prevSlide}
+                                    aria-label="Previous testimonial"
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
+                                >
+                                    &larr;
+                                </button>
+                                <div className="flex gap-2">
+                                    {TESTIMONIALS.map((_, idx) => (
+                                        <button
+                                            key={idx}
+                                            type="button"
+                                            onClick={() => setCurrentIndex(idx)}
+                                            aria-label={`Go to slide ${idx + 1}`}
+                                            className={`h-2 rounded-full transition-all ${
+                                                idx === currentIndex ? "w-6 bg-luxury-gold" : "w-2 bg-neutral-300"
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={nextSlide}
+                                    aria-label="Next testimonial"
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
+                                >
+                                    &rarr;
+                                </button>
                             </div>
-                            <button
-                                type="button"
-                                onClick={nextSlide}
-                                aria-label="Next testimonial"
-                                className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
-                            >
-                                &rarr;
-                            </button>
-                        </div>
+                        )}
                     </div>
                 </motion.div>
             </Container>
