@@ -8,6 +8,7 @@ type ClientLogo = {
     name: string;
     tagline: string;
     symbol: string;
+    href?: string;
 };
 
 const CLIENT_LOGOS: ClientLogo[] = [
@@ -16,7 +17,12 @@ const CLIENT_LOGOS: ClientLogo[] = [
     { name: "Somsbliss", tagline: "Aesthetic Brand", symbol: "◈" },
     { name: "Verve Global", tagline: "E-Commerce", symbol: "▲" },
     { name: "Code Hostels", tagline: "Tech Living", symbol: "⬡" },
-    { name: "The Engineers Club", tagline: "Developer Community", symbol: "⚡" },
+    {
+        name: "Anand Jadhav",
+        tagline: "Developed By",
+        symbol: "⚡",
+        href: "https://portfolio-eosin-seven-23.vercel.app",
+    },
     { name: "Nature One", tagline: "Fresh Produce Exporter", symbol: "🌿" },
 ];
 
@@ -64,24 +70,30 @@ export function ClientMarquee() {
                     }}
                     style={{ willChange: "transform" }}
                 >
-                    {marqueeItems.map((client, index) => (
-                        <div
-                            key={`${client.name}-${index}`}
-                            className="group/item flex shrink-0 items-center gap-3 rounded-full border border-black/15 bg-white/80 px-5 py-2.5 backdrop-blur-xs transition-all duration-300 md:grayscale hover:border-luxury-gold/50 hover:bg-white hover:shadow-md hover:shadow-luxury-gold/10 hover:grayscale-0"
-                        >
-                            <span className="text-base text-luxury-gold transition-transform duration-300 group-hover/item:scale-125">
-                                {client.symbol}
-                            </span>
-                            <div className="flex flex-col text-left">
-                                <span className="font-display text-sm font-bold uppercase tracking-wider text-neutral-900 transition-colors duration-300 group-hover/item:text-black">
-                                    {client.name}
+                    {marqueeItems.map((client, index) => {
+                        const ItemTag = client.href ? "a" : "div";
+                        return (
+                            <ItemTag
+                                key={`${client.name}-${index}`}
+                                href={client.href}
+                                target={client.href ? "_blank" : undefined}
+                                rel={client.href ? "noopener noreferrer" : undefined}
+                                className="group/item flex shrink-0 items-center gap-3 rounded-full border border-black/15 bg-white/80 px-5 py-2.5 backdrop-blur-xs transition-all duration-300 md:grayscale hover:border-luxury-gold/50 hover:bg-white hover:shadow-md hover:shadow-luxury-gold/10 hover:grayscale-0"
+                            >
+                                <span className="text-base text-luxury-gold transition-transform duration-300 group-hover/item:scale-125">
+                                    {client.symbol}
                                 </span>
-                                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-700">
-                                    {client.tagline}
-                                </span>
-                            </div>
-                        </div>
-                    ))}
+                                <div className="flex flex-col text-left">
+                                    <span className="font-display text-sm font-bold uppercase tracking-wider text-neutral-900 transition-colors duration-300 group-hover/item:text-black">
+                                        {client.name}
+                                    </span>
+                                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-700">
+                                        {client.tagline}
+                                    </span>
+                                </div>
+                            </ItemTag>
+                        );
+                    })}
                 </motion.div>
             </div>
         </section>
