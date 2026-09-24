@@ -8,7 +8,7 @@ import { ClientMarquee } from "@/components/ClientMarquee";
 import { ServicesShowcase } from "@/components/ServicesShowcase";
 import { OngoingProjects } from "@/components/OngoingProjects";
 import { CaseStudies } from "@/components/CaseStudies";
-import { Testimonials } from "@/components/Testimonials";
+
 import { Pricing } from "@/components/Pricing";
 import { CustomPlanBuilder } from "@/components/CustomPlanBuilder";
 import { TeamAccordion } from "@/components/TeamAccordion";
@@ -31,7 +31,7 @@ export default function Home() {
                 <ServicesShowcase />
                 <OngoingProjects />
                 <CaseStudies />
-                <Testimonials />
+
                 <Pricing />
                 <CustomPlanBuilder />
 
