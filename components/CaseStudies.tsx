@@ -103,7 +103,40 @@ const CASE_STUDIES: CaseStudy[] = [
         instagramUrl: "https://www.instagram.com/p/DbC-M5ZCLDu/",
         isReel: false,
     },
+    {
+        id: "ganesh-chaturthi-vol-1",
+        title: "Ganesh Chaturthi — Festive Brand Film Vol. 1",
+        client: "Elvora Media Production",
+        category: "Video",
+        metric: "Premium",
+        metricLabel: "Festive Cinematic Edit",
+        imageSrc: "/chai-bistro/image1.jpeg",
+        videoPreview: "/chai-bistro/video1.mp4",
+        summary: "A devotional yet visually stunning Ganesh Chaturthi brand film crafted with cinematic colour science, warm festive tones, and rhythmic editing.",
+        challenge: "Capturing the emotion and grandeur of Ganesh Chaturthi while keeping it brand-aligned and social-media optimised.",
+        solution: "Shot with premium festive lighting setups, warm amber LUTs, and perfectly synced celebratory audio cuts.",
+        results: ["High organic shareability during Ganesh Chaturthi", "Strong brand recall through festive storytelling", "Premium cinematic visual output"],
+        instagramUrl: "",
+        isReel: false,
+    },
+    {
+        id: "ganesh-chaturthi-vol-2",
+        title: "Ganesh Chaturthi — Festive Brand Film Vol. 2",
+        client: "Elvora Media Production",
+        category: "Video",
+        metric: "Premium",
+        metricLabel: "Festive Cinematic Edit",
+        imageSrc: "/chai-bistro/image2.jpeg",
+        videoPreview: "/chai-bistro/video2.mp4",
+        summary: "The second edition of Elvora's Ganesh Chaturthi festive series — elevated visual language, deeper colour grading, and immersive sound design.",
+        challenge: "Standing out in a saturated festive content landscape with a unique cinematic angle.",
+        solution: "Slow-motion sequences, dramatic colour contrast, and tradition-meets-modern visual storytelling.",
+        results: ["Viral festive campaign reach", "Audience emotional connect & high saves", "Demonstrated versatility in festive content production"],
+        instagramUrl: "",
+        isReel: false,
+    },
 ];
+
 
 const CATEGORIES: Category[] = ["All", "Branding", "Video", "Social", "Performance Ads"];
 
@@ -254,6 +287,16 @@ export function CaseStudies() {
                                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                     />
                                 )}
+                                {/* Play icon overlay for video entries */}
+                                {study.videoPreview && hoveredId !== study.id && (
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-deep-black/70 backdrop-blur-sm border border-luxury-gold/40 transition-transform duration-300 group-hover:scale-110">
+                                            <svg className="h-6 w-6 text-luxury-gold ml-1" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M8 5v14l11-7z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-deep-black/90 px-3.5 py-1.5 backdrop-blur-md">
                                     <span className="font-display text-sm font-bold text-luxury-gold">{study.metric}</span>
                                     <span className="font-mono text-[10px] uppercase text-ivory-cream">{study.metricLabel}</span>
@@ -325,8 +368,21 @@ export function CaseStudies() {
                                     <span className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-700">{activeStudy.metricLabel}</span>
                                 </div>
 
-                                {/* Inline Reel Embed Player */}
-                                {activeStudy.instagramUrl && (
+                                {/* Local Video Player */}
+                                {activeStudy.videoPreview && (
+                                    <div className="mt-6 overflow-hidden rounded-2xl border border-black/10 bg-black shadow-lg">
+                                        <video
+                                            src={activeStudy.videoPreview}
+                                            controls
+                                            playsInline
+                                            className="w-full max-h-[420px] object-contain"
+                                            poster={activeStudy.imageSrc}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Instagram Embed for non-local entries */}
+                                {!activeStudy.videoPreview && activeStudy.instagramUrl && (
                                     <div className="mt-6 flex flex-col items-center">
                                         <div className="relative w-full max-w-[340px] aspect-[9/16] overflow-hidden rounded-2xl border border-black/10 bg-black shadow-lg">
                                             <iframe
@@ -361,17 +417,19 @@ export function CaseStudies() {
                                     </div>
                                 </div>
 
-                                <div className="mt-6 border-t border-neutral-100 pt-4 flex items-center justify-between">
-                                    <span className="font-mono text-xs text-neutral-700 font-semibold">Direct Instagram Media</span>
-                                    <a
-                                        href={activeStudy.instagramUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-semibold text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
-                                    >
-                                        <span>View on Instagram ↗</span>
-                                    </a>
-                                </div>
+                                {!activeStudy.videoPreview && activeStudy.instagramUrl && (
+                                    <div className="mt-6 border-t border-neutral-100 pt-4 flex items-center justify-between">
+                                        <span className="font-mono text-xs text-neutral-700 font-semibold">Direct Instagram Media</span>
+                                        <a
+                                            href={activeStudy.instagramUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-semibold text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
+                                        >
+                                            <span>View on Instagram ↗</span>
+                                        </a>
+                                    </div>
+                                )}
                             </motion.div>
                         </motion.div>
                     )}

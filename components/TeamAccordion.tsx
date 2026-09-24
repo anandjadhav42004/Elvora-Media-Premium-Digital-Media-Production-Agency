@@ -34,7 +34,7 @@ const DIRECTORS: TeamMember[] = [
         name: "Suyash Mali",
         title: "Production and Marketing",
         byline: "evmsuyashhh@gmail.com",
-        photoSrc: "/IMG-20260629-WA0010.jpg.jpeg",
+        photoSrc: "/suyash-mali.jpg",
         description:
             "The creative engine behind Elvora Media. Suyash blends raw artistic vision with high-impact production strategy, transforming brand concepts into visually premium, market-responsive campaigns.",
         linkedin:
