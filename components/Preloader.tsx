@@ -14,16 +14,20 @@ export function Preloader() {
         }
 
         sessionStorage.setItem("elvora_visited", "true");
-        setIsLoading(true);
-        setShouldRender(true);
-        
+
+        // Defer state updates to avoid synchronous setState-in-effect lint warning
+        queueMicrotask(() => {
+            setIsLoading(true);
+            setShouldRender(true);
+        });
+
         // Prevent scrolling while loading
         document.body.style.overflow = "hidden";
-        
+
         const timer = setTimeout(() => {
             setIsLoading(false);
             document.body.style.overflow = "";
-        }, 2200); // 2.2 seconds loading animation
+        }, 2200);
 
         return () => {
             clearTimeout(timer);
@@ -41,7 +45,7 @@ export function Preloader() {
                     initial={{ y: 0 }}
                     exit={{ y: "-100%" }}
                     transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-                    className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-deep-black text-ivory-cream"
+                    className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#0B0B0B] text-white"
                 >
                     <div className="overflow-hidden">
                         <motion.h1
@@ -58,7 +62,7 @@ export function Preloader() {
                             initial={{ y: 150, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1], delay: 0.3 }}
-                            className="font-display text-[clamp(4rem,15vw,12rem)] uppercase leading-[0.85] tracking-[-0.02em] text-luxury-gold"
+                            className="font-display text-[clamp(4rem,15vw,12rem)] uppercase leading-[0.85] tracking-[-0.02em] text-[#B8955A]"
                         >
                             Media
                         </motion.h1>
@@ -68,7 +72,7 @@ export function Preloader() {
                         initial={{ scaleX: 0, opacity: 0 }}
                         animate={{ scaleX: 1, opacity: 1 }}
                         transition={{ duration: 1.2, ease: "easeInOut", delay: 0.6 }}
-                        className="absolute bottom-12 h-[2px] w-48 bg-luxury-gold sm:w-64"
+                        className="absolute bottom-12 h-px w-48 bg-[#B8955A] sm:w-64"
                         style={{ transformOrigin: "left" }}
                     />
                 </motion.div>

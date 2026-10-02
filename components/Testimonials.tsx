@@ -23,7 +23,7 @@ const TESTIMONIALS: Testimonial[] = [
         author: "Shreevardhan Rathore",
         role: "Managing Director",
         company: "Elvora Media",
-        metricBadge: "3.4M Organic Views",
+        metricBadge: "3.4M Views",
         imageSrc: "/IMG-20260702-WA0000.jpg.jpeg",
     },
     {
@@ -32,7 +32,7 @@ const TESTIMONIALS: Testimonial[] = [
         author: "Daksh Chandgaonkar",
         role: "Creative Director",
         company: "Elvora Media",
-        metricBadge: "2× Revenue Growth",
+        metricBadge: "2× Revenue",
         imageSrc: "/daksh-chandgaonkar.jpg",
     },
     {
@@ -50,19 +50,16 @@ export function Testimonials() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(1);
 
-    const prevSlide = () => {
-        setDirection(-1);
-        setCurrentIndex((prev) => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1));
+    const go = (to: number) => {
+        setDirection(to > currentIndex ? 1 : -1);
+        setCurrentIndex(to);
     };
 
-    const nextSlide = () => {
-        setDirection(1);
-        setCurrentIndex((prev) => (prev === TESTIMONIALS.length - 1 ? 0 : prev + 1));
-    };
+    const next = () => go((currentIndex + 1) % TESTIMONIALS.length);
+    const prev = () => go(currentIndex === 0 ? TESTIMONIALS.length - 1 : currentIndex - 1);
 
-    // Auto-advance
     useEffect(() => {
-        const t = setTimeout(() => nextSlide(), 6000);
+        const t = setTimeout(next, 7000);
         return () => clearTimeout(t);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex]);
@@ -70,22 +67,13 @@ export function Testimonials() {
     const current = TESTIMONIALS[currentIndex];
 
     const variants = {
-        enter: (d: number) => ({ opacity: 0, x: d * 40, scale: 0.97 }),
-        center: { opacity: 1, x: 0, scale: 1 },
-        exit: (d: number) => ({ opacity: 0, x: d * -40, scale: 0.97 }),
+        enter: (d: number) => ({ opacity: 0, x: d * 32 }),
+        center:               { opacity: 1, x: 0 },
+        exit:  (d: number) => ({ opacity: 0, x: d * -32 }),
     };
 
     return (
-        <section className="py-20 sm:py-32 bg-[#0a0a0a] relative overflow-hidden">
-            {/* Subtle radial glow */}
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                    background: "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(179,138,75,0.07), transparent 70%)",
-                }}
-            />
-
+        <section className="py-[72px] sm:py-[clamp(96px,10vw,160px)] bg-[#0B0B0B]">
             <Container>
                 <motion.div
                     initial="hidden"
@@ -95,35 +83,23 @@ export function Testimonials() {
                     className="flex flex-col items-center text-center"
                 >
                     {/* Label */}
-                    <motion.div variants={fadeUp} className="flex items-center gap-3 mb-4">
-                        <span className="h-px w-10 bg-luxury-gold/50" />
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-luxury-gold">
-                            Client Voice
-                        </span>
-                        <span className="h-px w-10 bg-luxury-gold/50" />
-                    </motion.div>
+                    <motion.p variants={fadeUp} className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6F6F6A] mb-4">
+                        Client Voice
+                    </motion.p>
 
                     <motion.h2
                         variants={fadeUp}
-                        className="font-display text-4xl font-extrabold uppercase tracking-tight text-white sm:text-6xl"
+                        className="font-display text-4xl font-extrabold uppercase tracking-[-0.02em] text-white sm:text-6xl"
                     >
-                        What Our Clients{" "}
-                        <span className="font-serif italic font-normal text-luxury-gold">Say</span>
+                        What Clients{" "}
+                        <span className="font-serif italic font-normal text-[#B8955A] tracking-normal">Say</span>
                     </motion.h2>
 
-                    {/* Testimonial Carousel */}
-                    <motion.div variants={fadeUp} className="mt-16 w-full max-w-3xl relative">
-                        {/* Large decorative quote mark */}
-                        <span
-                            aria-hidden="true"
-                            className="absolute -top-8 left-0 font-serif text-[7rem] leading-none text-luxury-gold/10 select-none pointer-events-none"
-                        >
-                            &ldquo;
-                        </span>
-
+                    {/* Testimonial */}
+                    <motion.div variants={fadeUp} className="mt-16 w-full max-w-2xl">
                         <div
                             className="relative overflow-hidden"
-                            onMouseEnter={() => {/* pause auto-advance on hover handled by effect cleanup */}}
+                            onDragStart={(e) => e.preventDefault()}
                         >
                             <AnimatePresence mode="wait" custom={direction}>
                                 <motion.div
@@ -133,62 +109,59 @@ export function Testimonials() {
                                     initial="enter"
                                     animate="center"
                                     exit="exit"
-                                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                                     drag="x"
                                     dragConstraints={{ left: 0, right: 0 }}
                                     onDragEnd={(_, info) => {
-                                        if (info.offset.x < -50) nextSlide();
-                                        if (info.offset.x > 50) prevSlide();
+                                        if (info.offset.x < -50) next();
+                                        if (info.offset.x > 50) prev();
                                     }}
                                     className="cursor-grab active:cursor-grabbing"
                                 >
                                     {/* Stars */}
-                                    <div className="flex justify-center gap-1.5 text-luxury-gold text-base mb-8">
+                                    <div className="flex justify-center gap-1 text-[#B8955A] text-sm mb-8">
                                         {"★".repeat(5)}
                                     </div>
 
                                     {/* Quote */}
-                                    <p className="font-serif text-xl italic leading-relaxed text-white/90 sm:text-2xl md:text-3xl font-medium">
+                                    <p className="font-serif text-xl italic leading-relaxed text-white/85 sm:text-2xl">
                                         &ldquo;{current.quote}&rdquo;
                                     </p>
 
-                                    {/* Author Row */}
-                                    <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-5">
-                                        <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border border-luxury-gold/40">
+                                    {/* Author */}
+                                    <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+                                        <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-white/10">
                                             <Image
                                                 src={current.imageSrc}
                                                 alt={current.author}
                                                 fill
-                                                sizes="56px"
+                                                sizes="48px"
                                                 className="object-cover"
                                             />
                                         </div>
                                         <div className="text-center sm:text-left">
-                                            <h4 className="font-display text-base font-bold uppercase tracking-wider text-white">
+                                            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-white">
                                                 {current.author}
                                             </h4>
-                                            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mt-0.5">
-                                                {current.role} &middot;{" "}
-                                                <span className="text-luxury-gold">{current.company}</span>
+                                            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6F6F6A] mt-0.5">
+                                                {current.role} &middot; {current.company}
                                             </p>
                                         </div>
-
-                                        {/* Metric badge */}
-                                        <div className="sm:ml-2 flex-shrink-0 rounded-full border border-luxury-gold/30 bg-luxury-gold/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-gold">
+                                        <span className="font-mono text-[9px] uppercase tracking-[0.18em] border border-[#B8955A]/30 text-[#B8955A] px-3 py-1 sm:ml-2">
                                             {current.metricBadge}
-                                        </div>
+                                        </span>
                                     </div>
                                 </motion.div>
                             </AnimatePresence>
                         </div>
 
                         {/* Navigation */}
-                        <div className="mt-10 flex items-center justify-center gap-5">
+                        <div className="mt-10 flex items-center justify-center gap-4">
                             <button
                                 type="button"
-                                onClick={prevSlide}
+                                onClick={prev}
                                 aria-label="Previous testimonial"
-                                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/50 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-luxury-gold"
+                                className="flex h-9 w-9 items-center justify-center border border-white/10 text-white/40 transition-colors hover:border-white/30 hover:text-white focus-visible:outline-none"
                             >
                                 ←
                             </button>
@@ -198,22 +171,18 @@ export function Testimonials() {
                                     <button
                                         key={idx}
                                         type="button"
-                                        onClick={() => { setDirection(idx > currentIndex ? 1 : -1); setCurrentIndex(idx); }}
+                                        onClick={() => go(idx)}
                                         aria-label={`Go to slide ${idx + 1}`}
-                                        className={`h-1.5 rounded-full transition-all duration-400 ${
-                                            idx === currentIndex
-                                                ? "w-8 bg-luxury-gold"
-                                                : "w-1.5 bg-white/20 hover:bg-white/40"
-                                        }`}
+                                        className={`h-px transition-all duration-400 ${idx === currentIndex ? "w-8 bg-[#B8955A]" : "w-4 bg-white/20"}`}
                                     />
                                 ))}
                             </div>
 
                             <button
                                 type="button"
-                                onClick={nextSlide}
+                                onClick={next}
                                 aria-label="Next testimonial"
-                                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/50 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-luxury-gold"
+                                className="flex h-9 w-9 items-center justify-center border border-white/10 text-white/40 transition-colors hover:border-white/30 hover:text-white focus-visible:outline-none"
                             >
                                 →
                             </button>

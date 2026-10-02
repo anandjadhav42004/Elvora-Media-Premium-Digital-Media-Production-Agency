@@ -36,23 +36,23 @@ export function ScopeEstimator() {
     const whatsappLink = buildCustomWhatsAppLink(generatedMessage);
 
     return (
-        <section id="estimator" className="py-16 sm:py-24 bg-[#faf7f0]">
+        <section id="estimator" className="py-[72px] sm:py-[clamp(96px,10vw,160px)] bg-white border-b border-black/[0.08]">
             <Container>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.15 }}
                     variants={stagger(0.12)}
-                    className="mx-auto max-w-4xl rounded-3xl border border-black/10 bg-white p-6 sm:p-12 shadow-xl"
+                    className="mx-auto max-w-4xl border border-black/[0.08] bg-[#F7F6F2] p-6 sm:p-12"
                 >
                     <motion.div variants={fadeUp} className="text-center">
-                        <span className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold">
-                            Interactive Project Wizard
-                        </span>
-                        <h2 className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-deep-black sm:text-4xl">
+                        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-[#6F6F6A]">
+                            Project Estimator
+                        </p>
+                        <h2 className="mt-2 font-display text-3xl font-bold uppercase tracking-[-0.02em] text-[#111111] sm:text-4xl">
                             Estimate Your Scope & Launch
                         </h2>
-                        <p className="mt-2 text-sm text-neutral-800 font-medium">
+                        <p className="mt-2 text-[15px] text-[#6F6F6A]">
                             Configure your project goals in 3 simple steps to get an instant tailored inquiry setup.
                         </p>
                     </motion.div>
@@ -64,12 +64,12 @@ export function ScopeEstimator() {
                                 key={num}
                                 type="button"
                                 onClick={() => setStep(num)}
-                                className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                                className={`flex h-8 w-8 items-center justify-center text-xs font-bold transition-all ${
                                     step === num
-                                        ? "bg-deep-black text-ivory-cream ring-2 ring-luxury-gold"
+                                        ? "bg-[#111111] text-white"
                                         : step > num
-                                        ? "bg-luxury-gold text-deep-black"
-                                        : "bg-neutral-200 text-neutral-700"
+                                        ? "bg-[#B8955A] text-white"
+                                        : "bg-neutral-200 text-neutral-500"
                                 }`}
                             >
                                 {step > num ? "✓" : num}
@@ -90,14 +90,14 @@ export function ScopeEstimator() {
                                             key={opt.id}
                                             type="button"
                                             onClick={() => setSelectedService(opt)}
-                                            className={`flex flex-col text-left p-4 rounded-2xl border transition-all duration-300 ${
+                                            className={`flex flex-col text-left p-4 border transition-all duration-200 ${
                                                 selectedService.id === opt.id
-                                                    ? "border-luxury-gold bg-luxury-gold/10 shadow-md"
-                                                    : "border-black/15 bg-neutral-50 hover:border-black/30"
+                                                    ? "border-[#111111] bg-white"
+                                                    : "border-black/10 bg-white hover:border-black/30"
                                             }`}
                                         >
-                                            <span className="font-display text-sm font-bold text-deep-black">{opt.title}</span>
-                                            <span className="font-mono text-xs text-neutral-700 font-medium mt-1">{opt.desc}</span>
+                                            <span className="font-display text-sm font-bold text-[#111111]">{opt.title}</span>
+                                            <span className="font-mono text-[11px] text-[#6F6F6A] mt-1">{opt.desc}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -115,13 +115,13 @@ export function ScopeEstimator() {
                                             key={opt.id}
                                             type="button"
                                             onClick={() => setSelectedTimeline(opt)}
-                                            className={`flex flex-col items-center justify-center text-center p-5 rounded-2xl border transition-all duration-300 ${
+                                            className={`flex flex-col items-center justify-center text-center p-5 border transition-all duration-200 ${
                                                 selectedTimeline.id === opt.id
-                                                    ? "border-luxury-gold bg-luxury-gold/10 shadow-md"
-                                                    : "border-black/15 bg-neutral-50 hover:border-black/30"
+                                                    ? "border-[#111111] bg-white"
+                                                    : "border-black/10 bg-white hover:border-black/30"
                                             }`}
                                         >
-                                            <span className="font-display text-sm font-bold text-deep-black">{opt.title}</span>
+                                            <span className="font-display text-sm font-bold text-[#111111]">{opt.title}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -139,14 +139,14 @@ export function ScopeEstimator() {
                                             key={opt.id}
                                             type="button"
                                             onClick={() => setSelectedBudget(opt)}
-                                            className={`flex flex-col text-left p-4 rounded-2xl border transition-all duration-300 ${
+                                            className={`flex flex-col text-left p-4 border transition-all duration-200 ${
                                                 selectedBudget.id === opt.id
-                                                    ? "border-luxury-gold bg-luxury-gold/10 shadow-md"
-                                                    : "border-black/15 bg-neutral-50 hover:border-black/30"
+                                                    ? "border-[#111111] bg-white"
+                                                    : "border-black/10 bg-white hover:border-black/30"
                                             }`}
                                         >
-                                            <span className="font-display text-base font-bold text-luxury-gold">{opt.title}</span>
-                                            <span className="font-mono text-xs text-neutral-700 font-medium mt-1">{opt.desc}</span>
+                                            <span className="font-display text-base font-bold text-[#111111]">{opt.title}</span>
+                                            <span className="font-mono text-[11px] text-[#6F6F6A] mt-1">{opt.desc}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -161,7 +161,7 @@ export function ScopeEstimator() {
                                 <button
                                     type="button"
                                     onClick={() => setStep(step - 1)}
-                                    className="rounded-full border border-black/20 px-5 py-2 text-xs font-semibold uppercase text-deep-black transition-colors hover:bg-neutral-100"
+                                    className="border border-black/15 px-5 py-2 text-[11px] font-semibold uppercase text-[#111111] transition-colors hover:bg-neutral-100"
                                 >
                                     &larr; Back
                                 </button>
@@ -170,7 +170,7 @@ export function ScopeEstimator() {
                                 <button
                                     type="button"
                                     onClick={() => setStep(step + 1)}
-                                    className="rounded-full bg-deep-black px-6 py-2 text-xs font-semibold uppercase text-ivory-cream transition-transform hover:scale-105"
+                                    className="bg-[#111111] px-6 py-2 text-[11px] font-semibold uppercase text-white transition-transform duration-200 hover:-translate-y-px"
                                 >
                                     Next Step &rarr;
                                 </button>
@@ -182,7 +182,7 @@ export function ScopeEstimator() {
                                 href={whatsappLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="mt-4 sm:mt-0 flex items-center gap-3 rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-3 px-8 text-sm font-bold text-deep-black shadow-lg transition-transform hover:scale-105"
+                                className="mt-4 sm:mt-0 flex items-center gap-3 bg-[#111111] py-3 px-8 text-sm font-bold text-white transition-transform duration-200 hover:-translate-y-px"
                             >
                                 Book Call With This Estimate 💬 &rarr;
                             </a>

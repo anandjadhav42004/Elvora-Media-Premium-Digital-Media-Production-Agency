@@ -116,7 +116,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                 className="hidden sm:inline-flex items-center gap-2.5 rounded-none border border-black bg-black px-5 py-2.5 text-[10px] font-mono font-bold uppercase tracking-[0.22em] text-white transition-all duration-300 hover:bg-neutral-800 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer group"
                             >
                                 <span>Start a Project</span>
-                                <span className="text-luxury-gold transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
+                                <span className="transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
                             </button>
                         ) : (
                             <a
@@ -126,7 +126,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                 className="hidden sm:inline-flex items-center gap-2.5 rounded-none border border-black bg-black px-5 py-2.5 text-[10px] font-mono font-bold uppercase tracking-[0.22em] text-white transition-all duration-300 hover:bg-neutral-800 focus:outline-none focus:ring-1 focus:ring-black group"
                             >
                                 <span>Start a Project</span>
-                                <span className="text-luxury-gold transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
+                                <span className="transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
                             </a>
                         )}
 
@@ -172,7 +172,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                             target={external ? "_blank" : undefined}
                                             rel={external ? "noopener noreferrer" : undefined}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="font-display text-xl uppercase tracking-tight text-deep-black transition-colors hover:text-luxury-gold py-1.5 border-b border-black/[0.04]"
+                                            className="font-display text-xl uppercase tracking-tight text-[#111111] transition-colors hover:text-[#6F6F6A] py-1.5 border-b border-black/[0.04]"
                                         >
                                             {label}
                                         </a>
@@ -188,7 +188,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                                 className="flex w-full items-center justify-center gap-2 border border-black bg-black py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white"
                                             >
                                                 <span>Start a Project</span>
-                                                <span className="text-luxury-gold">↗</span>
+                                                <span>↗</span>
                                             </button>
                                         ) : (
                                             <a
@@ -199,7 +199,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                                 className="flex w-full items-center justify-center gap-2 border border-black bg-black py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white"
                                             >
                                                 <span>Start a Project</span>
-                                                <span className="text-luxury-gold">↗</span>
+                                                <span>↗</span>
                                             </a>
                                         )}
                                     </div>

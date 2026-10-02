@@ -108,8 +108,8 @@ export function ElvoraCursor() {
             );
             isOverInteractive.current = !!hoveredEl;
 
-            let magneticTargetX = target.current.x;
-            let magneticTargetY = target.current.y;
+            const magneticTargetX = target.current.x;
+            const magneticTargetY = target.current.y;
 
             // Magnetic pull removed for better click accuracy
 
