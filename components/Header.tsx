@@ -151,20 +151,20 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="fixed inset-0 top-16 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+                            transition={{ duration: 0.2 }}
+                            className="fixed inset-0 top-16 z-40 bg-black/60 md:hidden"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >
                             <motion.div
                                 ref={drawerRef}
-                                initial={{ y: -20, opacity: 0 }}
+                                initial={{ y: -8, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                exit={{ y: -20, opacity: 0 }}
-                                transition={{ duration: 0.25, ease: EASE }}
+                                exit={{ y: -8, opacity: 0 }}
+                                transition={{ duration: 0.22, ease: EASE }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="flex flex-col border-b border-black/[0.08] bg-white px-6 py-8 shadow-xl"
+                                className="flex flex-col border-b border-black/[0.08] bg-white px-6 py-8"
                             >
-                                <nav className="flex flex-col gap-4">
+                                <nav className="flex flex-col gap-2">
                                     {NAV_LINKS.map(({ label, href, external }) => (
                                         <a
                                             key={label}
@@ -172,12 +172,12 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                             target={external ? "_blank" : undefined}
                                             rel={external ? "noopener noreferrer" : undefined}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className="font-display text-xl uppercase tracking-tight text-[#111111] transition-colors hover:text-[#6F6F6A] py-1.5 border-b border-black/[0.04]"
+                                            className="font-display text-xl uppercase tracking-tight text-[#111111] transition-colors hover:text-[#6F6F6A] min-h-[44px] flex items-center border-b border-black/[0.04]"
                                         >
                                             {label}
                                         </a>
                                     ))}
-                                    <div className="pt-2">
+                                    <div className="pt-4">
                                         {onOpenInquiry ? (
                                             <button
                                                 type="button"
@@ -185,7 +185,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                                     setIsMobileMenuOpen(false);
                                                     onOpenInquiry();
                                                 }}
-                                                className="flex w-full items-center justify-center gap-2 border border-black bg-black py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white"
+                                                className="flex w-full min-h-[44px] items-center justify-center gap-2 border border-black bg-black py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white"
                                             >
                                                 <span>Start a Project</span>
                                                 <span>↗</span>
@@ -196,7 +196,7 @@ export function Header({ onOpenInquiry }: HeaderProps) {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 onClick={() => setIsMobileMenuOpen(false)}
-                                                className="flex w-full items-center justify-center gap-2 border border-black bg-black py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white"
+                                                className="flex w-full min-h-[44px] items-center justify-center gap-2 border border-black bg-black py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white"
                                             >
                                                 <span>Start a Project</span>
                                                 <span>↗</span>

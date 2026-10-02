@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Container } from "./Container";
-import { fadeUp, stagger } from "@/lib/motion";
+import { stagger } from "@/lib/motion";
 import { buildCustomWhatsAppLink } from "@/lib/whatsapp";
 
 type Deliverable = {
@@ -108,7 +108,7 @@ export function CustomPlanBuilder() {
     };
 
     return (
-        <section id="estimator" className="py-20 sm:py-32 bg-white relative overflow-hidden border-b border-black/[0.06]">
+        <section id="estimator" className="py-[72px] sm:py-[clamp(96px,10vw,160px)] bg-white relative overflow-hidden border-b border-black/[0.08]">
             <Container>
                 {/* Section Header */}
                 <motion.div
@@ -119,14 +119,14 @@ export function CustomPlanBuilder() {
                     className="max-w-3xl mb-12"
                 >
                     <div className="flex items-center gap-2 mb-3">
-                        <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-400 uppercase">
-                            [ 06 &middot; Scope Configurator ]
+                        <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-[#6F6F6A] uppercase">
+                            06 / Scope Configurator
                         </span>
                     </div>
-                    <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase tracking-tight text-deep-black">
-                        Custom Plan Builder. <span className="font-serif italic font-normal text-luxury-gold">Bespoke Production.</span>
+                    <h2 className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-[#111111]">
+                        Custom Plan Builder. <span className="font-serif italic font-normal text-[#B8955A]">Bespoke Production.</span>
                     </h2>
-                    <p className="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-xl">
+                    <p className="mt-4 text-sm sm:text-base text-[#6F6F6A] leading-relaxed max-w-xl">
                         Design an exact production scope tailored to your brand&apos;s requirements. Select deliverables, turnaround speed, and production add-ons.
                     </p>
                 </motion.div>
@@ -136,11 +136,11 @@ export function CustomPlanBuilder() {
                     {/* Left: Step Form (7 cols) */}
                     <div className="lg:col-span-7">
                         {/* Step Navigation Tabs */}
-                        <div className="flex items-center gap-2 pb-6 border-b border-black/[0.08] mb-8 font-mono text-[10px] uppercase tracking-[0.2em]">
+                        <div className="flex flex-wrap items-center gap-2 pb-6 border-b border-black/[0.08] mb-8 font-mono text-[10px] uppercase tracking-[0.2em]">
                             <button
                                 type="button"
                                 onClick={() => setCurrentStep(1)}
-                                className={`px-4 py-2 border transition-all cursor-pointer ${
+                                className={`min-h-[44px] px-4 py-2 border transition-all cursor-pointer ${
                                     currentStep === 1
                                         ? "border-black bg-black text-white font-bold"
                                         : "border-black/10 bg-neutral-50 text-neutral-600 hover:border-black/40"
@@ -152,7 +152,7 @@ export function CustomPlanBuilder() {
                                 type="button"
                                 onClick={() => canProceedFromStep1 && setCurrentStep(2)}
                                 disabled={!canProceedFromStep1}
-                                className={`px-4 py-2 border transition-all ${
+                                className={`min-h-[44px] px-4 py-2 border transition-all ${
                                     currentStep === 2
                                         ? "border-black bg-black text-white font-bold"
                                         : canProceedFromStep1
@@ -166,7 +166,7 @@ export function CustomPlanBuilder() {
                                 type="button"
                                 onClick={() => canProceedFromStep1 && canProceedFromStep2 && setCurrentStep(3)}
                                 disabled={!canProceedFromStep1 || !canProceedFromStep2}
-                                className={`px-4 py-2 border transition-all ${
+                                className={`min-h-[44px] px-4 py-2 border transition-all ${
                                     currentStep === 3
                                         ? "border-black bg-black text-white font-bold"
                                         : canProceedFromStep1 && canProceedFromStep2
@@ -292,7 +292,7 @@ export function CustomPlanBuilder() {
                                         <button
                                             type="button"
                                             onClick={() => setCurrentStep(1)}
-                                            className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border border-black/20 text-black hover:border-black cursor-pointer"
+                                            className="min-h-[44px] px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border border-black/20 text-black hover:border-black cursor-pointer"
                                         >
                                             &larr; Back
                                         </button>
@@ -300,7 +300,7 @@ export function CustomPlanBuilder() {
                                             type="button"
                                             onClick={() => setCurrentStep(3)}
                                             disabled={!canProceedFromStep2}
-                                            className={`px-7 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border transition-all ${
+                                            className={`min-h-[44px] px-7 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border transition-all ${
                                                 canProceedFromStep2
                                                     ? "bg-black text-white border-black hover:bg-neutral-800 cursor-pointer"
                                                     : "bg-neutral-200 text-neutral-400 border-neutral-200 cursor-not-allowed"
@@ -331,9 +331,9 @@ export function CustomPlanBuilder() {
                                             <div
                                                 key={a.id}
                                                 onClick={() => toggleAddOn(a.id)}
-                                                className={`p-4 border transition-all cursor-pointer flex items-center justify-between ${
+                                                className={`min-h-[44px] p-4 border transition-all cursor-pointer flex items-center justify-between ${
                                                     isSelected
-                                                        ? "border-black bg-neutral-50/80 shadow-sm"
+                                                        ? "border-black bg-neutral-50/80"
                                                         : "border-black/[0.08] bg-white hover:border-black/30"
                                                 }`}
                                             >
@@ -358,7 +358,7 @@ export function CustomPlanBuilder() {
                                         <button
                                             type="button"
                                             onClick={() => setCurrentStep(2)}
-                                            className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border border-black/20 text-black hover:border-black cursor-pointer"
+                                            className="min-h-[44px] px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border border-black/20 text-black hover:border-black cursor-pointer"
                                         >
                                             &larr; Back
                                         </button>
@@ -370,8 +370,8 @@ export function CustomPlanBuilder() {
 
                     {/* Right: Estimated Investment Card (5 cols) */}
                     <div className="lg:col-span-5 lg:sticky lg:top-24">
-                        <div className="border border-black bg-neutral-950 text-white p-8 sm:p-10 shadow-2xl relative overflow-hidden">
-                            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-luxury-gold mb-2">
+                        <div className="border border-black bg-neutral-950 text-white p-6 sm:p-10 relative overflow-hidden">
+                            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#B8955A] mb-2">
                                 Proposal Synthesis
                             </div>
                             <h3 className="font-display text-2xl uppercase tracking-tight text-white mb-6">
@@ -412,7 +412,7 @@ export function CustomPlanBuilder() {
                                 type="button"
                                 onClick={handleSendWhatsApp}
                                 disabled={!canProceedFromStep1}
-                                className={`w-full py-4 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
+                                className={`w-full min-h-[44px] py-4 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
                                     canProceedFromStep1
                                         ? "bg-white text-black hover:bg-neutral-200 cursor-pointer shadow-lg"
                                         : "bg-white/10 text-white/40 cursor-not-allowed"

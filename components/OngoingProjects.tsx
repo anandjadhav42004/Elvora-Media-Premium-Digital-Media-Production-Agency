@@ -80,7 +80,6 @@ function CloseIcon() {
 
 export function OngoingProjects() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
-    const [hoveredId, setHoveredId] = useState<string | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
 
     const activeProject = ONGOING_PROJECTS.find((study) => study.id === selectedId) ?? null;
@@ -124,7 +123,7 @@ export function OngoingProjects() {
     }, [selectedId]);
 
     return (
-        <section id="ongoing-projects" className="py-20 sm:py-32 bg-neutral-50/50 border-b border-black/[0.08]">
+        <section id="ongoing-projects" className="py-[72px] sm:py-[clamp(96px,10vw,160px)] bg-[#F7F6F2] border-b border-black/[0.08]">
             <Container>
                 <motion.div
                     initial="hidden"
@@ -135,15 +134,15 @@ export function OngoingProjects() {
                 >
                     <div>
                         <motion.div variants={fadeUp} className="flex items-center gap-2 mb-3">
-                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-500 uppercase">
-                                [ 04 &middot; Live Production Slate ]
+                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-[#6F6F6A] uppercase">
+                                04 / Live Production
                             </span>
                         </motion.div>
-                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-black">
-                            In The Studio. <span className="font-serif italic font-normal text-luxury-gold">Active Sets.</span>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-[#111111]">
+                            In The Studio. <span className="font-serif italic font-normal text-[#B8955A]">Active Sets.</span>
                         </motion.h2>
                     </div>
-                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-neutral-600 leading-relaxed">
+                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-[#6F6F6A] leading-relaxed">
                         A real-time look at ongoing campaign shoots, color grading sessions, and post-production pipelines currently underway.
                     </motion.p>
                 </motion.div>
@@ -154,7 +153,7 @@ export function OngoingProjects() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.1 }}
                     variants={stagger(0.12)}
-                    className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+                    className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
                 >
                     {ONGOING_PROJECTS.map((study) => (
                         <motion.div
@@ -162,8 +161,6 @@ export function OngoingProjects() {
                             variants={fadeUp}
                             layoutId={`project-card-${study.id}`}
                             onClick={() => setSelectedId(study.id)}
-                            onMouseEnter={() => setHoveredId(study.id)}
-                            onMouseLeave={() => setHoveredId(null)}
                             tabIndex={0}
                             role="button"
                             onKeyDown={(e) => {
@@ -172,9 +169,9 @@ export function OngoingProjects() {
                                     setSelectedId(study.id);
                                 }
                             }}
-                            className="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-luxury-gold/50 hover:shadow-xl hover:shadow-luxury-gold/10 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                            className="group relative flex flex-col overflow-hidden border border-black/[0.08] bg-white p-5 sm:p-6 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-black cursor-pointer"
                         >
-                            <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl bg-neutral-100">
+                            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-neutral-100">
                                 {study.videoPreview ? (
                                     <video
                                         src={study.videoPreview}
@@ -182,7 +179,7 @@ export function OngoingProjects() {
                                         loop
                                         muted
                                         playsInline
-                                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                        className="h-full w-full object-cover"
                                     />
                                 ) : (
                                     study.imageSrc && (
@@ -191,28 +188,31 @@ export function OngoingProjects() {
                                             alt={study.title}
                                             fill
                                             sizes="(max-width: 640px) 100vw, 33vw"
-                                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                            className="object-cover"
                                         />
                                     )
                                 )}
-                                <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-deep-black/90 px-3.5 py-1.5 backdrop-blur-md z-10">
-                                    <span className="font-display text-sm font-bold text-luxury-gold">{study.metric}</span>
-                                    <span className="font-mono text-[10px] uppercase text-ivory-cream">{study.metricLabel}</span>
+                                <div className="absolute bottom-0 left-0 right-0 px-4 pb-3 pt-8 bg-gradient-to-t from-black/75 to-transparent">
+                                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60">{study.metricLabel}</span>
+                                    <p className="font-display text-sm font-bold text-white">{study.metric}</p>
                                 </div>
                             </div>
 
-                            <div className="mt-6 flex flex-col gap-2">
+                            <div className="mt-4 flex flex-col gap-1.5">
                                 <div className="flex items-center justify-between">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-luxury-gold">
+                                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#B8955A]">
                                         {study.client} &middot; {study.category}
                                     </span>
-                                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 transition-colors group-hover:text-deep-black">
-                                        View Details &rarr;
-                                    </span>
                                 </div>
-                                <h3 className="font-display text-xl font-bold leading-snug text-deep-black">
+                                <h3 className="font-display text-xl font-bold uppercase tracking-[-0.02em] leading-tight text-[#111111]">
                                     {study.title}
                                 </h3>
+                                <p className="text-[13px] leading-relaxed text-[#6F6F6A] line-clamp-2">
+                                    {study.summary}
+                                </p>
+                                <span className="mt-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#111111]">
+                                    View Details &rarr;
+                                </span>
                             </div>
                         </motion.div>
                     ))}
@@ -237,31 +237,31 @@ export function OngoingProjects() {
                                 role="dialog"
                                 aria-modal="true"
                                 aria-label={activeProject.title}
-                                className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-y-auto rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
+                                className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-y-auto rounded-xl bg-white p-5 sm:p-8 mx-2 border border-black/10 shadow-2xl"
                             >
                                 <button
                                     type="button"
                                     onClick={() => setSelectedId(null)}
                                     aria-label="Close modal"
-                                    className="absolute top-6 right-6 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-800 transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-luxury-gold z-10"
+                                    className="absolute top-4 right-4 sm:top-6 sm:right-6 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-[#111111] transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-black z-10"
                                 >
                                     <CloseIcon />
                                 </button>
 
-                                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-luxury-gold font-bold pr-10">
+                                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#B8955A] font-bold pr-10">
                                     <span>{activeProject.client}</span>
                                     <span>&middot;</span>
                                     <span>{activeProject.category}</span>
                                 </div>
 
-                                <h3 className="mt-2 font-display text-2xl font-bold text-deep-black sm:text-3xl">
+                                <h3 className="mt-2 font-display text-2xl font-bold uppercase tracking-tight text-[#111111] sm:text-3xl">
                                     {activeProject.title}
                                 </h3>
 
                                 {/* Video Player / Image Embed */}
                                 <div className="mt-6 flex flex-col items-center w-full">
                                     {activeProject.localVideoFull ? (
-                                        <div className="relative w-full aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
+                                        <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-black">
                                             <video 
                                                 src={activeProject.localVideoFull} 
                                                 controls 
@@ -270,7 +270,7 @@ export function OngoingProjects() {
                                             />
                                         </div>
                                     ) : activeProject.instagramUrl ? (
-                                        <div className="relative w-full max-w-[340px] aspect-[9/16] overflow-hidden rounded-2xl border border-black/10 bg-black shadow-lg">
+                                        <div className="relative w-full max-w-[320px] aspect-[9/16] overflow-hidden rounded-lg border border-black/10 bg-black">
                                             <iframe
                                                 src={getEmbedUrl(activeProject.instagramUrl)}
                                                 className="h-full w-full border-0"
@@ -280,7 +280,7 @@ export function OngoingProjects() {
                                             />
                                         </div>
                                     ) : activeProject.imageSrc && (
-                                        <div className="relative w-full aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
+                                        <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-black">
                                             <Image
                                                 src={activeProject.imageSrc}
                                                 alt={activeProject.title}
@@ -297,8 +297,8 @@ export function OngoingProjects() {
                                         <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-700">Focus Areas</h4>
                                         <ul className="mt-2 space-y-1.5">
                                             {activeProject.results.map((res, i) => (
-                                                <li key={i} className="flex items-center gap-2 text-sm font-semibold text-deep-black">
-                                                    <span className="text-luxury-gold">✓</span> {res}
+                                                <li key={i} className="flex items-center gap-2 text-sm text-[#111111]">
+                                                    <span className="text-[#B8955A] font-bold">✓</span> {res}
                                                 </li>
                                             ))}
                                         </ul>

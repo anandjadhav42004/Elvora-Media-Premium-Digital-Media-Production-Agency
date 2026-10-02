@@ -165,7 +165,7 @@ function LeadCard({
                     onClick();
                 }
             }}
-            className={`group relative aspect-square w-full shrink-0 overflow-hidden border border-transparent transition-all duration-300 hover:border-luxury-gold/40 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] sm:aspect-auto sm:h-full ${onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-luxury-gold/60' : ''}`}
+            className={`group relative aspect-square w-full shrink-0 overflow-hidden border border-black/[0.08] bg-neutral-900 transition-all duration-300 sm:aspect-auto sm:h-full ${onClick ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-black' : ''}`}
         >
             <Image
                 src={member.photoSrc}
@@ -173,7 +173,7 @@ function LeadCard({
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
                 style={{ objectPosition: member.imagePosition }}
-                className="object-cover transition-all duration-500 ease-out md:grayscale group-hover:scale-105 group-hover:grayscale-0"
+                className="object-cover transition-opacity duration-500 ease-out"
             />
             <div
                 className="pointer-events-none absolute inset-0"
@@ -186,7 +186,7 @@ function LeadCard({
                 <p className="text-sm font-medium text-white sm:text-base">
                     {member.name}
                 </p>
-                <p className="text-xs font-medium uppercase tracking-wide text-luxury-gold">
+                <p className="text-xs font-medium uppercase tracking-wide text-[#B8955A]">
                     {member.title}
                 </p>
             </div>
@@ -277,28 +277,28 @@ export function TeamAccordion() {
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-12 mb-10 border-b border-black/[0.08]">
                     <div>
                         <motion.div variants={fadeUp} className="flex items-center gap-2 mb-3">
-                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-500 uppercase">
-                                [ 06 &middot; Leadership & Direction ]
+                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-[#6F6F6A] uppercase">
+                                07 / Directors & Leads
                             </span>
                         </motion.div>
-                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-black">
-                            The Collective. <span className="font-serif italic font-normal text-luxury-gold">Directors & Leads.</span>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-[#111111]">
+                            The Collective. <span className="font-serif italic font-normal text-[#B8955A]">Directors & Leads.</span>
                         </motion.h2>
                     </div>
-                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-neutral-600 leading-relaxed">
+                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-[#6F6F6A] leading-relaxed">
                         A focused group of filmmakers, marketing architects, and creative strategists united to build market-defining brands.
                     </motion.p>
                 </div>
 
                 <motion.p
                     variants={fadeUp}
-                    className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-neutral-500"
+                    className="mb-4 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#6F6F6A]"
                 >
-                    [ Board of Directors ]
+                    Directors
                 </motion.p>
                 <motion.div
                     variants={fadeUp}
-                    className="flex w-full flex-col overflow-hidden rounded-3xl sm:h-80 sm:flex-row md:h-105 border border-black/[0.08] shadow-sm"
+                    className="flex w-full flex-col overflow-hidden rounded-xl sm:h-80 sm:flex-row md:h-105 border border-black/[0.08]"
                 >
                     {DIRECTORS.map((member, index) => {
                         const isActive = index === activeIndex;
@@ -335,10 +335,10 @@ export function TeamAccordion() {
                                           }
                                         : undefined
                                 }
-                                className="group relative aspect-square w-full shrink-0 overflow-hidden border border-transparent transition-all duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-luxury-gold/60 hover:border-luxury-gold/40 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] sm:aspect-auto sm:h-full sm:w-auto"
+                                className="group relative aspect-square w-full shrink-0 overflow-hidden border border-black/[0.08] bg-neutral-900 transition-all duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-black sm:aspect-auto sm:h-full sm:w-auto"
                             >
                                 <div
-                                    className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
+                                    className="absolute inset-0 transition-transform duration-500 ease-out"
                                     style={
                                         member.imageScale
                                             ? {
@@ -367,7 +367,7 @@ export function TeamAccordion() {
                                             objectPosition:
                                                 member.imagePosition,
                                         }}
-                                        className="object-cover transition-all duration-500 ease-out md:grayscale group-hover:grayscale-0"
+                                        className="object-cover transition-opacity duration-500 ease-out"
                                     />
                                 </div>
                                 {selectedId !== member.id && (
@@ -393,7 +393,7 @@ export function TeamAccordion() {
                                             <p className="text-sm font-medium text-white">
                                                 {member.name}
                                             </p>
-                                            <p className="text-xs font-medium uppercase tracking-wide text-luxury-gold">
+                                            <p className="text-xs font-medium uppercase tracking-wide text-[#B8955A]">
                                                 {member.title}
                                             </p>
                                             <motion.button
@@ -405,7 +405,7 @@ export function TeamAccordion() {
                                                 onClick={() =>
                                                     openModal(member)
                                                 }
-                                                className="flex items-center gap-2 rounded-[100px] border border-white bg-transparent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                                className="flex min-h-[44px] items-center gap-2 border border-white/60 bg-black/40 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-black"
                                             >
                                                 <span>Know more</span>
                                                 <ArrowIcon />
@@ -420,14 +420,14 @@ export function TeamAccordion() {
 
                 <motion.p
                     variants={fadeUp}
-                    className="mb-4 mt-8 font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold"
+                    className="mb-4 mt-8 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#6F6F6A]"
                 >
                     Team Leads
                 </motion.p>
                 <div className="w-full sm:flex sm:justify-center">
                     <motion.div
                         variants={fadeUp}
-                        className="flex w-full flex-col overflow-hidden rounded-3xl sm:h-80 sm:flex-row md:h-105"
+                        className="flex w-full flex-col overflow-hidden rounded-xl sm:h-80 sm:flex-row md:h-105 border border-black/[0.08]"
                         style={
                             isDesktopAccordion
                                 ? { width: `${RESTING_WIDTH * LEADS.length}%` }
@@ -468,7 +468,7 @@ export function TeamAccordion() {
                                 role="dialog"
                                 aria-modal="true"
                                 aria-label={selectedMember.name}
-                                className="flex w-full max-w-lg flex-col rounded-3xl bg-white p-5 sm:p-5 shadow-2xl"
+                                className="flex max-h-[92dvh] w-full max-w-lg flex-col overflow-y-auto rounded-xl bg-white p-6 sm:p-8 mx-2 border border-black/10 shadow-2xl"
                             >
                                 <motion.div
                                     layout
@@ -486,12 +486,12 @@ export function TeamAccordion() {
                                         type="button"
                                         onClick={requestClose}
                                         aria-label="Close"
-                                        className="flex shrink-0 items-center justify-center self-end rounded-full bg-transparent text-neutral-950 transition-colors hover:border-neutral-500 hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                        className="flex h-9 w-9 shrink-0 items-center justify-center self-end rounded-full bg-neutral-100 text-[#111111] transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-black"
                                     >
                                         <CloseIcon />
                                     </button>
                                     <div className="mt-4 flex items-center gap-2">
-                                        <h3 className="text-xl font-semibold sm:text-2xl">
+                                        <h3 className="font-display text-xl uppercase tracking-tight text-[#111111] sm:text-2xl">
                                             {selectedMember.name}
                                         </h3>
                                         {selectedMember.linkedin && (
@@ -500,22 +500,22 @@ export function TeamAccordion() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 aria-label={`${selectedMember.name} on LinkedIn`}
-                                                className="flex h-9 w-9 shrink-0 items-center justify-center text-[#2868b2] transition-opacity hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-luxury-gold rounded-full"
+                                                className="flex h-9 w-9 shrink-0 items-center justify-center text-[#2868b2] transition-opacity hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-black rounded-full"
                                             >
                                                 <LinkedInIcon />
                                             </a>
                                         )}
                                     </div>
-                                    <p className="mt-1 text-sm font-medium text-luxury-gold">
+                                    <p className="mt-1 text-sm font-medium text-[#B8955A]">
                                         {selectedMember.title}
                                     </p>
                                     {selectedMember.byline && (
-                                        <p className="mt-2 text-sm font-medium text-neutral-500">
+                                        <p className="mt-2 text-xs font-mono uppercase tracking-wider text-[#6F6F6A]">
                                             {selectedMember.byline}
                                         </p>
                                     )}
                                     {selectedMember.description && (
-                                        <p className="mt-6 text-base leading-relaxed text-neutral-700">
+                                        <p className="mt-6 text-sm leading-relaxed text-[#6F6F6A]">
                                             {selectedMember.description}
                                         </p>
                                     )}

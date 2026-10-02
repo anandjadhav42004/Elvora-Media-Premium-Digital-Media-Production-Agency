@@ -133,12 +133,12 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                             {/* CTA pair */}
                             <motion.div
                                 variants={fadeUp}
-                                className="mt-8 flex flex-wrap items-center gap-3"
+                                className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto"
                             >
                                 <button
                                     type="button"
                                     onClick={onOpenInquiry ? onOpenInquiry : () => window.open(WHATSAPP_LINK, "_blank")}
-                                    className="inline-flex items-center gap-3 bg-[#111111] px-7 py-3.5 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white transition-transform duration-200 hover:-translate-y-px hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black cursor-pointer"
+                                    className="inline-flex min-h-[44px] items-center justify-center gap-3 bg-[#111111] px-7 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white transition-transform duration-200 hover:-translate-y-px hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black cursor-pointer"
                                 >
                                     <span>Initiate Project</span>
                                     <span>↗</span>
@@ -147,7 +147,7 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                                 <button
                                     type="button"
                                     onClick={() => setIsShowreelOpen(true)}
-                                    className="inline-flex items-center gap-2.5 border border-black/20 px-6 py-3.5 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#111111] transition-transform duration-200 hover:-translate-y-px hover:border-black focus-visible:outline-none cursor-pointer"
+                                    className="inline-flex min-h-[44px] items-center justify-center gap-2.5 border border-black/20 px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#111111] transition-transform duration-200 hover:-translate-y-px hover:border-black focus-visible:outline-none cursor-pointer"
                                 >
                                     <span className="flex h-2 w-2 rounded-full bg-[#B8955A]" />
                                     <span>Play Showreel</span>
@@ -157,9 +157,9 @@ export function Hero({ onOpenInquiry }: HeroProps) {
 
                         {/* RIGHT — Featured production image */}
                         <motion.div
-                            initial={{ opacity: 0, y: 24 }}
+                            initial={{ opacity: 0, y: 16 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                             className="relative lg:col-span-5 flex justify-center lg:justify-end"
                         >
                             <div
@@ -246,20 +246,20 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 sm:p-8 backdrop-blur-md"
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
                         onClick={() => setIsShowreelOpen(false)}
                     >
                         <motion.div
                             ref={modalRef}
-                            initial={{ scale: 0.95, opacity: 0 }}
+                            initial={{ scale: 0.98, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                            exit={{ scale: 0.98, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                             onClick={(e) => e.stopPropagation()}
                             role="dialog"
                             aria-modal="true"
                             aria-label="Elvora Media Showreel"
-                            className="relative w-full max-w-4xl overflow-hidden rounded-xl bg-black border border-white/10"
+                            className="relative w-full max-h-[92dvh] max-w-4xl overflow-hidden rounded-xl bg-black border border-white/10"
                         >
                             <button
                                 type="button"
@@ -290,7 +290,7 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                                         href={SHOWREEL_VIDEO_URL}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="border border-white/20 px-5 py-2.5 text-[10px] font-bold text-white uppercase tracking-wider transition-colors hover:border-white/50 focus-visible:outline-none"
+                                        className="min-h-[44px] inline-flex items-center border border-white/20 px-5 py-2 text-[10px] font-bold text-white uppercase tracking-wider transition-colors hover:border-white/50 focus-visible:outline-none"
                                     >
                                         Watch on Instagram ↗
                                     </a>
@@ -300,7 +300,7 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                                             setIsShowreelOpen(false);
                                             if (onOpenInquiry) onOpenInquiry();
                                         }}
-                                        className="bg-white px-5 py-2.5 text-[10px] font-bold text-black uppercase tracking-wider transition-transform hover:-translate-y-px cursor-pointer"
+                                        className="min-h-[44px] inline-flex items-center bg-white px-5 py-2 text-[10px] font-bold text-black uppercase tracking-wider transition-transform hover:-translate-y-px cursor-pointer"
                                     >
                                         Book Your Shoot
                                     </button>

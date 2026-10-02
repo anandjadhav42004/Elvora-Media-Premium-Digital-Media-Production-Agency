@@ -95,43 +95,43 @@ export function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
                     onClick={onClose}
                 >
                     <motion.div
                         ref={modalRef}
-                        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                        initial={{ scale: 0.98, opacity: 0, y: 12 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
-                        exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 28 }}
+                        exit={{ scale: 0.98, opacity: 0, y: 12 }}
+                        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                         onClick={(e) => e.stopPropagation()}
                         role="dialog"
                         aria-modal="true"
                         aria-label="Start a Project - Elvora Media Quick Inquiry"
-                        className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-black/10 text-deep-black"
+                        className="relative w-full max-h-[92dvh] overflow-y-auto max-w-lg rounded-xl bg-white p-5 sm:p-8 shadow-2xl border border-black/10 text-[#111111]"
                     >
                         <button
                             type="button"
                             onClick={onClose}
                             aria-label="Close modal"
-                            className="absolute top-6 right-6 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-800 transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                            className="absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-[#111111] transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-black"
                         >
                             <CloseIcon />
                         </button>
 
-                        <div className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-luxury-gold">
+                        <div className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#B8955A]">
                             Quick Project Inquiry
                         </div>
-                        <h3 className="mt-1 font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-deep-black">
-                            Start Your <span className="text-luxury-gold">Project</span>
+                        <h3 className="mt-1 font-display text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#111111]">
+                            Start Your <span className="font-serif italic font-normal text-[#B8955A]">Project</span>
                         </h3>
-                        <p className="mt-2 text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
+                        <p className="mt-2 text-xs sm:text-sm text-[#6F6F6A] leading-relaxed">
                             Fill out brief details below and connect directly with our production lead on WhatsApp.
                         </p>
 
                         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                             <div>
-                                <label htmlFor="inquiry-name" className="block font-mono text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                                <label htmlFor="inquiry-name" className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#111111] mb-1">
                                     Your Name / Brand
                                 </label>
                                 <input
@@ -141,19 +141,19 @@ export function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                                     placeholder="e.g. Alex Vance or Brand Name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="w-full rounded-xl border border-black/15 bg-[#faf7f0] px-4 py-2.5 text-sm text-deep-black placeholder-neutral-500 focus:border-luxury-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-luxury-gold/30 transition-colors"
+                                    className="w-full border border-black/15 bg-[#F7F6F2] px-4 py-2.5 text-sm text-[#111111] placeholder-neutral-400 focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black transition-colors"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="inquiry-service" className="block font-mono text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                                <label htmlFor="inquiry-service" className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#111111] mb-1">
                                     Service Needed
                                 </label>
                                 <select
                                     id="inquiry-service"
                                     value={service}
                                     onChange={(e) => setService(e.target.value)}
-                                    className="w-full rounded-xl border border-black/15 bg-[#faf7f0] px-4 py-2.5 text-sm text-deep-black focus:border-luxury-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-luxury-gold/30 transition-colors"
+                                    className="w-full border border-black/15 bg-[#F7F6F2] px-4 py-2.5 text-sm text-[#111111] focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black transition-colors"
                                 >
                                     {SERVICES.map((s) => (
                                         <option key={s} value={s}>
@@ -164,14 +164,14 @@ export function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                             </div>
 
                             <div>
-                                <label htmlFor="inquiry-budget" className="block font-mono text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                                <label htmlFor="inquiry-budget" className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#111111] mb-1">
                                     Budget Range
                                 </label>
                                 <select
                                     id="inquiry-budget"
                                     value={budget}
                                     onChange={(e) => setBudget(e.target.value)}
-                                    className="w-full rounded-xl border border-black/15 bg-[#faf7f0] px-4 py-2.5 text-sm text-deep-black focus:border-luxury-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-luxury-gold/30 transition-colors"
+                                    className="w-full border border-black/15 bg-[#F7F6F2] px-4 py-2.5 text-sm text-[#111111] focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black transition-colors"
                                 >
                                     {BUDGET_RANGES.map((b) => (
                                         <option key={b} value={b}>
@@ -182,7 +182,7 @@ export function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                             </div>
 
                             <div>
-                                <label htmlFor="inquiry-message" className="block font-mono text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
+                                <label htmlFor="inquiry-message" className="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#111111] mb-1">
                                     Project Brief & Goals
                                 </label>
                                 <textarea
@@ -191,13 +191,13 @@ export function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                                     placeholder="Tell us a little about your project goals or timeline..."
                                     value={message}
                                     onChange={(e) => setMessage(e.target.value)}
-                                    className="w-full rounded-xl border border-black/15 bg-[#faf7f0] px-4 py-2.5 text-sm text-deep-black placeholder-neutral-500 focus:border-luxury-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-luxury-gold/30 transition-colors resize-none"
+                                    className="w-full border border-black/15 bg-[#F7F6F2] px-4 py-2.5 text-sm text-[#111111] placeholder-neutral-400 focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black transition-colors resize-none"
                                 />
                             </div>
 
                             <button
                                 type="submit"
-                                className="mt-2 w-full rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-3.5 px-6 font-display text-xs sm:text-sm font-bold uppercase tracking-wider text-deep-black shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                className="mt-2 w-full min-h-[44px] border border-black bg-black py-3.5 px-6 font-mono text-xs font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-black cursor-pointer"
                             >
                                 Send Inquiry to WhatsApp &rarr;
                             </button>
