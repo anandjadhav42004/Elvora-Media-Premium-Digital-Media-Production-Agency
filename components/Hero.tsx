@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "./Container";
 import { fadeUp, popIn, stagger } from "@/lib/motion";
 import { WHATSAPP_LINK } from "@/lib/whatsapp";
@@ -22,22 +23,12 @@ type HeroProps = {
 export function Hero({ onOpenInquiry }: HeroProps) {
     const [isShowreelOpen, setIsShowreelOpen] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
-    const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 1000], [0, 300]); // Downwards
-    const y2 = useTransform(scrollY, [0, 1000], [0, -150]); // Upwards
-    const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-
     const embedUrl = getEmbedUrl(SHOWREEL_VIDEO_URL);
-
-    // Non-breaking spaces so the separators never collapse; two identical
-    // copies + an x shift of -50% give a seamless horizontal loop.
-    const marqueeText = "Apni Marketing Agency   ".repeat(4);
 
     useEffect(() => {
         if (!isShowreelOpen) return;
 
         const previousActiveElement = document.activeElement as HTMLElement | null;
-
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") setIsShowreelOpen(false);
         };
@@ -57,200 +48,240 @@ export function Hero({ onOpenInquiry }: HeroProps) {
     }, [isShowreelOpen]);
 
     return (
-        <section className="relative w-full overflow-hidden bg-[#faf7f0] text-deep-black">
-            <motion.div
-                style={{ y: y1, opacity }}
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 right-6 hidden w-40 select-none items-center justify-center overflow-hidden sm:right-10 sm:flex lg:right-16 lg:w-64"
-            >
-                <motion.span
-                    className="[writing-mode:vertical-rl] whitespace-nowrap font-display text-[10rem] uppercase leading-none tracking-wider text-deep-black/10 lg:text-[14rem]"
-                    style={{ rotate: 180 }}
-                    animate={{ y: ["-100%", "100%"] }}
-                    transition={{
-                        duration: 7,
-                        repeat: Infinity,
-                        ease: "linear",
-                    }}
-                >
-                    Apni Marketing Agency
-                </motion.span>
-            </motion.div>
+        <section className="relative w-full overflow-hidden bg-white text-black border-b border-black/[0.06]">
+            {/* Subtle Editorial Background Grid Lines */}
+            <div className="pointer-events-none absolute inset-0 z-0 flex justify-between px-6 sm:px-12 opacity-25">
+                <div className="w-[1px] h-full bg-black/[0.03]" />
+                <div className="w-[1px] h-full bg-black/[0.03] hidden md:block" />
+                <div className="w-[1px] h-full bg-black/[0.03] hidden lg:block" />
+                <div className="w-[1px] h-full bg-black/[0.03]" />
+            </div>
 
-            <Container className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-between py-6 sm:py-8">
-                {/* giant headline */}
-                {/* 60/40 Asymmetrical Grid */}
-                <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 py-6 sm:py-4">
-                    {/* Left: 60% */}
+            {/* Main First-Viewport Hero Container */}
+            <div className="relative z-10 flex min-h-[calc(100vh-4rem)] lg:max-h-[900px] flex-col justify-between pt-4 pb-8 sm:pt-6 sm:pb-10">
+                <Container className="w-full">
+                    {/* Editorial Top Micro-Label Row */}
                     <motion.div
                         initial="hidden"
                         animate="visible"
-                        variants={stagger(0.15, 0.1)}
-                        className="flex flex-col justify-center lg:col-span-7 xl:col-span-8"
+                        variants={stagger(0.08)}
+                        className="flex flex-wrap items-center justify-between gap-3 pb-4 sm:pb-6 border-b border-black/[0.06]"
                     >
-                        <h1 className="font-display uppercase tracking-[-0.02em]">
-                            <motion.span
-                                variants={fadeUp}
-                                className="block text-[clamp(3.25rem,14vw,11rem)] leading-[0.9] text-deep-black"
-                            >
-                                Elvora
-                            </motion.span>
-                            <motion.span
-                                variants={fadeUp}
-                                className="mt-1 block text-[clamp(3.25rem,14vw,11rem)] leading-[0.9] text-luxury-gold sm:mt-2"
-                            >
-                                Media
-                            </motion.span>
-                        </h1>
-                        <motion.p
-                            variants={fadeUp}
-                            className="mt-4 pl-1 font-script text-[clamp(1.75rem,5vw,4rem)] leading-none text-deep-black sm:pl-2"
-                        >
-                            Made <span className="text-luxury-gold">Unforgettable.</span>
-                        </motion.p>
-                        
-                        {/* Mobile Tagline Fallback */}
-                        <motion.div variants={fadeUp} className="mt-8 flex flex-col lg:hidden pl-1 sm:pl-2">
-                             <h2 className="font-display text-2xl uppercase leading-none tracking-tight text-deep-black">
-                                Apni Marketing Agency
-                            </h2>
-                            <span className="mt-1 font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-luxury-gold">
-                                Branding &middot; Content &middot; Strategy
+                        <motion.div variants={fadeUp} className="flex items-center gap-2.5">
+                            <span className="flex h-1.5 w-1.5 rounded-full bg-black animate-pulse" />
+                            <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.26em] uppercase text-neutral-700">
+                                Elvora Media &middot; Creative &amp; Production Studio
                             </span>
+                        </motion.div>
+
+                        <motion.div variants={fadeUp} className="hidden sm:flex items-center gap-5 font-mono text-[10px] text-neutral-400 uppercase tracking-[0.22em]">
+                            <span>[ Directing ]</span>
+                            <span>[ Production ]</span>
+                            <span>[ Performance ]</span>
                         </motion.div>
                     </motion.div>
 
-                    {/* Right: 40% Frosted Glass Frame & Tagline */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        style={{ y: y2 }}
-                        className="relative hidden flex-col items-center justify-end lg:col-span-5 lg:flex xl:col-span-4"
-                    >
-                        {/* Desktop Tagline Block - Overlapping */}
-                        <div className="absolute -top-10 -left-12 z-30 flex flex-col">
-                            <h2 className="font-display text-5xl uppercase leading-[0.9] tracking-tight text-deep-black drop-shadow-xl bg-white/60 backdrop-blur-md px-6 py-4 rounded-xl border border-white/50">
-                                Apni <br />
-                                Marketing <br />
-                                Agency
-                            </h2>
-                            <span className="mt-3 ml-6 font-mono text-sm font-bold uppercase tracking-[0.18em] text-luxury-gold drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
-                                Branding &middot; Content &middot; Strategy
-                            </span>
-                        </div>
-
-                        <div 
-                            className="group relative aspect-[4/5] w-full max-w-sm cursor-pointer overflow-hidden rounded-2xl border border-white/40 bg-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] backdrop-blur-xl" 
-                            onClick={() => {
-                                // TODO: Connect to BTS video when footage is ready
-                                alert("BTS video coming soon!");
-                            }}
+                    {/* Hero Grid: Editorial Asymmetric Layout */}
+                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12 pt-6 sm:pt-8 lg:pt-10 items-center">
+                        {/* Left Column: Monumental Editorial Headline (7 cols) */}
+                        <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={stagger(0.08, 0.05)}
+                            className="flex flex-col justify-center lg:col-span-7"
                         >
-                            <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-luxury-gold/20 to-transparent mix-blend-overlay" />
-                            {/* Visual Placeholder */}
-                            <img src="/hero-camera-hires.jpg" alt="BTS Video Placeholder" className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0" />
-                            
-                            {/* Play Button Overlay (BTS Video) */}
-                            <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
-                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-deep-black/90 text-luxury-gold shadow-2xl backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
-                                    <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-6 w-6">
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                </div>
-                                <span className="rounded-full bg-deep-black/80 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-ivory-cream backdrop-blur-md shadow-lg">
-                                    How We Work
+                            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-3">
+                                <span className="px-2.5 py-0.5 border border-black/10 bg-neutral-50/80 font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.22em] text-neutral-600 uppercase">
+                                    Season 2026 Direction
                                 </span>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+                            </motion.div>
 
-                {/* horizontal ELVORA marquee — phones only (sm+ uses the vertical one on the right) */}
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none relative -mx-4 select-none overflow-hidden sm:hidden"
-                >
-                    <motion.div
-                        className="flex w-max whitespace-nowrap font-display text-[5.5rem] uppercase leading-none tracking-wider text-deep-black/10"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1, x: ["0%", "-50%"] }}
-                        transition={{
-                            opacity: { duration: 1, delay: 0.6 },
-                            x: {
-                                duration: 32,
-                                repeat: Infinity,
-                                ease: "linear",
-                            },
-                        }}
-                    >
-                        <span>{marqueeText}</span>
-                        <span>{marqueeText}</span>
-                    </motion.div>
-                </div>
+                            <h1 className="font-display uppercase tracking-[-0.025em] text-black">
+                                <motion.span
+                                    variants={fadeUp}
+                                    className="block text-[clamp(2.5rem,6.8vw,5.6rem)] leading-[0.89] text-black font-extrabold"
+                                >
+                                    Cinematic
+                                </motion.span>
+                                <motion.span
+                                    variants={fadeUp}
+                                    className="block text-[clamp(2.5rem,6.8vw,5.6rem)] leading-[0.89] font-serif italic font-normal tracking-normal text-luxury-gold pt-1"
+                                >
+                                    Impact &amp;
+                                </motion.span>
+                                <motion.span
+                                    variants={fadeUp}
+                                    className="block text-[clamp(2.5rem,6.8vw,5.6rem)] leading-[0.89] font-serif italic font-normal tracking-normal text-luxury-gold pb-1"
+                                >
+                                    Scale
+                                </motion.span>
+                                <motion.span
+                                    variants={fadeUp}
+                                    className="block text-[clamp(2.5rem,6.8vw,5.6rem)] leading-[0.89] text-black font-extrabold"
+                                >
+                                    By Design.
+                                </motion.span>
+                            </h1>
 
-                {/* bottom detail row */}
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={stagger(0.12, 0.9)}
-                    className="grid gap-6 border-t border-black/10 pt-6 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-12"
-                >
-                    <motion.div variants={stagger(0.1)} className="max-w-md">
-                        <motion.p
-                            variants={fadeUp}
-                            className="font-serif text-lg font-semibold italic tracking-[0.06em] text-luxury-gold sm:text-xl"
+                            <motion.p
+                                variants={fadeUp}
+                                className="mt-5 max-w-lg text-sm sm:text-base leading-relaxed text-neutral-600 font-normal"
+                            >
+                                We partner with visionary founders and luxury brands to produce commercial films, high-converting social campaigns, and timeless visual identities engineered for uncompromising growth.
+                            </motion.p>
+
+                            {/* CTA Action Group */}
+                            <motion.div
+                                variants={fadeUp}
+                                className="mt-7 flex flex-wrap items-center gap-3.5"
+                            >
+                                {/* Primary CTA: Dominant Black */}
+                                <button
+                                    type="button"
+                                    onClick={onOpenInquiry ? onOpenInquiry : () => window.open(WHATSAPP_LINK, "_blank")}
+                                    className="group relative inline-flex items-center gap-3.5 bg-black px-7 py-3.5 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-neutral-800 hover:shadow-lg focus:outline-none focus:ring-1 focus:ring-black cursor-pointer"
+                                >
+                                    <span>Initiate Project</span>
+                                    <span className="flex h-5 w-5 items-center justify-center bg-white/15 text-white text-[11px] transition-transform duration-300 group-hover:translate-x-1">
+                                        ↗
+                                    </span>
+                                </button>
+
+                                {/* Secondary CTA: Understated Minimal */}
+                                <button
+                                    type="button"
+                                    onClick={() => setIsShowreelOpen(true)}
+                                    className="group inline-flex items-center gap-2.5 border border-black/20 bg-white/80 px-6 py-3.5 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-black transition-all duration-300 hover:border-black hover:bg-neutral-50 focus:outline-none cursor-pointer"
+                                >
+                                    <span className="flex h-2 w-2 rounded-full bg-luxury-gold" />
+                                    <span>Play Showreel</span>
+                                </button>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Right Column: Editorial Featured Production Card (5 cols) */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative lg:col-span-5 flex justify-center lg:justify-end"
                         >
-                            What We Do
-                        </motion.p>
-                        <motion.p
-                            variants={fadeUp}
-                            className="mt-3 text-sm leading-relaxed text-muted-grey sm:text-base"
-                        >
-                            We build brands people remember branding, content,
-                            video, and performance marketing, engineered to look
-                            exceptional and drive real growth.
-                        </motion.p>
-                    </motion.div>
-
-                    <motion.div
-                        variants={stagger(0.1)}
-                        className="flex flex-col items-start gap-4 sm:items-end"
-                    >
-                        <div className="flex flex-wrap items-center gap-3">
-                            <motion.button
-                                variants={popIn}
-                                type="button"
+                            <div
                                 onClick={() => setIsShowreelOpen(true)}
-                                whileHover={{ scale: 1.04 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="group relative flex items-center gap-3 rounded-full border border-luxury-gold/40 bg-deep-black/95 px-6 py-3 text-sm font-semibold text-ivory-cream shadow-[0_8px_25px_rgba(0,0,0,0.2)] backdrop-blur-md transition-all duration-300 hover:border-luxury-gold hover:shadow-[0_0_25px_rgba(181,140,86,0.35)] focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                className="group relative aspect-[4/4.9] w-full max-w-sm sm:max-w-md overflow-hidden rounded-2xl border border-black/[0.08] bg-neutral-950 shadow-xl cursor-pointer transition-transform duration-500 hover:scale-[1.015]"
                             >
-                                <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-luxury-gold text-deep-black transition-transform duration-300 group-hover:scale-110 shadow-[0_0_12px_rgba(181,140,86,0.6)]">
-                                    <span className="absolute inset-0 rounded-full bg-luxury-gold/50 animate-ping" />
-                                    <svg viewBox="0 0 24 24" fill="currentColor" className="relative h-3.5 w-3.5 ml-0.5" aria-hidden="true">
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                </span>
-                                <span className="font-display font-bold uppercase tracking-wider text-xs sm:text-sm">Watch Showreel</span>
-                            </motion.button>
+                                {/* Production Still Preview */}
+                                <Image
+                                    src="/code-hostel/thumb2.jpg"
+                                    alt="Elvora Media Featured Production Film"
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 36vw"
+                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-90"
+                                    priority
+                                />
 
-                            <motion.button
-                                variants={popIn}
-                                type="button"
-                                onClick={onOpenInquiry ? onOpenInquiry : () => window.open(WHATSAPP_LINK, "_blank")}
-                                whileHover={{ scale: 1.03 }}
-                                className="group flex items-center gap-3 rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-2.5 pl-6 pr-2.5 text-sm font-semibold text-deep-black transition-[filter] duration-300 hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-luxury-gold cursor-pointer"
-                            >
-                                Start a Project
-                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-deep-black text-ivory-cream transition-transform group-hover:translate-x-0.5">
-                                    &rarr;
+                                {/* Cinematic Editorial Overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/15" />
+
+                                {/* Card Header Metadata */}
+                                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+                                    <span className="bg-black/60 backdrop-blur-md px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-white/90 border border-white/10">
+                                        Featured Production
+                                    </span>
+                                    <span className="flex items-center gap-1.5 font-mono text-[9px] text-white/80 uppercase tracking-widest bg-black/60 backdrop-blur-md px-2.5 py-1 border border-white/10">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                                        01:10 Film
+                                    </span>
+                                </div>
+
+                                {/* Refined Minimal Play Button */}
+                                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-black shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" className="ml-0.5 h-5 w-5 text-black">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                {/* Bottom Editorial Credits */}
+                                <div className="absolute bottom-5 left-5 right-5 z-10 text-white">
+                                    <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-champagne-light block mb-1">
+                                        Code Hostel &middot; Grand Aagman
+                                    </span>
+                                    <h3 className="font-display text-lg sm:text-xl font-bold uppercase tracking-tight text-white leading-tight">
+                                        Ganesh Chaturthi Festive Film
+                                    </h3>
+                                    <div className="mt-2.5 flex items-center justify-between text-[11px] text-neutral-300 font-mono pt-2.5 border-t border-white/15">
+                                        <span className="tracking-wider">Watch Full Production</span>
+                                        <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </Container>
+
+                {/* Swiss-Style Editorial Metrics Strip */}
+                <div className="w-full mt-6 sm:mt-8 pt-4 border-t border-black/[0.06]">
+                    <Container>
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            variants={stagger(0.08)}
+                            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+                        >
+                            <motion.div variants={fadeUp} className="py-2">
+                                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-400 block mb-1">
+                                    [ 01 &middot; Reach ]
                                 </span>
-                            </motion.button>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            </Container>
+                                <div className="font-display text-2xl sm:text-3xl font-bold text-black uppercase tracking-tight">
+                                    3.4M+
+                                </div>
+                                <p className="mt-0.5 font-sans text-[11px] text-neutral-500">
+                                    Organic Video Impressions
+                                </p>
+                            </motion.div>
+
+                            <motion.div variants={fadeUp} className="py-2">
+                                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-400 block mb-1">
+                                    [ 02 &middot; Film Works ]
+                                </span>
+                                <div className="font-display text-2xl sm:text-3xl font-bold text-black uppercase tracking-tight">
+                                    50+
+                                </div>
+                                <p className="mt-0.5 font-sans text-[11px] text-neutral-500">
+                                    Brand &amp; Commercial Cuts
+                                </p>
+                            </motion.div>
+
+                            <motion.div variants={fadeUp} className="py-2">
+                                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-400 block mb-1">
+                                    [ 03 &middot; Performance ]
+                                </span>
+                                <div className="font-display text-2xl sm:text-3xl font-bold text-black uppercase tracking-tight">
+                                    4.8X
+                                </div>
+                                <p className="mt-0.5 font-sans text-[11px] text-neutral-500">
+                                    Average Campaign ROAS
+                                </p>
+                            </motion.div>
+
+                            <motion.div variants={fadeUp} className="py-2">
+                                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-400 block mb-1">
+                                    [ 04 &middot; Directing ]
+                                </span>
+                                <div className="font-display text-2xl sm:text-3xl font-bold text-luxury-gold uppercase tracking-tight">
+                                    100%
+                                </div>
+                                <p className="mt-0.5 font-sans text-[11px] text-neutral-500">
+                                    Bespoke In-House Craft
+                                </p>
+                            </motion.div>
+                        </motion.div>
+                    </Container>
+                </div>
+            </div>
 
             {/* Video Lightbox Modal */}
             <AnimatePresence>
@@ -260,26 +291,26 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md"
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 sm:p-8 backdrop-blur-md"
                         onClick={() => setIsShowreelOpen(false)}
                     >
                         <motion.div
                             ref={modalRef}
-                            initial={{ scale: 0.9, opacity: 0 }}
+                            initial={{ scale: 0.94, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+                            exit={{ scale: 0.94, opacity: 0 }}
+                            transition={{ type: "spring", stiffness: 320, damping: 28 }}
                             onClick={(e) => e.stopPropagation()}
                             role="dialog"
                             aria-modal="true"
                             aria-label="Elvora Media Showreel"
-                            className="relative flex w-full max-w-4xl flex-col overflow-hidden rounded-3xl bg-black shadow-2xl"
+                            className="relative flex w-full max-w-4xl flex-col overflow-hidden rounded-3xl bg-black border border-white/10 shadow-2xl"
                         >
                             <button
                                 type="button"
                                 onClick={() => setIsShowreelOpen(false)}
                                 aria-label="Close Showreel"
-                                className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition-colors hover:bg-white/40 focus:outline-none"
+                                className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition-colors hover:bg-white/40 focus:outline-none cursor-pointer"
                             >
                                 <CloseIcon />
                             </button>
@@ -294,28 +325,30 @@ export function Hero({ onOpenInquiry }: HeroProps) {
                                 />
                             </div>
 
-                            <div className="flex items-center justify-between p-4 bg-deep-black text-ivory-cream flex-wrap gap-2">
+                            <div className="flex items-center justify-between p-5 bg-neutral-950 text-white flex-wrap gap-4 border-t border-white/10">
                                 <div>
-                                    <h4 className="font-display text-base font-bold">Elvora Media Commercial Showreel</h4>
-                                    <p className="font-mono text-xs text-luxury-gold">Directed by Suyash Mali & Team</p>
+                                    <h4 className="font-display text-lg font-bold uppercase tracking-tight">Elvora Media Commercial Showreel</h4>
+                                    <p className="font-mono text-xs text-luxury-gold mt-0.5">Directed by Suyash Mali & Anand Jadhav</p>
                                 </div>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-3">
                                     <a
                                         href={SHOWREEL_VIDEO_URL}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="rounded-full border border-luxury-gold/50 bg-black/40 px-4 py-2 text-xs font-bold text-luxury-gold uppercase tracking-wider transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                        className="rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-xs font-bold text-white uppercase tracking-wider transition-colors hover:bg-white/15 focus:outline-none"
                                     >
-                                        Watch Reel ↗
+                                        Watch on Instagram ↗
                                     </a>
-                                    <a
-                                        href={WHATSAPP_LINK}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="rounded-full bg-luxury-gold px-4 py-2 text-xs font-bold text-deep-black uppercase tracking-wider transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setIsShowreelOpen(false);
+                                            if (onOpenInquiry) onOpenInquiry();
+                                        }}
+                                        className="rounded-full bg-white px-5 py-2.5 text-xs font-bold text-black uppercase tracking-wider transition-transform hover:scale-105 cursor-pointer"
                                     >
                                         Book Your Shoot
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </motion.div>
@@ -325,4 +358,3 @@ export function Hero({ onOpenInquiry }: HeroProps) {
         </section>
     );
 }
-

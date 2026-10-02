@@ -5,14 +5,14 @@ import { Container } from "./Container";
 import { fadeUp, stagger } from "@/lib/motion";
 import { buildCustomWhatsAppLink } from "@/lib/whatsapp";
 
-const CheckIcon = () => (
-    <svg className="w-4 h-4 flex-shrink-0 text-luxury-gold mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+const CheckIcon = ({ dark = false }: { dark?: boolean }) => (
+    <svg className={`w-4 h-4 flex-shrink-0 mt-0.5 ${dark ? "text-luxury-gold" : "text-black"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
 );
 
-const PlusIcon = () => (
-    <svg className="w-4 h-4 flex-shrink-0 text-luxury-gold mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+const PlusIcon = ({ dark = false }: { dark?: boolean }) => (
+    <svg className={`w-4 h-4 flex-shrink-0 mt-0.5 ${dark ? "text-luxury-gold" : "text-black"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <line x1="12" y1="8" x2="12" y2="16"></line>
         <line x1="8" y1="12" x2="16" y2="12"></line>
@@ -23,75 +23,68 @@ export function Pricing() {
     const plans = [
         {
             num: "01",
-            name: "BASE PLAN",
+            name: "STARTER PRODUCTION",
             price: "₹30K–50K",
-            subtitle: "Build your presence.",
+            subtitle: "Establish baseline cinematic presence.",
             features: [
-                { text: "12-15 Creative Posts", icon: <CheckIcon /> },
-                { text: "4-6 Reels", icon: <CheckIcon /> },
-                { text: "8-10 Stories", icon: <CheckIcon /> },
-                { text: "Caption & Hashtag Strategy", icon: <CheckIcon /> },
-                { text: "Monthly Content Calendar", icon: <CheckIcon /> },
-                { text: "Basic Community Management", icon: <CheckIcon /> },
-                { text: "Monthly Performance Report", icon: <CheckIcon /> },
-                { text: "Creative Direction", icon: <CheckIcon /> },
+                { text: "12-15 Creative Editorial Posts" },
+                { text: "4-6 High-Paced Reels" },
+                { text: "8-10 Brand Stories" },
+                { text: "Caption & Strategic Hook Copy" },
+                { text: "Monthly Content Calendar" },
+                { text: "Basic Community Management" },
+                { text: "Monthly Performance Report" },
+                { text: "Dedicated Creative Direction" },
             ],
-            idealFor: "Startups\nLocal Businesses\nNew Brands",
-            bgClass: "bg-[#e8d9c5]",
-            popular: false
+            idealFor: "Emerging Startups\nLocal Boutiques\nNew Brand Launches",
+            isPopular: false,
         },
         {
             num: "02",
-            name: "MID PLAN",
+            name: "SCALE AGENCY RETAINER",
             price: "₹51K–70K",
-            subtitle: "Turn attention into growth.",
+            subtitle: "Turn audience attention into high ROI.",
             features: [
-                { text: "Everything in Base Plan", icon: <PlusIcon /> },
-                { text: "16-20 Premium Posts", icon: <CheckIcon /> },
-                { text: "6-8 Reels", icon: <CheckIcon /> },
-                { text: "10-15 Stories", icon: <CheckIcon /> },
-                { text: "Advanced Content Strategy", icon: <CheckIcon /> },
-                { text: "Trend & Competitor Research", icon: <CheckIcon /> },
-                { text: "Community Engagement", icon: <CheckIcon /> },
-                { text: "Campaign Planning", icon: <CheckIcon /> },
-                { text: "Monthly Optimization", icon: <CheckIcon /> },
-                { text: "Detailed Analytics & Insights", icon: <CheckIcon /> },
-                { text: "Priority Support", icon: <CheckIcon /> },
+                { text: "Everything in Starter Production", isPlus: true },
+                { text: "16-20 Premium Posts & Carousels" },
+                { text: "6-8 Cinema-Grade Reels" },
+                { text: "10-15 Interactive Stories" },
+                { text: "Advanced Algorithmic Content Strategy" },
+                { text: "Trend & Competitor Intelligence" },
+                { text: "Active Community Nurturing" },
+                { text: "Integrated Campaign Direction" },
+                { text: "Deep Performance Analytics & Insights" },
+                { text: "Priority Studio Turnaround" },
             ],
-            idealFor: "Growing Businesses\nD2C Brands\nPersonal Brands",
-            bgClass: "bg-[#f5ead5]",
-            popular: true
+            idealFor: "Scaling D2C Brands\nGrowth Ventures\nPersonal Brands",
+            isPopular: true,
         },
         {
             num: "03",
-            name: "PREMIUM PLAN",
-            price: "₹71K–1L",
-            subtitle: "Build a brand people remember.",
+            name: "ENTERPRISE COMMERCIAL",
+            price: "₹71K–1L+",
+            subtitle: "Build an iconic, market-defining brand.",
             features: [
-                { text: "Everything in Mid Plan", icon: <PlusIcon /> },
-                { text: "20-25+ Premium Posts", icon: <CheckIcon /> },
-                { text: "8-12 Reels", icon: <CheckIcon /> },
-                { text: "15+ Stories", icon: <CheckIcon /> },
-                { text: "Complete Social Media Management", icon: <CheckIcon /> },
-                { text: "Advanced Brand Strategy", icon: <CheckIcon /> },
-                { text: "Campaign & Launch Planning", icon: <CheckIcon /> },
-                { text: "Influencer Collaboration Strategy", icon: <CheckIcon /> },
-                { text: "Paid Ads Management*", icon: <CheckIcon /> },
-                { text: "Content Shoot Direction", icon: <CheckIcon /> },
-                { text: "Advanced Monthly Reporting", icon: <CheckIcon /> },
-                { text: "Monthly Strategy Consultation", icon: <CheckIcon /> },
-                { text: "Priority Creative Support", icon: <CheckIcon /> },
+                { text: "Everything in Scale Agency Retainer", isPlus: true },
+                { text: "20-25+ Bespoke Editorial Posts" },
+                { text: "8-12 Full-Scale Commercial Reels" },
+                { text: "15+ Daily Stories & Highlights" },
+                { text: "End-to-End Social Media Dominance" },
+                { text: "Full Creative Shoot & Set Direction" },
+                { text: "Influencer Collaboration Architecture" },
+                { text: "Paid Ads Management & Creatives" },
+                { text: "Executive Strategy Consultation" },
+                { text: "VIP 24/7 Production Support" },
             ],
-            idealFor: "Established Brands\nPremium Businesses\nHigh-Growth Companies",
-            bgClass: "bg-[linear-gradient(180deg,#e0c38a_0%,#b58c56_100%)]",
-            popular: false
-        }
+            idealFor: "Established Luxury Brands\nHigh-Growth Enterprises\nMarket Leaders",
+            isPopular: false,
+        },
     ];
 
     const dmLink = buildCustomWhatsAppLink("Hi Elvora Media, I would like to get a custom proposal (GROW).");
 
     return (
-        <section id="pricing" className="py-20 sm:py-32 bg-[#faf7f0] relative overflow-hidden">
+        <section id="pricing" className="py-20 sm:py-32 bg-white border-b border-black/[0.08] relative overflow-hidden">
             <Container>
                 {/* Header Section */}
                 <motion.div
@@ -99,135 +92,150 @@ export function Pricing() {
                     whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                     variants={stagger(0.1)}
-                    className="flex flex-col items-center text-center mb-16 sm:mb-24 px-4"
+                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end pb-12 border-b border-black/[0.08] mb-16"
                 >
-                    <motion.div variants={fadeUp} className="relative mb-6">
-                        <span className="font-script text-4xl sm:text-5xl text-neutral-600 -rotate-6 inline-block mr-2 transform origin-bottom-right">
-                            crafted for growth
-                        </span>
-                        <span className="text-xl inline-block -rotate-6">♡</span>
-                    </motion.div>
-                    
-                    <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tight text-deep-black leading-[1.1]">
-                        Not Just<br />Social Media.
-                    </motion.h2>
-                    <motion.p variants={fadeUp} className="mt-4 text-xl sm:text-2xl font-bold uppercase tracking-[0.1em] text-luxury-gold">
-                        A Complete Brand Presence.
+                    <div>
+                        <motion.div variants={fadeUp} className="flex items-center gap-3 mb-4">
+                            <span className="h-px w-8 bg-luxury-gold/40" />
+                            <span className="font-mono text-[10px] font-bold tracking-[0.3em] text-luxury-gold uppercase">
+                                05 &middot; Investment Architecture
+                            </span>
+                            <span className="h-px w-8 bg-luxury-gold/40" />
+                        </motion.div>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-black">
+                            Predictable Retainers. <span className="font-serif italic font-normal text-luxury-gold">Unrivalled Output.</span>
+                        </motion.h2>
+                    </div>
+
+                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-neutral-600 leading-relaxed">
+                        Transparent monthly production retainers structured to give you a dedicated in-house media team at a fraction of agency overhead.
                     </motion.p>
-                    <motion.div variants={fadeUp} className="mt-8 flex items-center justify-center gap-3 sm:gap-6 text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-neutral-500 w-full flex-wrap">
-                        <span>Strategy</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-luxury-gold" />
-                        <span>Content</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-luxury-gold" />
-                        <span>Engagement</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-luxury-gold" />
-                        <span>Growth</span>
-                    </motion.div>
                 </motion.div>
 
                 {/* Cards Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 items-start max-w-7xl mx-auto">
-                    {plans.map((plan, idx) => (
-                        <motion.div
-                            key={plan.num}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.4, delay: idx * 0.1, type: "spring", stiffness: 100 }}
-                            className={`relative w-full rounded-[2rem] p-8 sm:p-10 shadow-2xl ${plan.bgClass} ${plan.popular ? 'lg:-translate-y-8 z-10 border-2 border-white ring-4 ring-black/5' : 'border border-black/5'} overflow-hidden`}
-                        >
-                            {plan.popular && (
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-deep-black text-white text-[10px] font-bold uppercase tracking-[0.2em] py-2 px-6 shadow-xl rounded-b-lg">
-                                    Most Popular
-                                </div>
-                            )}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-7xl mx-auto">
+                    {plans.map((plan, idx) => {
+                        const isDark = plan.isPopular;
+                        return (
+                            <motion.div
+                                key={plan.num}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.4, delay: idx * 0.1, type: "spring", stiffness: 100 }}
+                                className={`relative flex flex-col justify-between rounded-3xl p-8 sm:p-10 transition-all duration-500 ${
+                                    isDark
+                                        ? "bg-black text-white shadow-2xl lg:-translate-y-4 border border-black"
+                                        : "bg-neutral-50/60 text-black border border-black/[0.08] hover:border-black/30 hover:bg-white"
+                                }`}
+                            >
+                                {isDark && (
+                                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-luxury-gold text-black text-[10px] font-bold uppercase tracking-[0.25em] py-1 px-4 rounded-full shadow-md">
+                                        Most Popular Tier
+                                    </div>
+                                )}
 
-                            <div className="flex flex-col items-center text-center mt-4">
-                                <div className="w-12 h-12 rounded-full bg-deep-black text-white flex items-center justify-center font-display text-xl font-bold mb-6">
-                                    {plan.num}
-                                </div>
-                                <h3 className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-neutral-700 mb-4 border-b border-black/10 pb-4 w-full">
-                                    {plan.name}
-                                </h3>
-                                <div className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-deep-black mb-2">
-                                    {plan.price}
-                                </div>
-                                <div className="text-xs font-bold uppercase tracking-wider text-neutral-600 mb-6">
-                                    / Month
-                                </div>
-                                <div className="font-script text-3xl text-luxury-gold mb-8">
-                                    {plan.subtitle}
-                                </div>
-                            </div>
+                                <div>
+                                    <div className="flex items-center justify-between pb-6 border-b border-black/[0.08] dark:border-white/10">
+                                        <span className={`font-mono text-xs font-bold uppercase tracking-[0.2em] ${isDark ? "text-luxury-gold" : "text-neutral-500"}`}>
+                                            [ Tier {plan.num} ]
+                                        </span>
+                                        <span className={`font-mono text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
+                                            isDark ? "border-white/20 text-neutral-300" : "border-black/10 text-neutral-600"
+                                        }`}>
+                                            Monthly Retainer
+                                        </span>
+                                    </div>
 
-                            <ul className="space-y-4 mb-10 text-sm font-medium text-neutral-800">
-                                {plan.features.map((feature, i) => (
-                                    <li key={i} className="flex items-start gap-3">
-                                        {feature.icon}
-                                        <span className="leading-snug text-left">{feature.text}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                                    <div className="pt-6">
+                                        <h3 className="font-display text-2xl font-bold uppercase tracking-tight">
+                                            {plan.name}
+                                        </h3>
+                                        <p className={`mt-1 font-serif italic text-sm ${isDark ? "text-neutral-300" : "text-neutral-600"}`}>
+                                            {plan.subtitle}
+                                        </p>
+                                    </div>
 
-                            <div className="pt-8 border-t border-black/10 mt-auto text-left">
-                                <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-500 mb-3">
-                                    Ideal For:
+                                    <div className="mt-6 flex items-baseline gap-2">
+                                        <span className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight">
+                                            {plan.price}
+                                        </span>
+                                        <span className={`font-mono text-xs uppercase tracking-wider ${isDark ? "text-neutral-400" : "text-neutral-500"}`}>
+                                            / month
+                                        </span>
+                                    </div>
+
+                                    <ul className="mt-8 space-y-3.5 text-xs sm:text-sm font-normal">
+                                        {plan.features.map((feature, i) => (
+                                            <li key={i} className="flex items-start gap-3">
+                                                {feature.isPlus ? (
+                                                    <PlusIcon dark={isDark} />
+                                                ) : (
+                                                    <CheckIcon dark={isDark} />
+                                                )}
+                                                <span className={`leading-snug ${isDark ? "text-neutral-200" : "text-neutral-700"}`}>
+                                                    {feature.text}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <div className="text-sm font-bold text-deep-black leading-relaxed whitespace-pre-line">
-                                    {plan.idealFor}
+
+                                <div className="mt-10 pt-6 border-t border-black/[0.08] dark:border-white/10">
+                                    <div className={`text-[10px] font-mono uppercase tracking-[0.2em] mb-2 ${isDark ? "text-luxury-gold" : "text-neutral-500"}`}>
+                                        Ideal For:
+                                    </div>
+                                    <div className={`text-xs font-medium leading-relaxed whitespace-pre-line mb-6 ${isDark ? "text-neutral-300" : "text-neutral-700"}`}>
+                                        {plan.idealFor}
+                                    </div>
+
+                                    <a
+                                        href={buildCustomWhatsAppLink(`Hi Elvora Media, I am interested in the ${plan.name} (${plan.price}/month).`)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-xs font-bold uppercase tracking-[0.2em] transition-all cursor-pointer ${
+                                            isDark
+                                                ? "bg-white text-black hover:bg-neutral-200"
+                                                : "bg-black text-white hover:bg-neutral-800"
+                                        }`}
+                                    >
+                                        <span>Select {plan.name}</span>
+                                        <span>↗</span>
+                                    </a>
                                 </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        );
+                    })}
                 </div>
 
-                {/* Footer Section */}
+                {/* Footer Banner */}
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                     variants={stagger(0.1)}
-                    className="mt-20 sm:mt-32 flex flex-col items-center text-center relative px-4"
+                    className="mt-16 sm:mt-24 p-8 sm:p-12 rounded-3xl bg-neutral-950 text-white flex flex-col md:flex-row items-center justify-between gap-8"
                 >
-                    <div className="absolute top-0 right-0 lg:-right-10 origin-bottom-right -rotate-90 hidden lg:block text-[9px] font-bold tracking-[0.15em] text-neutral-400 uppercase w-[500px] text-right">
-                        *AD SPEND, INFLUENCER FEES AND PRODUCTION COSTS ARE SEPARATE.
+                    <div>
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-luxury-gold block mb-2">
+                            Need a Tailored Production Scope?
+                        </span>
+                        <h3 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
+                            Build A Custom Campaign Scope
+                        </h3>
+                        <p className="mt-2 text-sm text-neutral-400 max-w-xl">
+                            Select individual film shoots, reel batches, brand identity kits, or performance creative packages tailored to your exact roadmap.
+                        </p>
                     </div>
 
-                    <motion.div variants={fadeUp} className="text-sm font-bold uppercase tracking-[0.2em] text-neutral-500 mb-2">
-                        Don't just post.
-                    </motion.div>
-                    <motion.h2 variants={fadeUp} className="font-display text-3xl sm:text-5xl font-bold uppercase tracking-tight text-deep-black mb-6">
-                        Build a presence.
-                    </motion.h2>
-                    <motion.div variants={fadeUp} className="flex flex-col items-center mb-10">
-                        <div className="font-display text-xl sm:text-2xl font-bold tracking-[0.3em] uppercase text-deep-black mb-2 flex items-center">
-                            Elvora <span className="text-luxury-gold mx-2 text-sm">×</span> Media
-                        </div>
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500">
-                            Strategy × Creativity × Growth
-                        </div>
-                    </motion.div>
-
-                    <motion.a
-                        variants={fadeUp}
+                    <a
                         href={dmLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex flex-wrap justify-center items-center gap-4 bg-deep-black text-white px-8 py-4 rounded-full shadow-2xl hover:bg-neutral-800 transition-all hover:scale-105"
+                        className="shrink-0 rounded-full bg-white px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-black hover:bg-neutral-200 transition-transform hover:scale-105"
                     >
-                        <span className="font-mono text-sm font-bold uppercase tracking-wider">
-                            DM "GROW"
-                        </span>
-                        <span className="text-xs font-medium opacity-80">FOR A CUSTOM PROPOSAL</span>
-                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 text-luxury-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </motion.a>
-
-                    <div className="mt-12 lg:hidden text-[9px] font-bold tracking-[0.15em] text-neutral-400 uppercase">
-                        *AD SPEND, INFLUENCER FEES AND PRODUCTION COSTS ARE SEPARATE.
-                    </div>
+                        <span>DM "GROW" For Custom Proposal ↗</span>
+                    </a>
                 </motion.div>
             </Container>
         </section>

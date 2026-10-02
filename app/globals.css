@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #111111;
+  --foreground: #0a0a0a;
 }
 
 @theme inline {
@@ -14,76 +14,96 @@
   --font-serif: var(--font-playfair);
   --font-script: var(--font-great-vibes);
 
-  /* Elvora Media brand palette */
-  --color-ivory-cream: #faeee0;
-  --color-warm-beige: #d4bea2;
-  --color-luxury-gold: #b58c56;
-  --color-deep-black: #000000;
-  --color-muted-grey: #655d62;
-  --color-soft-sand: #e8d9c5;
-  --color-champagne-gold: #e0c38a;
+  /* Modern Editorial Luxury Palette */
+  --color-ivory-cream: #fafaf9;
+  --color-warm-beige: #f5f4f0;
+  --color-luxury-gold: #b38a4b;
+  --color-champagne-gold: #c5a059;
+  --color-champagne-light: #e8d7b8;
+  --color-deep-black: #0a0a0a;
+  --color-muted-grey: #6b6b6b;
+  --color-soft-sand: #f0ede6;
 }
 
 @layer base {
   body {
-    background: var(--background);
-    color: var(--foreground);
+    background: #ffffff;
+    color: var(--color-deep-black);
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Premium Noise/Grain Overlay */
+  /* Editorial Film Grain Overlay */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.018;
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: multiply;
   }
 
   ::selection {
-    background: var(--color-champagne-gold);
-    color: var(--color-deep-black);
+    background: #0a0a0a;
+    color: #ffffff;
   }
 
-  img,
-  button,
-  input,
-  a {
-    border-radius: 0;
-  }
-
-  /* Custom Scrollbar - Firefox */
+  /* Custom Scrollbar */
   html {
-    scrollbar-color: var(--color-luxury-gold) var(--color-deep-black);
+    scrollbar-color: var(--color-luxury-gold) #0a0a0a;
     scrollbar-width: thin;
   }
 
-  /* Custom Scrollbar - Webkit */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-deep-black);
+    background: #ffffff;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-luxury-gold);
-    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-champagne-gold);
+    background: var(--color-luxury-gold);
   }
 }
 
-body.elvora-cursor-active,
-body.elvora-cursor-active * {
-  cursor: none !important;
+/* Custom Cursor Rules & Accessibility */
+@media (hover: hover) and (pointer: fine) {
+  body.elvora-cursor-active,
+  body.elvora-cursor-active a,
+  body.elvora-cursor-active button,
+  body.elvora-cursor-active [role="button"] {
+    cursor: none !important;
+  }
+
+  /* Preserve native text editing cursors */
+  body.elvora-cursor-active input,
+  body.elvora-cursor-active textarea,
+  body.elvora-cursor-active select,
+  body.elvora-cursor-active [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

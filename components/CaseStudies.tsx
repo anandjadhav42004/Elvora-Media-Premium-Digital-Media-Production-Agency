@@ -15,6 +15,7 @@ type CaseStudy = {
     title: string;
     client: string;
     category: Category;
+    director: string;
     metric: string;
     metricLabel: string;
     imageSrc: string;
@@ -33,6 +34,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "High-Paced Commercial Reel & Brand Motion Edit",
         client: "Elvora Media Production",
         category: "Video",
+        director: "Suyash Mali",
         metric: "3.4M+",
         metricLabel: "Reel Impressions & Views",
         imageSrc: "/services2.png",
@@ -48,6 +50,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Cinematic Aesthetic & Visual Storytelling Reel",
         client: "Elvora Media Creative",
         category: "Video",
+        director: "Suyash Mali",
         metric: "1.8M+",
         metricLabel: "Organic Social Reach",
         imageSrc: "/services1.png",
@@ -63,6 +66,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Luxury Visual Identity & Brand Direction",
         client: "Sculptura & Branding",
         category: "Branding",
+        director: "Daksh Chandgaonkar",
         metric: "+280%",
         metricLabel: "Brand Value & Inquiries",
         imageSrc: "/services3.png",
@@ -78,6 +82,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Performance Marketing & Social Grid Showcase",
         client: "WeCrafted Growth Series",
         category: "Social",
+        director: "Yash Borate",
         metric: "8.4%",
         metricLabel: "Average Engagement Rate",
         imageSrc: "/services4.png",
@@ -93,6 +98,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Full-Scale Production & Media Launch Campaign",
         client: "Verve Global Launch",
         category: "Performance Ads",
+        director: "Suyash Mali & Anand Jadhav",
         metric: "4.8x",
         metricLabel: "Campaign ROAS",
         imageSrc: "/services1.png",
@@ -108,6 +114,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Ganesh Chaturthi — Code Hostel Festive Film Vol. 1",
         client: "Code Hostel",
         category: "Video",
+        director: "Suyash Mali",
         metric: "Campus Viral",
         metricLabel: "Festive Celebration",
         imageSrc: "/code-hostel/thumb1.jpg",
@@ -124,6 +131,7 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Ganesh Chaturthi — Aagman Cinematic Edit Vol. 2",
         client: "Code Hostel",
         category: "Video",
+        director: "Suyash Mali",
         metric: "Grand Edit",
         metricLabel: "Festive Cinematic Film",
         imageSrc: "/code-hostel/thumb2.jpg",
@@ -202,21 +210,23 @@ export function CaseStudies() {
     }, [selectedId]);
 
     return (
-        <section id="case-studies" className="py-16 sm:py-24 bg-[#faf7f0]">
+        <section id="case-studies" className="py-20 sm:py-32 bg-white border-b border-black/[0.08]">
             <Container>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.15 }}
                     variants={stagger(0.12)}
-                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end"
+                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end pb-12 border-b border-black/[0.08]"
                 >
                     <div>
-                        <motion.span variants={fadeUp} className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-luxury-gold">
-                            Case Studies & Impact
-                        </motion.span>
-                        <motion.h2 variants={fadeUp} className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-deep-black sm:text-5xl">
-                            Proven Results. <span className="text-luxury-gold">No Fluff.</span>
+                        <motion.div variants={fadeUp} className="flex items-center gap-2 mb-3">
+                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-500 uppercase">
+                                [ 03 &middot; Portfolio Archive ]
+                            </span>
+                        </motion.div>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-black">
+                            Selected Works. <span className="font-serif italic font-normal text-luxury-gold">Measurable Scale.</span>
                         </motion.h2>
                     </div>
 
@@ -229,10 +239,10 @@ export function CaseStudies() {
                                     key={cat}
                                     type="button"
                                     onClick={() => setSelectedCategory(cat)}
-                                    className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                                    className={`rounded-full px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer ${
                                         isActive
-                                            ? "bg-deep-black text-ivory-cream shadow-md"
-                                            : "border border-black/20 bg-white/80 text-neutral-800 hover:border-luxury-gold/50 hover:bg-white"
+                                            ? "bg-black text-white shadow-md"
+                                            : "border border-black/10 bg-white text-neutral-600 hover:border-black hover:text-black"
                                     }`}
                                 >
                                     {cat}
@@ -248,7 +258,7 @@ export function CaseStudies() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.1 }}
                     variants={stagger(0.12)}
-                    className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-2"
+                    className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-2"
                 >
                     {filteredStudies.map((study) => (
                         <motion.div
@@ -303,19 +313,21 @@ export function CaseStudies() {
                                 </div>
                             </div>
 
-                            <div className="mt-6 flex flex-col gap-2">
+                            <div className="mt-5 flex flex-col gap-2">
                                 <div className="flex items-center justify-between">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-luxury-gold">
-                                        {study.client} &middot; {study.category}
-                                    </span>
-                                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 transition-colors group-hover:text-deep-black">
-                                        View Case &rarr;
+                                    <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-neutral-500">
+                                        <span className="font-bold text-luxury-gold">{study.category}</span>
+                                        <span>&middot;</span>
+                                        <span>Dir: {study.director}</span>
+                                    </div>
+                                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-neutral-400 transition-colors group-hover:text-black">
+                                        View Project &rarr;
                                     </span>
                                 </div>
                                 <h3 className="font-display text-xl font-bold leading-snug text-deep-black sm:text-2xl">
                                     {study.title}
                                 </h3>
-                                <p className="text-sm leading-relaxed text-neutral-800 font-medium line-clamp-2">
+                                <p className="text-sm leading-relaxed text-neutral-600 line-clamp-2">
                                     {study.summary}
                                 </p>
                             </div>

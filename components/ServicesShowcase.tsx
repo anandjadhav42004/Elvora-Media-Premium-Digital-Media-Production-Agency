@@ -1,310 +1,263 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "./Container";
+import { fadeUp, stagger } from "@/lib/motion";
 import { WHATSAPP_LINK } from "@/lib/whatsapp";
 
-gsap.registerPlugin(ScrollTrigger);
-
-type Service = {
+type ServiceItem = {
     number: string;
     title: string;
+    subtitle: string;
+    category: string;
+    description: string;
+    deliverables: string[];
+    imageSrc: string;
 };
 
-type FloatingImage = {
-    src: string;
-    wrapperClass: string;
-    rotateClass: string;
-    eager?: boolean;
-};
-
-const FLOATING_IMAGES: FloatingImage[] = [
+const SERVICES: ServiceItem[] = [
     {
-        src: "/services1.png",
-        wrapperClass:
-            "left-1 top-30 h-20 w-20 sm:left-6 sm:top-10 sm:h-28 sm:w-28 lg:left-14 lg:top-14 lg:h-36 lg:w-36",
-        rotateClass: "-rotate-12",
-        eager: true,
+        number: "01",
+        title: "Commercial Film & Video Production",
+        subtitle: "High-Paced Cinematic Direction",
+        category: "Production",
+        description:
+            "From high-energy brand films to grand festive event coverage, we direct and produce cinema-grade video content with industry-standard cameras, custom color science, and dynamic rhythm.",
+        deliverables: [
+            "Concept Development & Scripting",
+            "Cinema 4K Camera & Drone Direction",
+            "Full Lighting & Sound Architecture",
+            "Color Science (DaVinci Resolve)",
+            "Commercial Sound Design & Score",
+        ],
+        imageSrc: "/code-hostel/thumb2.jpg",
     },
     {
-        src: "/services2.png",
-        wrapperClass:
-            "right-1 top-30 h-28 w-20 sm:right-6 sm:top-[18%] sm:h-40 sm:w-28 lg:right-16 lg:top-[14%] lg:h-52 lg:w-36",
-        rotateClass: "rotate-9",
+        number: "02",
+        title: "Brand Identity & Art Direction",
+        subtitle: "Luxury Aesthetic & Positioning",
+        category: "Branding",
+        description:
+            "We construct bespoke brand universes that command premium pricing. Clean typography, distinctive visual language, and cohesive digital touchpoints that make your brand unforgettable.",
+        deliverables: [
+            "Core Visual Identity & Marks",
+            "Editorial Typography Guidelines",
+            "Color Palette & Material Systems",
+            "Packaging & Print Direction",
+            "Comprehensive Brand Book",
+        ],
+        imageSrc: "/services3.png",
     },
     {
-        src: "/services3.png",
-        wrapperClass:
-            "bottom-6 left-1 h-24 w-24 sm:bottom-12 sm:left-8 sm:h-32 sm:w-32 lg:left-16 lg:h-40 lg:w-40",
-        rotateClass: "-rotate-6",
+        number: "03",
+        title: "Social-First Content & Reels",
+        subtitle: "Viral Engineering & Retention",
+        category: "Social",
+        description:
+            "Short-form video engineered for algorithmic dominance. We combine 2-second visual hooks, rapid pacing, and trend curation to generate millions of organic impressions.",
+        deliverables: [
+            "High-Retention Reel Architecture",
+            "Hook Strategy & Scripting",
+            "Micro-Storytelling & Editing",
+            "Custom Audio Sync & SFX",
+            "Monthly Content Production Calendar",
+        ],
+        imageSrc: "/services2.png",
     },
     {
-        src: "/services4.png",
-        wrapperClass:
-            "bottom-6 right-1 h-24 w-24 sm:bottom-12 sm:right-8 sm:h-32 sm:w-32 lg:right-16 lg:h-40 lg:w-40",
-        rotateClass: "rotate-[15deg]",
-        eager: true,
+        number: "04",
+        title: "Performance Ads & Growth Media",
+        subtitle: "Creative Engineered for Direct ROI",
+        category: "Performance",
+        description:
+            "High-converting ad creatives designed specifically to lower CAC and maximize ROAS. We A/B test angles, hooks, and formats to turn paid traffic into reliable customer acquisition.",
+        deliverables: [
+            "Performance Creative Testing (Meta & Google)",
+            "Direct-Response Ad Scripting",
+            "UGC & Studio Hybrid Production",
+            "Conversion Funnel Optimization",
+            "Weekly Analytics & Iteration",
+        ],
+        imageSrc: "/services1.png",
     },
-];
-
-const SERVICES: Service[] = [
-    { number: "01", title: "Client Priority" },
-    { number: "02", title: "Growth Partner" },
-    { number: "03", title: "Strategic DOM" },
-    { number: "04", title: "Fine Production" },
-    { number: "05", title: "Fluid Editing" },
-    { number: "06", title: "Laser Marketing" },
-    { number: "07", title: "Finance ROI" },
-    { number: "08", title: "Full Transparency" },
-    { number: "09", title: "Creative Agility" },
-    { number: "10", title: "Enduring Scale" },
+    {
+        number: "05",
+        title: "3D Motion Design & Post-Production",
+        subtitle: "Hyper-Real Animation & Finishing",
+        category: "Motion",
+        description:
+            "Elevate your product presentation with hyper-realistic 3D rendering, kinetic typographic animation, and seamless visual effects that standard cameras cannot capture.",
+        deliverables: [
+            "3D Product Visualizations",
+            "Kinetic Typography & Titles",
+            "CGI Commercial Sequences",
+            "Motion Graphics Packages",
+            "Ultra-Clean Visual Clean-up & Retouching",
+        ],
+        imageSrc: "/services4.png",
+    },
 ];
 
 export function ServicesShowcase() {
     const [activeIndex, setActiveIndex] = useState(0);
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-    const floatRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    useEffect(() => {
-        if (!sectionRef.current) return;
-
-        const items = itemRefs.current.filter(
-            (item): item is HTMLButtonElement => item !== null,
-        );
-        if (items.length === 0) return;
-
-        ScrollTrigger.config({ ignoreMobileResize: true });
-
-        const mm = gsap.matchMedia();
-
-        mm.add(
-            { isMobile: "(max-width: 639px)", isDesktop: "(min-width: 640px)" },
-            (context) => {
-                const conditions = context.conditions as { isMobile: boolean };
-                const isMobile = conditions.isMobile;
-                const pinFactor = isMobile ? 1.6 : 2.2;
-                const rowHeight = isMobile ? 52 : 76;
-                const steps = items.length - 1;
-
-                const applyPositions = (activePosition: number) => {
-                    items.forEach((item, i) => {
-                        const offset = i - activePosition;
-                        const absOffset = Math.abs(offset);
-                        const opacity = Math.max(0, 1 - absOffset * 0.4);
-                        const scale = Math.max(0.75, 1 - absOffset * 0.12);
-                        // Update styles directly instead of via gsap.quickSetter(). On iOS
-                        // WebKit, GSAP's quickSetter falls back to
-                        // element.setAttribute(prop, value), which throws and crashes the
-                        // whole page on every iPhone (it works via .style on other
-                        // platforms, which is why it only broke on iOS). Writing to .style
-                        // ourselves avoids GSAP's setter entirely and renders identically
-                        // everywhere. The -50% centers each row (they sit at top: 50%).
-                        item.style.transform = `translateY(-50%) translateY(${
-                            offset * rowHeight
-                        }px) scale(${scale})`;
-                        item.style.opacity = String(opacity);
-                        item.style.pointerEvents =
-                            opacity < 0.05 ? "none" : "auto";
-                    });
-                };
-
-                applyPositions(0);
-
-                const wanderTweens: (gsap.core.Tween | null)[] = [];
-                const wanderRange = isMobile ? 8 : 16;
-
-                const floats = floatRefs.current.filter(
-                    (floatEl): floatEl is HTMLDivElement => floatEl !== null,
-                );
-
-                if (floats.length > 0 && sectionRef.current) {
-                    const sectionRect =
-                        sectionRef.current.getBoundingClientRect();
-                    const sectionCenterX =
-                        sectionRect.left + sectionRect.width / 2;
-                    const sectionCenterY =
-                        sectionRect.top + sectionRect.height / 2;
-
-                    floats.forEach((floatEl, i) => {
-                        const rect = floatEl.getBoundingClientRect();
-                        const elCenterX = rect.left + rect.width / 2;
-                        const elCenterY = rect.top + rect.height / 2;
-                        const dx = sectionCenterX - elCenterX;
-                        const dy = sectionCenterY - elCenterY;
-
-                        const startWander = () => {
-                            const wander = () => {
-                                wanderTweens[i] = gsap.to(floatEl, {
-                                    x: gsap.utils.random(
-                                        -wanderRange,
-                                        wanderRange,
-                                    ),
-                                    y: gsap.utils.random(
-                                        -wanderRange * 0.85,
-                                        wanderRange * 0.85,
-                                    ),
-                                    duration: gsap.utils.random(4, 7),
-                                    ease: "sine.inOut",
-                                    onComplete: wander,
-                                });
-                            };
-                            wander();
-                        };
-
-                        gsap.set(floatEl, { x: dx, y: dy });
-                        gsap.to(floatEl, {
-                            x: 0,
-                            y: 0,
-                            opacity: 1,
-                            duration: 1.2,
-                            ease: "power3.out",
-                            delay: i * 0.1,
-                            scrollTrigger: {
-                                trigger: sectionRef.current,
-                                start: "top 75%",
-                                toggleActions: "play none none reverse",
-                            },
-                            onComplete: startWander,
-                        });
-                    });
-                }
-
-                ScrollTrigger.create({
-                    trigger: sectionRef.current,
-                    start: "top top",
-                    end: () => `+=${window.innerHeight * pinFactor}`,
-                    pin: true,
-                    scrub: 1,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    onUpdate: (self) => {
-                        const activePosition = self.progress * steps;
-                        applyPositions(activePosition);
-                        const nextIndex = Math.round(
-                            Math.min(steps, Math.max(0, activePosition)),
-                        );
-                        setActiveIndex((current) =>
-                            current === nextIndex ? current : nextIndex,
-                        );
-                    },
-                });
-
-                return () => {
-                    wanderTweens.forEach((tween) => tween?.kill());
-                };
-            },
-        );
-
-        return () => mm.revert();
-    }, []);
+    const activeService = SERVICES[activeIndex];
 
     return (
-        <section
-            id="services"
-            ref={sectionRef}
-            className="relative h-svh overflow-hidden bg-[#faf7f0] py-12 sm:py-16"
-        >
-            {FLOATING_IMAGES.map((image, index) => (
-                <div
-                    key={image.src}
-                    ref={(el) => {
-                        floatRefs.current[index] = el;
-                    }}
-                    aria-hidden="true"
-                    className={`group absolute z-0 block opacity-0 will-change-transform ${image.wrapperClass}`}
+        <section id="services" className="relative py-20 sm:py-32 bg-[#faf9f6] border-b border-black/[0.08]">
+            <Container>
+                {/* Section Header */}
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={stagger(0.12)}
+                    className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 pb-12 border-b border-black/[0.08]"
                 >
-                    <div
-                        className={`relative h-full w-full transition-transform duration-700 ease-out will-change-transform ${image.rotateClass} group-hover:rotate-0 group-hover:scale-105`}
-                    >
-                        <Image
-                            src={image.src}
-                            alt=""
-                            fill
-                            loading={image.eager ? "eager" : "lazy"}
-                            sizes="(max-width: 1024px) 25vw, 220px"
-                            className="object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.3)]"
-                        />
+                    <div>
+                        <motion.div variants={fadeUp} className="flex items-center gap-3 mb-4">
+                            <span className="h-px w-8 bg-luxury-gold/40" />
+                            <span className="font-mono text-[10px] font-bold tracking-[0.3em] text-luxury-gold uppercase">
+                                02 &middot; Capabilities
+                            </span>
+                            <span className="h-px w-8 bg-luxury-gold/40" />
+                        </motion.div>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl uppercase tracking-tight text-black font-extrabold">
+                            Core Disciplines. <span className="font-serif italic font-normal text-luxury-gold">No Limits.</span>
+                        </motion.h2>
                     </div>
-                </div>
-            ))}
 
-            <Container className="relative z-10 flex h-full flex-col items-center justify-between pointer-events-none">
-                <h2 className="text-center text-3xl font-semibold leading-tight text-deep-black sm:text-4xl md:text-5xl">
-                    What Can We Do
-                    <br />
-                    <span className="text-luxury-gold">For your Business?</span>
-                </h2>
+                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-neutral-600 leading-relaxed">
+                        Comprehensive media production and creative direction under one roof. Every execution is designed to elevate status and drive revenue.
+                    </motion.p>
+                </motion.div>
 
-                <div className="relative h-64 w-full overflow-hidden pointer-events-auto sm:h-80 md:h-96">
-                    {SERVICES.map((service, index) => {
-                        const isActive = index === activeIndex;
-                        return (
-                            <button
-                                key={service.number}
-                                ref={(el) => {
-                                    itemRefs.current[index] = el;
-                                }}
-                                type="button"
-                                onMouseEnter={() => setActiveIndex(index)}
-                                onFocus={() => setActiveIndex(index)}
-                                className={`absolute inset-x-0 top-1/2 flex items-center justify-center gap-2 px-2 py-3 text-center transition-colors duration-300 sm:gap-4 sm:px-4 ${
-                                    isActive
-                                        ? "bg-linear-to-r from-transparent via-black/5 to-transparent"
-                                        : ""
-                                }`}
-                            >
-                                <span className="flex items-baseline gap-2 sm:gap-6">
-                                    <span
-                                        className={`whitespace-nowrap text-lg font-bold transition-colors duration-300 sm:text-3xl ${
-                                            isActive
-                                                ? "text-luxury-gold"
-                                                : "text-neutral-500"
-                                        }`}
-                                    >
-                                        {service.number}
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap text-lg font-bold transition-colors duration-300 sm:text-3xl ${
-                                            isActive
-                                                ? "text-deep-black"
-                                                : "text-neutral-600 hover:text-deep-black"
-                                        }`}
-                                    >
-                                        {service.title}
-                                    </span>
-                                </span>
-                                <span
-                                    aria-hidden="true"
-                                    className={`hidden font-serif text-3xl text-luxury-gold transition-opacity duration-300 sm:inline-block sm:text-4xl ${
-                                        isActive ? "opacity-100" : "opacity-0"
+                {/* Editorial Catalogue Layout (Interactive Master-Detail) */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-12 items-start">
+                    {/* Left: Service Accordion List (7 cols) */}
+                    <div className="lg:col-span-7 flex flex-col divide-y divide-black/[0.08]">
+                        {SERVICES.map((service, index) => {
+                            const isCurrent = activeIndex === index;
+                            return (
+                                <div
+                                    key={service.number}
+                                    onMouseEnter={() => setActiveIndex(index)}
+                                    onClick={() => setActiveIndex(index)}
+                                    className={`group cursor-pointer py-8 transition-all duration-300 ${
+                                        isCurrent ? "opacity-100" : "opacity-60 hover:opacity-100"
                                     }`}
                                 >
-                                    &rdquo;
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="flex items-start gap-6 sm:gap-8">
+                                            <span className="font-mono text-sm font-bold tracking-wider text-luxury-gold pt-1">
+                                                {service.number}
+                                            </span>
+                                            <div>
+                                                <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-black transition-colors group-hover:text-black">
+                                                    {service.title}
+                                                </h3>
+                                                <p className="mt-1 font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">
+                                                    {service.subtitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center pt-1">
+                                            <span
+                                                className={`flex h-8 w-8 items-center justify-center rounded-full border text-xs transition-all duration-300 ${
+                                                    isCurrent
+                                                        ? "border-black bg-black text-white rotate-45"
+                                                        : "border-black/15 text-neutral-500 group-hover:border-black group-hover:text-black"
+                                                }`}
+                                            >
+                                                →
+                                            </span>
+                                        </div>
+                                    </div>
 
-                <div className="pointer-events-auto flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                    <span className="text-sm font-semibold text-neutral-800">
-                        Have another idea?
-                    </span>
-                    <a
-                        href={WHATSAPP_LINK}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 rounded-full bg-[linear-gradient(90deg,#b58c56,#e0c38a,#b58c56)] py-2 pl-5 pr-2 text-sm font-medium text-deep-black transition-[filter] duration-300 hover:brightness-95"
-                    >
-                        Explore Our Services
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-deep-black text-ivory-cream">
-                            »
-                        </span>
-                    </a>
+                                    {/* Expanded Detail for Mobile & Active */}
+                                    <AnimatePresence>
+                                        {isCurrent && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: "auto", opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                                className="overflow-hidden pl-10 sm:pl-14 pt-4"
+                                            >
+                                                <p className="text-sm sm:text-base text-neutral-700 leading-relaxed max-w-xl">
+                                                    {service.description}
+                                                </p>
+
+                                                {/* Deliverables Pills */}
+                                                <div className="mt-4 flex flex-wrap gap-2">
+                                                    {service.deliverables.map((item, dIdx) => (
+                                                        <span
+                                                            key={dIdx}
+                                                            className="rounded-full border border-black/10 bg-neutral-50 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-neutral-800"
+                                                        >
+                                                            {item}
+                                                        </span>
+                                                    ))}
+                                                </div>
+
+                                                <div className="mt-6 pt-4 border-t border-black/[0.04] flex items-center gap-4">
+                                                    <a
+                                                        href={WHATSAPP_LINK}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-black hover:text-luxury-gold transition-colors"
+                                                    >
+                                                        <span>Inquire for {service.category}</span>
+                                                        <span>↗</span>
+                                                    </a>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Right: Sticky Editorial Media Card (5 cols) */}
+                    <div className="lg:col-span-5 sticky top-28 hidden lg:block">
+                        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-black/[0.08] bg-neutral-900 shadow-xl">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeService.number}
+                                    initial={{ opacity: 0, scale: 1.05 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.98 }}
+                                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                    className="relative h-full w-full"
+                                >
+                                    <Image
+                                        src={activeService.imageSrc}
+                                        alt={activeService.title}
+                                        fill
+                                        sizes="40vw"
+                                        className="object-cover"
+                                        priority
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
+
+                                    <div className="absolute bottom-6 left-6 right-6 text-white">
+                                        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-luxury-gold block mb-1">
+                                            [ Discipline {activeService.number} ]
+                                        </span>
+                                        <h4 className="font-display text-2xl font-bold uppercase tracking-tight text-white leading-tight">
+                                            {activeService.title}
+                                        </h4>
+                                        <p className="mt-2 text-xs text-neutral-300 font-mono">
+                                            {activeService.subtitle}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+                    </div>
                 </div>
             </Container>
         </section>

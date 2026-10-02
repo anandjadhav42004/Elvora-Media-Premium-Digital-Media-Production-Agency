@@ -3,9 +3,6 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
-  turbopack: {
-    root: process.cwd(),
-  },
   images: {
     remotePatterns: [
       {

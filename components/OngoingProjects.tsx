@@ -124,23 +124,28 @@ export function OngoingProjects() {
     }, [selectedId]);
 
     return (
-        <section id="ongoing-projects" className="py-16 sm:py-24 bg-[#faf7f0] border-b border-black/5">
+        <section id="ongoing-projects" className="py-20 sm:py-32 bg-neutral-50/50 border-b border-black/[0.08]">
             <Container>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.15 }}
                     variants={stagger(0.12)}
-                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end"
+                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end pb-12 border-b border-black/[0.08]"
                 >
                     <div>
-                        <motion.span variants={fadeUp} className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-luxury-gold">
-                            What's Cooking
-                        </motion.span>
-                        <motion.h2 variants={fadeUp} className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-deep-black sm:text-5xl">
-                            Ongoing <span className="text-luxury-gold">Projects.</span>
+                        <motion.div variants={fadeUp} className="flex items-center gap-2 mb-3">
+                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-500 uppercase">
+                                [ 04 &middot; Live Production Slate ]
+                            </span>
+                        </motion.div>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-black">
+                            In The Studio. <span className="font-serif italic font-normal text-luxury-gold">Active Sets.</span>
                         </motion.h2>
                     </div>
+                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-neutral-600 leading-relaxed">
+                        A real-time look at ongoing campaign shoots, color grading sessions, and post-production pipelines currently underway.
+                    </motion.p>
                 </motion.div>
 
                 {/* Projects Grid */}

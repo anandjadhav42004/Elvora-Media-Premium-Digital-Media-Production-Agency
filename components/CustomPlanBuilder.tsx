@@ -5,37 +5,82 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "./Container";
 import { fadeUp, stagger } from "@/lib/motion";
 import { buildCustomWhatsAppLink } from "@/lib/whatsapp";
-import { MagneticWrapper } from "./MagneticWrapper";
 
-const AVAILABLE_SERVICES = [
-    { id: "smm", name: "Social Media Management", minPrice: 20000, maxPrice: 40000 },
-    { id: "reels", name: "Reels / Short-Form Video", minPrice: 15000, maxPrice: 30000 },
-    { id: "ads", name: "Performance Ads (Meta/Google)", minPrice: 20000, maxPrice: 50000 },
-    { id: "strategy", name: "Brand Strategy & Positioning", minPrice: 25000, maxPrice: 60000 },
-    { id: "shoot", name: "Professional Content Shoot", minPrice: 30000, maxPrice: 80000 },
-    { id: "influencer", name: "Influencer Marketing", minPrice: 15000, maxPrice: 45000 },
+type Deliverable = {
+    id: string;
+    name: string;
+    description: string;
+    minPrice: number;
+    maxPrice: number;
+};
+
+type AddOn = {
+    id: string;
+    name: string;
+    price: number;
+};
+
+const DELIVERABLES: Deliverable[] = [
+    { id: "commercial-film", name: "Commercial 4K Brand Film", description: "TVC-grade cinematography, full lighting, custom score", minPrice: 40000, maxPrice: 90000 },
+    { id: "reels-package", name: "High-Retention Reels Package", description: "8-12 short-form cuts engineered for 2-second hook retention", minPrice: 25000, maxPrice: 45000 },
+    { id: "brand-identity", name: "Luxury Visual Identity & Direction", description: "Typography, color science, guidelines, social grid", minPrice: 30000, maxPrice: 60000 },
+    { id: "social-retainer", name: "Full Social Growth Retainer", description: "End-to-end production, daily stories, community growth", minPrice: 50000, maxPrice: 85000 },
+    { id: "performance-ads", name: "Performance Ad Creatives", description: "Direct-response hooks, multi-angle A/B test variations", minPrice: 25000, maxPrice: 50000 },
+];
+
+const TIMELINES = [
+    { id: "urgent", name: "Urgent (2–3 Weeks)", multiplier: 1.15 },
+    { id: "standard", name: "Standard (1 Month)", multiplier: 1.0 },
+    { id: "flexible", name: "Multi-Month / Retainer", multiplier: 0.95 },
+];
+
+const ADD_ONS: AddOn[] = [
+    { id: "drone", name: "Cinema 4K Drone Aerials", price: 15000 },
+    { id: "actors", name: "Professional Model & Actor Casting", price: 20000 },
+    { id: "studio", name: "Studio & Lighting Set Architecture", price: 18000 },
+    { id: "sound", name: "Custom Sound Design & Original Score", price: 12000 },
+    { id: "ad-variations", name: "5x Additional Ad Hook Cuts", price: 10000 },
 ];
 
 const CheckIcon = () => (
-    <svg className="w-3.5 h-3.5 text-deep-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-3.5 h-3.5 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
 );
 
 export function CustomPlanBuilder() {
-    const [selectedServices, setSelectedServices] = useState<string[]>([]);
-    const [timeline, setTimeline] = useState("Standard (1 Month)");
+    const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
+    const [selectedDeliverables, setSelectedDeliverables] = useState<string[]>(["commercial-film"]);
+    const [selectedTimeline, setSelectedTimeline] = useState<string>("Standard (1 Month)");
+    const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
 
-    const toggleService = (id: string) => {
-        setSelectedServices(prev => 
-            prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
+    const toggleDeliverable = (id: string) => {
+        setSelectedDeliverables(prev =>
+            prev.includes(id)
+                ? prev.filter(item => item !== id)
+                : [...prev, id]
         );
     };
 
-    // Calculate dynamic budget based on selected services
-    const selectedItems = AVAILABLE_SERVICES.filter(s => selectedServices.includes(s.id));
-    const totalMin = selectedItems.reduce((acc, curr) => acc + curr.minPrice, 0);
-    const totalMax = selectedItems.reduce((acc, curr) => acc + curr.maxPrice, 0);
+    const toggleAddOn = (id: string) => {
+        setSelectedAddOns(prev =>
+            prev.includes(id)
+                ? prev.filter(item => item !== id)
+                : [...prev, id]
+        );
+    };
+
+    // Calculations
+    const chosenDeliverables = DELIVERABLES.filter(d => selectedDeliverables.includes(d.id));
+    const chosenAddOns = ADD_ONS.filter(a => selectedAddOns.includes(a.id));
+
+    const timelineObj = TIMELINES.find(t => t.name === selectedTimeline) || TIMELINES[1];
+    const baseMin = chosenDeliverables.reduce((acc, curr) => acc + curr.minPrice, 0);
+    const baseMax = chosenDeliverables.reduce((acc, curr) => acc + curr.maxPrice, 0);
+    const addOnTotal = chosenAddOns.reduce((acc, curr) => acc + curr.price, 0);
+
+    const totalMin = Math.round((baseMin * timelineObj.multiplier) + addOnTotal);
+    const totalMax = Math.round((baseMax * timelineObj.multiplier) + addOnTotal);
 
     const formatCurrency = (val: number) => {
         if (val === 0) return "₹0";
@@ -44,171 +89,342 @@ export function CustomPlanBuilder() {
         return `₹${val}`;
     };
 
-    const isReady = selectedServices.length > 0;
+    const canProceedFromStep1 = selectedDeliverables.length > 0;
+    const canProceedFromStep2 = Boolean(selectedTimeline);
 
-    const handleBuildPlan = () => {
-        const serviceNames = selectedItems.map(s => s.name).join(", ");
-        const estimatedBudget = `${formatCurrency(totalMin)} - ${formatCurrency(totalMax)}`;
-        const msg = `Hi Elvora Media, I've built a custom plan!\n\nServices: ${serviceNames}\nTimeline: ${timeline}\nEstimated Budget: ${estimatedBudget}\n\nLet's discuss!`;
+    const handleSendWhatsApp = () => {
+        const deliverableNames = chosenDeliverables.map(d => d.name).join(", ");
+        const addOnNames = chosenAddOns.length > 0 ? chosenAddOns.map(a => a.name).join(", ") : "None";
+        const estimatedBudget = `${formatCurrency(totalMin)} – ${formatCurrency(totalMax)}`;
+
+        const msg = `Hi Elvora Media, I've configured a custom production scope!\n\n` +
+            `• Deliverable(s): ${deliverableNames}\n` +
+            `• Timeline: ${selectedTimeline}\n` +
+            `• Add-Ons: ${addOnNames}\n` +
+            `• Estimated Investment: ${estimatedBudget}\n\n` +
+            `Let's discuss scheduling and next steps!`;
+
         window.open(buildCustomWhatsAppLink(msg), "_blank");
     };
 
     return (
-        <section className="py-24 sm:py-32 bg-white relative overflow-hidden border-t border-black/5">
+        <section id="estimator" className="py-20 sm:py-32 bg-white relative overflow-hidden border-b border-black/[0.06]">
             <Container>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start max-w-6xl mx-auto">
-                    {/* Left: Configuration */}
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-50px" }}
-                        variants={stagger(0.1)}
-                    >
-                        <motion.div variants={fadeUp}>
-                            <div className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-luxury-gold mb-3">
-                                Create Your Own
-                            </div>
-                            <h2 className="font-display text-4xl sm:text-5xl font-bold uppercase tracking-tight text-deep-black mb-6">
-                                Custom Package Builder
-                            </h2>
-                            <p className="text-sm sm:text-base font-medium text-neutral-600 mb-10 max-w-md">
-                                Don't see a plan that fits exactly? Select the specific services you need and instantly get a tailored estimate.
-                            </p>
-                        </motion.div>
+                {/* Section Header */}
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                    variants={stagger(0.08)}
+                    className="max-w-3xl mb-12"
+                >
+                    <div className="flex items-center gap-2 mb-3">
+                        <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-400 uppercase">
+                            [ 06 &middot; Scope Configurator ]
+                        </span>
+                    </div>
+                    <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase tracking-tight text-deep-black">
+                        Custom Plan Builder. <span className="font-serif italic font-normal text-luxury-gold">Bespoke Production.</span>
+                    </h2>
+                    <p className="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-xl">
+                        Design an exact production scope tailored to your brand&apos;s requirements. Select deliverables, turnaround speed, and production add-ons.
+                    </p>
+                </motion.div>
 
-                        <motion.div variants={fadeUp} className="mb-10">
-                            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-deep-black mb-4 flex items-center gap-2">
-                                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-black/5 text-[9px]">01</span>
-                                Select Services
-                            </h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {AVAILABLE_SERVICES.map(service => {
-                                    const isSelected = selectedServices.includes(service.id);
-                                    return (
-                                        <button
-                                            key={service.id}
-                                            onClick={() => toggleService(service.id)}
-                                            className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all duration-300 group ${
-                                                isSelected 
-                                                ? "border-luxury-gold bg-luxury-gold/5" 
-                                                : "border-black/10 bg-neutral-50 hover:border-black/30 hover:bg-white"
-                                            }`}
-                                        >
-                                            <div className={`w-5 h-5 rounded flex-shrink-0 flex items-center justify-center border transition-colors ${
-                                                isSelected ? "bg-luxury-gold border-luxury-gold" : "border-black/20 group-hover:border-black/40"
-                                            }`}>
-                                                {isSelected && <CheckIcon />}
-                                            </div>
-                                            <span className={`text-xs font-bold uppercase tracking-wider ${isSelected ? 'text-deep-black' : 'text-neutral-600 group-hover:text-deep-black'}`}>
-                                                {service.name}
-                                            </span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </motion.div>
+                {/* 3-Step Wizard Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+                    {/* Left: Step Form (7 cols) */}
+                    <div className="lg:col-span-7">
+                        {/* Step Navigation Tabs */}
+                        <div className="flex items-center gap-2 pb-6 border-b border-black/[0.08] mb-8 font-mono text-[10px] uppercase tracking-[0.2em]">
+                            <button
+                                type="button"
+                                onClick={() => setCurrentStep(1)}
+                                className={`px-4 py-2 border transition-all cursor-pointer ${
+                                    currentStep === 1
+                                        ? "border-black bg-black text-white font-bold"
+                                        : "border-black/10 bg-neutral-50 text-neutral-600 hover:border-black/40"
+                                }`}
+                            >
+                                01 &middot; Deliverable
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => canProceedFromStep1 && setCurrentStep(2)}
+                                disabled={!canProceedFromStep1}
+                                className={`px-4 py-2 border transition-all ${
+                                    currentStep === 2
+                                        ? "border-black bg-black text-white font-bold"
+                                        : canProceedFromStep1
+                                            ? "border-black/10 bg-neutral-50 text-neutral-600 hover:border-black/40 cursor-pointer"
+                                            : "border-black/5 bg-neutral-100 text-neutral-300 cursor-not-allowed"
+                                }`}
+                            >
+                                02 &middot; Timeline
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => canProceedFromStep1 && canProceedFromStep2 && setCurrentStep(3)}
+                                disabled={!canProceedFromStep1 || !canProceedFromStep2}
+                                className={`px-4 py-2 border transition-all ${
+                                    currentStep === 3
+                                        ? "border-black bg-black text-white font-bold"
+                                        : canProceedFromStep1 && canProceedFromStep2
+                                            ? "border-black/10 bg-neutral-50 text-neutral-600 hover:border-black/40 cursor-pointer"
+                                            : "border-black/5 bg-neutral-100 text-neutral-300 cursor-not-allowed"
+                                }`}
+                            >
+                                03 &middot; Add-Ons
+                            </button>
+                        </div>
 
-                        <motion.div variants={fadeUp}>
-                            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-deep-black mb-4 flex items-center gap-2">
-                                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-black/5 text-[9px]">02</span>
-                                Expected Timeline
-                            </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {["Urgent (2-3 Weeks)", "Standard (1 Month)", "Flexible"].map(t => (
-                                    <button
-                                        key={t}
-                                        onClick={() => setTimeline(t)}
-                                        className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors border ${
-                                            timeline === t
-                                            ? "bg-deep-black text-white border-deep-black"
-                                            : "bg-white text-neutral-600 border-black/10 hover:border-black/30"
-                                        }`}
-                                    >
-                                        {t}
-                                    </button>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-
-                    {/* Right: Estimate Summary Sticky Card */}
-                    <div className="lg:sticky lg:top-32 h-auto relative">
-                        {/* Decorative background element */}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(181,140,86,0.1),transparent_50%)] rounded-[2rem] pointer-events-none" />
-                        
-                        <motion.div 
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                            className="bg-deep-black text-white p-8 sm:p-12 rounded-[2rem] shadow-2xl relative overflow-hidden"
-                        >
-                            <div className="font-script text-3xl text-luxury-gold mb-6">
-                                Your Estimate
-                            </div>
-
-                            <div className="min-h-[150px]">
-                                <AnimatePresence mode="wait">
-                                    {isReady ? (
-                                        <motion.div 
-                                            key="has-items"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                        >
-                                            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-2">
-                                                Estimated Range
-                                            </div>
-                                            <div className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white mb-8">
-                                                {formatCurrency(totalMin)} - {formatCurrency(totalMax)}
-                                            </div>
-
-                                            <div className="space-y-3 mb-8">
-                                                {selectedItems.map(item => (
-                                                    <div key={item.id} className="flex justify-between items-center text-xs font-medium text-neutral-300 border-b border-white/10 pb-3">
-                                                        <span>{item.name}</span>
-                                                        <span className="text-luxury-gold">Included</span>
+                        {/* Step Content */}
+                        <div className="min-h-[320px]">
+                            {/* STEP 01: DELIVERABLE */}
+                            {currentStep === 1 && (
+                                <motion.div
+                                    key="step-1"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 10 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="space-y-3"
+                                >
+                                    <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 mb-4">
+                                        Select primary deliverables (at least 1):
+                                    </div>
+                                    {DELIVERABLES.map(d => {
+                                        const isSelected = selectedDeliverables.includes(d.id);
+                                        return (
+                                            <div
+                                                key={d.id}
+                                                onClick={() => toggleDeliverable(d.id)}
+                                                className={`p-4 border transition-all cursor-pointer flex items-start gap-4 ${
+                                                    isSelected
+                                                        ? "border-black bg-neutral-50/80 shadow-sm"
+                                                        : "border-black/[0.08] bg-white hover:border-black/30"
+                                                }`}
+                                            >
+                                                <div className={`mt-0.5 w-4 h-4 flex items-center justify-center border transition-colors ${
+                                                    isSelected ? "bg-black border-black text-white" : "border-black/20"
+                                                }`}>
+                                                    {isSelected && <CheckIcon />}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="font-display text-base font-bold uppercase tracking-tight text-deep-black">
+                                                            {d.name}
+                                                        </span>
+                                                        <span className="font-mono text-xs text-neutral-500">
+                                                            {formatCurrency(d.minPrice)}+
+                                                        </span>
                                                     </div>
-                                                ))}
-                                                <div className="flex justify-between items-center text-xs font-medium text-neutral-300 border-b border-white/10 pb-3">
-                                                    <span>Timeline</span>
-                                                    <span className="text-white font-bold">{timeline}</span>
+                                                    <p className="mt-1 text-xs text-neutral-500 font-normal">
+                                                        {d.description}
+                                                    </p>
                                                 </div>
                                             </div>
-                                        </motion.div>
-                                    ) : (
-                                        <motion.div 
-                                            key="empty"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            className="flex flex-col items-center justify-center h-full text-center py-10"
+                                        );
+                                    })}
+
+                                    <div className="pt-6 flex justify-end">
+                                        <button
+                                            type="button"
+                                            onClick={() => setCurrentStep(2)}
+                                            disabled={!canProceedFromStep1}
+                                            className={`px-7 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border transition-all ${
+                                                canProceedFromStep1
+                                                    ? "bg-black text-white border-black hover:bg-neutral-800 cursor-pointer"
+                                                    : "bg-neutral-200 text-neutral-400 border-neutral-200 cursor-not-allowed"
+                                            }`}
                                         >
-                                            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-                                                <span className="text-xl">✨</span>
+                                            Next: Step 02 &rarr;
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* STEP 02: TIMELINE */}
+                            {currentStep === 2 && (
+                                <motion.div
+                                    key="step-2"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 10 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="space-y-4"
+                                >
+                                    <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 mb-4">
+                                        Select expected delivery timeline:
+                                    </div>
+                                    <div className="space-y-3">
+                                        {TIMELINES.map(t => {
+                                            const isSelected = selectedTimeline === t.name;
+                                            return (
+                                                <div
+                                                    key={t.id}
+                                                    onClick={() => setSelectedTimeline(t.name)}
+                                                    className={`p-4 border transition-all cursor-pointer flex items-center justify-between ${
+                                                        isSelected
+                                                            ? "border-black bg-neutral-50/80 shadow-sm"
+                                                            : "border-black/[0.08] bg-white hover:border-black/30"
+                                                    }`}
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
+                                                            isSelected ? "border-black bg-black" : "border-black/30"
+                                                        }`}>
+                                                            {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                                                        </div>
+                                                        <span className="font-display text-base font-bold uppercase tracking-tight text-deep-black">
+                                                            {t.name}
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-500">
+                                                        {t.id === "urgent" ? "Priority Studio Slot" : t.id === "standard" ? "Standard Turnaround" : "Dedicated Retainer Rate"}
+                                                    </span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className="pt-6 flex justify-between">
+                                        <button
+                                            type="button"
+                                            onClick={() => setCurrentStep(1)}
+                                            className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border border-black/20 text-black hover:border-black cursor-pointer"
+                                        >
+                                            &larr; Back
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setCurrentStep(3)}
+                                            disabled={!canProceedFromStep2}
+                                            className={`px-7 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border transition-all ${
+                                                canProceedFromStep2
+                                                    ? "bg-black text-white border-black hover:bg-neutral-800 cursor-pointer"
+                                                    : "bg-neutral-200 text-neutral-400 border-neutral-200 cursor-not-allowed"
+                                            }`}
+                                        >
+                                            Next: Step 03 &rarr;
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* STEP 03: ADD-ONS */}
+                            {currentStep === 3 && (
+                                <motion.div
+                                    key="step-3"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 10 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="space-y-3"
+                                >
+                                    <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 mb-4">
+                                        Select production enhancements &amp; add-ons (optional):
+                                    </div>
+                                    {ADD_ONS.map(a => {
+                                        const isSelected = selectedAddOns.includes(a.id);
+                                        return (
+                                            <div
+                                                key={a.id}
+                                                onClick={() => toggleAddOn(a.id)}
+                                                className={`p-4 border transition-all cursor-pointer flex items-center justify-between ${
+                                                    isSelected
+                                                        ? "border-black bg-neutral-50/80 shadow-sm"
+                                                        : "border-black/[0.08] bg-white hover:border-black/30"
+                                                }`}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`w-4 h-4 flex items-center justify-center border transition-colors ${
+                                                        isSelected ? "bg-black border-black text-white" : "border-black/20"
+                                                    }`}>
+                                                        {isSelected && <CheckIcon />}
+                                                    </div>
+                                                    <span className="font-display text-sm sm:text-base font-bold uppercase tracking-tight text-deep-black">
+                                                        {a.name}
+                                                    </span>
+                                                </div>
+                                                <span className="font-mono text-xs text-neutral-500">
+                                                    +{formatCurrency(a.price)}
+                                                </span>
                                             </div>
-                                            <div className="text-sm font-medium text-neutral-400">
-                                                Select services on the left to instantly build your tailored package and calculate an estimated budget.
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                        );
+                                    })}
+
+                                    <div className="pt-6 flex justify-between">
+                                        <button
+                                            type="button"
+                                            onClick={() => setCurrentStep(2)}
+                                            className="px-6 py-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] border border-black/20 text-black hover:border-black cursor-pointer"
+                                        >
+                                            &larr; Back
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Right: Estimated Investment Card (5 cols) */}
+                    <div className="lg:col-span-5 lg:sticky lg:top-24">
+                        <div className="border border-black bg-neutral-950 text-white p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+                            <div className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-luxury-gold mb-2">
+                                Proposal Synthesis
+                            </div>
+                            <h3 className="font-display text-2xl uppercase tracking-tight text-white mb-6">
+                                Estimated Investment
+                            </h3>
+
+                            {/* Price range */}
+                            <div className="pb-6 border-b border-white/10 mb-6">
+                                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-400 block mb-1">
+                                    Project Range
+                                </span>
+                                <div className="font-display text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                                    {formatCurrency(totalMin)} &ndash; {formatCurrency(totalMax)}
+                                </div>
+                                <span className="font-mono text-[10px] text-neutral-400 block mt-1">
+                                    Estimated studio commitment for selected scope
+                                </span>
                             </div>
 
-                            <MagneticWrapper className="w-full mt-4" strength={30}>
-                                <button
-                                    onClick={handleBuildPlan}
-                                    disabled={!isReady}
-                                    className={`w-full py-4 rounded-full font-mono text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                                        isReady
-                                        ? "bg-luxury-gold text-deep-black hover:bg-white shadow-[0_0_20px_rgba(181,140,86,0.3)] hover:scale-[1.02]"
+                            {/* Summary checklist */}
+                            <div className="space-y-3 mb-8 text-xs font-mono">
+                                <div className="flex justify-between items-center text-neutral-300 pb-2 border-b border-white/10">
+                                    <span className="text-neutral-400">Deliverables ({chosenDeliverables.length})</span>
+                                    <span className="text-white font-bold">{chosenDeliverables.length > 0 ? "Selected" : "None"}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-neutral-300 pb-2 border-b border-white/10">
+                                    <span className="text-neutral-400">Turnaround</span>
+                                    <span className="text-white font-bold">{selectedTimeline}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-neutral-300 pb-2 border-b border-white/10">
+                                    <span className="text-neutral-400">Add-Ons ({chosenAddOns.length})</span>
+                                    <span className="text-white font-bold">{chosenAddOns.length > 0 ? `+${chosenAddOns.length} Selected` : "None"}</span>
+                                </div>
+                            </div>
+
+                            {/* Direct WhatsApp Action Button */}
+                            <button
+                                type="button"
+                                onClick={handleSendWhatsApp}
+                                disabled={!canProceedFromStep1}
+                                className={`w-full py-4 text-center font-mono text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
+                                    canProceedFromStep1
+                                        ? "bg-white text-black hover:bg-neutral-200 cursor-pointer shadow-lg"
                                         : "bg-white/10 text-white/40 cursor-not-allowed"
-                                    }`}
-                                >
-                                    {isReady ? "Submit Custom Proposal →" : "Awaiting Selections"}
-                                </button>
-                            </MagneticWrapper>
-                        </motion.div>
+                                }`}
+                            >
+                                Send Scope on WhatsApp &rarr;
+                            </button>
+
+                            <p className="mt-3 text-[10px] font-mono text-neutral-500 text-center uppercase tracking-wider">
+                                Direct connection with Director Suyash Mali
+                            </p>
+                        </div>
                     </div>
                 </div>
             </Container>

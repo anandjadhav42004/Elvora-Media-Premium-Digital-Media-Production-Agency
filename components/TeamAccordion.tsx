@@ -274,15 +274,31 @@ export function TeamAccordion() {
                 viewport={{ once: true, amount: 0.15 }}
                 variants={stagger(0.15)}
             >
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-12 mb-10 border-b border-black/[0.08]">
+                    <div>
+                        <motion.div variants={fadeUp} className="flex items-center gap-2 mb-3">
+                            <span className="font-mono text-[10px] font-bold tracking-[0.25em] text-neutral-500 uppercase">
+                                [ 06 &middot; Leadership & Direction ]
+                            </span>
+                        </motion.div>
+                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-black">
+                            The Collective. <span className="font-serif italic font-normal text-luxury-gold">Directors & Leads.</span>
+                        </motion.h2>
+                    </div>
+                    <motion.p variants={fadeUp} className="max-w-md text-sm sm:text-base text-neutral-600 leading-relaxed">
+                        A focused group of filmmakers, marketing architects, and creative strategists united to build market-defining brands.
+                    </motion.p>
+                </div>
+
                 <motion.p
                     variants={fadeUp}
-                    className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-luxury-gold"
+                    className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-neutral-500"
                 >
-                    Directors
+                    [ Board of Directors ]
                 </motion.p>
                 <motion.div
                     variants={fadeUp}
-                    className="flex w-full flex-col overflow-hidden rounded-3xl sm:h-80 sm:flex-row md:h-105"
+                    className="flex w-full flex-col overflow-hidden rounded-3xl sm:h-80 sm:flex-row md:h-105 border border-black/[0.08] shadow-sm"
                 >
                     {DIRECTORS.map((member, index) => {
                         const isActive = index === activeIndex;
