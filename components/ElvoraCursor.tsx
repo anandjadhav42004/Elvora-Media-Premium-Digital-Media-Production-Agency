@@ -2,18 +2,18 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 
-const SIZE = 72;
-const RADIUS = 68;
-const FOLLOW_EASE = 0.2;
-const ROTATION_SPEED = 15; // degrees per second
-const MIN_SCALE = 0.7;
-const SPEED_TO_SHRINK = 0.1; // scale lost per px/ms of movement
-const SCALE_EASE = 0.18;
-const SKEW_FACTOR = 10;
-const MAX_SKEW = 12;
-const SKEW_EASE = 0.18;
-const HOVER_SCALE = 0.45; // sleek compact target on hover
-const HOVER_PROBE_RADIUS = 12;
+const SIZE = 152;
+const RADIUS = 78;
+const FOLLOW_EASE = 0.16;
+const ROTATION_SPEED = 18; // degrees per second
+const MIN_SCALE = 0.55;
+const SPEED_TO_SHRINK = 0.15; // scale lost per px/ms of movement
+const SCALE_EASE = 0.15;
+const SKEW_FACTOR = 14; // degrees of skew per px/ms of movement
+const MAX_SKEW = 18;
+const SKEW_EASE = 0.15;
+const HOVER_SCALE = 0.4; // cursor size over clickable elements, so the target is visible
+const HOVER_PROBE_RADIUS = 16; // px of slack around the pointer so small links/icons still register as hovered
 
 const INTERACTIVE_SELECTOR =
     'a, button, input, select, textarea, label, summary, [role="button"], [role="link"], [data-cursor-pointer]';
@@ -108,8 +108,8 @@ export function ElvoraCursor() {
             );
             isOverInteractive.current = !!hoveredEl;
 
-            const magneticTargetX = target.current.x;
-            const magneticTargetY = target.current.y;
+            let magneticTargetX = target.current.x;
+            let magneticTargetY = target.current.y;
 
             // Magnetic pull removed for better click accuracy
 

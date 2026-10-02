@@ -1,191 +1,276 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp, stagger } from "@/lib/motion";
+import { fadeUp, popIn, stagger } from "@/lib/motion";
 import { WHATSAPP_LINK } from "@/lib/whatsapp";
 
-const NAV_LINKS = [
-    { label: "Services", href: "#services" },
-    { label: "Work", href: "#case-studies" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Team", href: "#team" },
+const FOOTER_LINKS = [
+    { label: "About", href: "#team" },
+    {
+        label: "Contact Us",
+        href: WHATSAPP_LINK,
+        external: true,
+    },
 ];
+
+function InstagramIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            className="h-4 w-4"
+            aria-hidden="true"
+        >
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle
+                cx="17.5"
+                cy="6.5"
+                r="1"
+                fill="currentColor"
+                stroke="none"
+            />
+        </svg>
+    );
+}
+
+function LinkedInIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-4 w-4"
+            aria-hidden="true"
+        >
+            <path d="M4 9h2v11H4z" fill="currentColor" stroke="none" />
+            <circle cx="5" cy="5" r="1.6" fill="currentColor" stroke="none" />
+            <path d="M10 9v11M10 13c0-2.5 2-4 4-4s4 1.5 4 4v7" />
+        </svg>
+    );
+}
+
+function EmailIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-4 w-4"
+            aria-hidden="true"
+        >
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M3 7l9 6 9-6" />
+        </svg>
+    );
+}
+
+function FacebookIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-4 w-4"
+            aria-hidden="true"
+        >
+            <path d="M14 21v-8h3l.5-4H14V6.5c0-1 .3-1.5 1.6-1.5H18V1.2C17.6 1.1 16.5 1 15.3 1 12.7 1 11 2.6 11 5.4V9H8v4h3v8h3z" />
+        </svg>
+    );
+}
 
 const SOCIALS = [
     {
         name: "Instagram",
         href: "https://www.instagram.com/elvoramediaofficial?igsh=MTRxMW95aDBhaG1pMw==",
-        label: "IG",
+        Icon: InstagramIcon,
     },
     {
         name: "LinkedIn",
         href: "https://www.linkedin.com/company/elvora-media-pvt-ltd/",
-        label: "LI",
-    },
-    {
-        name: "Facebook",
-        href: "https://www.facebook.com/share/17sZckUKMU/?mibextid=wwXIfr",
-        label: "FB",
+        Icon: LinkedInIcon,
     },
     {
         name: "Email",
         href: "mailto:helloelvoramedia@gmail.com",
-        label: "Mail",
+        Icon: EmailIcon,
+    },
+    {
+        name: "Facebook",
+        href: "https://www.facebook.com/share/17sZckUKMU/?mibextid=wwXIfr",
+        Icon: FacebookIcon,
     },
 ];
 
 export function Footer() {
     return (
-        <footer className="bg-[#0B0B0B]">
+        <footer className="pt-12 sm:pt-16">
+            <div className="mx-auto w-full max-w-432 px-5">
+                <div className="relative overflow-hidden rounded-t-3xl bg-deep-black p-8 sm:p-12">
+                    <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                            background:
+                                "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 60%)",
+                        }}
+                    />
 
-            {/* CTA Section */}
-            <div className="border-t border-white/[0.06]">
-                <div className="mx-auto max-w-[1440px] px-5 sm:px-[clamp(24px,4vw,64px)] py-[72px] sm:py-[clamp(96px,10vw,160px)]">
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                        variants={stagger(0.1)}
+                        viewport={{ once: true, amount: 0.3 }}
+                        variants={stagger(0.15)}
                     >
-                        <motion.p variants={fadeUp} className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#6F6F6A] mb-5">
-                            Ready to Start?
-                        </motion.p>
-
-                        <motion.h2
-                            variants={fadeUp}
-                            className="font-display text-5xl sm:text-7xl font-extrabold uppercase tracking-[-0.02em] text-white leading-none mb-8"
+                        <motion.div
+                            variants={stagger(0.12)}
+                            className="relative"
                         >
-                            Let&apos;s Build
-                            <br />
-                            <span className="font-serif italic font-normal text-[#B8955A] tracking-normal">
-                                Something Iconic.
-                            </span>
-                        </motion.h2>
-
-                        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
-                            <a
-                                href={WHATSAPP_LINK}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                id="footer-cta-whatsapp"
-                                className="inline-flex items-center gap-2 bg-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#111111] transition-transform duration-200 hover:-translate-y-px focus-visible:outline-none"
+                            <motion.span
+                                aria-hidden="true"
+                                variants={popIn}
+                                className="block font-serif text-5xl leading-none text-champagne-gold sm:text-6xl"
                             >
-                                <span>Start a Project</span>
-                                <span>↗</span>
-                            </a>
-                            <a
-                                href="mailto:helloelvoramedia@gmail.com"
-                                id="footer-cta-email"
-                                className="inline-flex items-center gap-2 border border-white/15 px-8 py-4 text-[11px] font-bold uppercase tracking-[0.22em] text-white/60 transition-all duration-200 hover:border-white/30 hover:text-white focus-visible:outline-none"
+                                &ldquo;
+                            </motion.span>
+                            <motion.h2
+                                variants={fadeUp}
+                                className="mt-2 text-2xl font-semibold leading-tight text-ivory-cream sm:text-3xl md:text-4xl"
                             >
-                                <span>Email Us</span>
-                                <span>→</span>
-                            </a>
+                                See How We Bring
+                                <br />
+                                Your Idea Into Reality
+                            </motion.h2>
                         </motion.div>
-                    </motion.div>
-                </div>
-            </div>
 
-            {/* Footer body */}
-            <div className="border-t border-white/[0.06]">
-                <div className="mx-auto max-w-[1440px] px-5 sm:px-[clamp(24px,4vw,64px)] py-12">
-                    <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+                        <motion.div
+                            variants={stagger(0.1)}
+                            className="relative mt-12 flex flex-col gap-10 sm:mt-16 sm:flex-row sm:items-start sm:justify-between"
+                        >
+                            <motion.div variants={fadeUp} className="max-w-xs">
+                                <span className="text-lg font-semibold text-ivory-cream">
+                                    Elvora Media
+                                </span>
+                                <p className="mt-3 text-sm leading-relaxed text-muted-grey">
+                                    A creative media and branding agency helping
+                                    ambitious businesses build a powerful
+                                    presence in the digital world.
+                                </p>
+                            </motion.div>
 
-                        {/* Brand */}
-                        <div className="max-w-xs">
-                            <span className="font-display text-lg font-extrabold uppercase tracking-[-0.02em] text-white block mb-3">
-                                Elvora Media
-                            </span>
-                            <p className="text-[13px] leading-relaxed text-[#6F6F6A]">
-                                A premium digital media and commercial production agency. Pune, Maharashtra, India.
+                            <motion.nav variants={fadeUp} aria-label="Footer">
+                                <p className="text-xs font-medium uppercase tracking-wide text-muted-grey">
+                                    Quick Links
+                                </p>
+                                <motion.ul
+                                    variants={stagger(0.08)}
+                                    className="mt-4 flex flex-col gap-2"
+                                >
+                                    {FOOTER_LINKS.map(
+                                        ({ label, href, external }) => (
+                                            <motion.li
+                                                key={label}
+                                                variants={fadeUp}
+                                            >
+                                                <a
+                                                    href={href}
+                                                    target={
+                                                        external
+                                                            ? "_blank"
+                                                            : undefined
+                                                    }
+                                                    rel={
+                                                        external
+                                                            ? "noopener noreferrer"
+                                                            : undefined
+                                                    }
+                                                    className="text-sm text-ivory-cream/80 transition-colors hover:text-ivory-cream"
+                                                >
+                                                    {label}
+                                                </a>
+                                            </motion.li>
+                                        ),
+                                    )}
+                                </motion.ul>
+                            </motion.nav>
+
+                            <motion.div variants={fadeUp}>
+                                <p className="text-xs font-medium uppercase tracking-wide text-muted-grey">
+                                    Follow Us
+                                </p>
+                                <motion.div
+                                    variants={stagger(0.06)}
+                                    className="mt-4 flex items-center gap-3"
+                                >
+                                    {SOCIALS.map(({ name, href, Icon }) => {
+                                        const isMail =
+                                            href.startsWith("mailto:");
+                                        return (
+                                            <motion.a
+                                                key={name}
+                                                variants={popIn}
+                                                href={href}
+                                                target={
+                                                    isMail
+                                                        ? undefined
+                                                        : "_blank"
+                                                }
+                                                rel={
+                                                    isMail
+                                                        ? undefined
+                                                        : "noopener noreferrer"
+                                                }
+                                                aria-label={name}
+                                                whileHover={{ scale: 1.1 }}
+                                                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-ivory-cream transition-colors hover:bg-white/20"
+                                            >
+                                                <Icon />
+                                            </motion.a>
+                                        );
+                                    })}
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>
+
+                        <motion.div
+                            variants={fadeUp}
+                            className="relative mt-12 flex flex-col gap-2 text-xs text-muted-grey border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between"
+                        >
+                            <p>
+                                &copy; {new Date().getFullYear()} Elvora Media.
+                                All rights reserved.
                             </p>
-                            <div className="mt-5 flex items-center gap-4">
-                                {SOCIALS.map(({ name, href, label }) => (
+                            <div className="flex items-center gap-2">
+                                <span>
+                                    Designed & Developed by{" "}
                                     <a
-                                        key={name}
-                                        href={href}
-                                        target={href.startsWith("mailto:") ? undefined : "_blank"}
-                                        rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                                        aria-label={name}
-                                        className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#6F6F6A] transition-colors hover:text-white"
-                                    >
-                                        {label}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Nav */}
-                        <nav aria-label="Footer navigation">
-                            <p className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-[#6F6F6A] mb-4">
-                                Pages
-                            </p>
-                            <ul className="flex flex-col gap-2.5">
-                                {NAV_LINKS.map(({ label, href }) => (
-                                    <li key={label}>
-                                        <a
-                                            href={href}
-                                            className="text-[13px] text-[#6F6F6A] transition-colors hover:text-white"
-                                        >
-                                            {label}
-                                        </a>
-                                    </li>
-                                ))}
-                                <li>
-                                    <a
-                                        href={WHATSAPP_LINK}
+                                        href="https://portfolio-eosin-seven-23.vercel.app"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-[13px] text-[#6F6F6A] transition-colors hover:text-white"
+                                        className="font-semibold text-luxury-gold underline decoration-luxury-gold/50 underline-offset-4 transition-colors hover:text-ivory-cream"
                                     >
-                                        Contact
+                                        Anand Jadhav
                                     </a>
-                                </li>
-                            </ul>
-                        </nav>
-
-                        {/* Contact */}
-                        <div>
-                            <p className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-[#6F6F6A] mb-4">
-                                Contact
-                            </p>
-                            <ul className="flex flex-col gap-2.5">
-                                <li>
-                                    <a href="mailto:helloelvoramedia@gmail.com" className="text-[13px] text-[#6F6F6A] transition-colors hover:text-white">
-                                        helloelvoramedia@gmail.com
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#B8955A] transition-colors hover:text-white">
-                                        WhatsApp ↗
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Watermark */}
-                    <div aria-hidden="true" className="mt-12 select-none overflow-hidden pointer-events-none">
-                        <span className="font-display block text-[clamp(4rem,18vw,14rem)] font-extrabold uppercase leading-none tracking-[-0.02em] text-white/[0.03]">
-                            ELVORA
-                        </span>
-                    </div>
-
-                    {/* Bottom bar */}
-                    <div className="flex flex-col gap-2 text-[11px] text-[#6F6F6A] border-t border-white/[0.06] pt-5 -mt-6 sm:flex-row sm:items-center sm:justify-between">
-                        <p>&copy; {new Date().getFullYear()} Elvora Media. All rights reserved.</p>
-                        <p>
-                            Designed &amp; Developed by{" "}
-                            <a
-                                href="https://portfolio-eosin-seven-23.vercel.app"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-white/40 underline underline-offset-4 transition-colors hover:text-white"
-                            >
-                                Anand Jadhav
-                            </a>
-                        </p>
-                    </div>
+                                </span>
+                                <a
+                                    href="https://www.instagram.com/anannnnnd22?igsh=MXkwZ3JqOXBlandqaQ%3D%3D&utm_source=qr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Anand Jadhav on Instagram"
+                                    className="text-ivory-cream/80 transition-colors hover:text-luxury-gold"
+                                >
+                                    <InstagramIcon />
+                                </a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </div>
         </footer>

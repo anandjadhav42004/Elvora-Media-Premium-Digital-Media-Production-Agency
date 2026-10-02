@@ -35,8 +35,8 @@ export default function Home() {
                 <Pricing />
                 <CustomPlanBuilder />
 
-                <section id="team" className="py-[72px] sm:py-[clamp(96px,10vw,160px)] bg-white border-b border-black/[0.08]">
-                    <Container>
+                <section id="team">
+                    <Container className="py-12 sm:py-16">
                         <TeamAccordion />
                     </Container>
                 </section>

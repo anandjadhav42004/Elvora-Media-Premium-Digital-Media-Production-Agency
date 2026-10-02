@@ -15,7 +15,6 @@ type CaseStudy = {
     title: string;
     client: string;
     category: Category;
-    director: string;
     metric: string;
     metricLabel: string;
     imageSrc: string;
@@ -34,7 +33,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "High-Paced Commercial Reel & Brand Motion Edit",
         client: "Elvora Media Production",
         category: "Video",
-        director: "Suyash Mali",
         metric: "3.4M+",
         metricLabel: "Reel Impressions & Views",
         imageSrc: "/services2.png",
@@ -50,7 +48,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Cinematic Aesthetic & Visual Storytelling Reel",
         client: "Elvora Media Creative",
         category: "Video",
-        director: "Suyash Mali",
         metric: "1.8M+",
         metricLabel: "Organic Social Reach",
         imageSrc: "/services1.png",
@@ -66,7 +63,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Luxury Visual Identity & Brand Direction",
         client: "Sculptura & Branding",
         category: "Branding",
-        director: "Daksh Chandgaonkar",
         metric: "+280%",
         metricLabel: "Brand Value & Inquiries",
         imageSrc: "/services3.png",
@@ -82,7 +78,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Performance Marketing & Social Grid Showcase",
         client: "WeCrafted Growth Series",
         category: "Social",
-        director: "Yash Borate",
         metric: "8.4%",
         metricLabel: "Average Engagement Rate",
         imageSrc: "/services4.png",
@@ -98,7 +93,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Full-Scale Production & Media Launch Campaign",
         client: "Verve Global Launch",
         category: "Performance Ads",
-        director: "Suyash Mali & Anand Jadhav",
         metric: "4.8x",
         metricLabel: "Campaign ROAS",
         imageSrc: "/services1.png",
@@ -114,7 +108,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Ganesh Chaturthi — Code Hostel Festive Film Vol. 1",
         client: "Code Hostel",
         category: "Video",
-        director: "Suyash Mali",
         metric: "Campus Viral",
         metricLabel: "Festive Celebration",
         imageSrc: "/code-hostel/thumb1.jpg",
@@ -131,7 +124,6 @@ const CASE_STUDIES: CaseStudy[] = [
         title: "Ganesh Chaturthi — Aagman Cinematic Edit Vol. 2",
         client: "Code Hostel",
         category: "Video",
-        director: "Suyash Mali",
         metric: "Grand Edit",
         metricLabel: "Festive Cinematic Film",
         imageSrc: "/code-hostel/thumb2.jpg",
@@ -210,46 +202,43 @@ export function CaseStudies() {
     }, [selectedId]);
 
     return (
-        <section id="case-studies" className="py-[72px] sm:py-[clamp(96px,10vw,160px)] bg-white border-b border-black/[0.08]">
+        <section id="case-studies" className="py-16 sm:py-24 bg-[#faf7f0]">
             <Container>
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.15 }}
                     variants={stagger(0.12)}
-                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end pb-12 border-b border-black/[0.08]"
+                    className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end"
                 >
                     <div>
-                        <motion.p variants={fadeUp} className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-[#6F6F6A] mb-3">
-                            03 / Selected Work
-                        </motion.p>
-                        <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-6xl font-extrabold uppercase tracking-[-0.02em] text-[#111111]">
-                            Selected Works.{" "}
-                            <span className="font-serif italic font-normal text-[#B8955A] tracking-normal">Measurable Scale.</span>
+                        <motion.span variants={fadeUp} className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-luxury-gold">
+                            Case Studies & Impact
+                        </motion.span>
+                        <motion.h2 variants={fadeUp} className="mt-2 font-display text-3xl font-bold uppercase tracking-tight text-deep-black sm:text-5xl">
+                            Proven Results. <span className="text-luxury-gold">No Fluff.</span>
                         </motion.h2>
                     </div>
 
-                    {/* Filter pills — horizontal scroll on mobile, no page overflow */}
-                    <motion.div variants={fadeUp} className="-mx-5 sm:mx-0 overflow-x-auto scrollbar-none">
-                        <div className="flex gap-2 px-5 sm:px-0 pb-1 w-max sm:w-auto sm:flex-wrap">
-                            {CATEGORIES.map((cat) => {
-                                const isActive = selectedCategory === cat;
-                                return (
-                                    <button
-                                        key={cat}
-                                        type="button"
-                                        onClick={() => setSelectedCategory(cat)}
-                                        className={`flex-shrink-0 min-h-[44px] px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-200 cursor-pointer ${
-                                            isActive
-                                                ? "bg-[#111111] text-white"
-                                                : "border border-black/10 text-[#6F6F6A] hover:border-black/40 hover:text-[#111111]"
-                                        }`}
-                                    >
-                                        {cat}
-                                    </button>
-                                );
-                            })}
-                        </div>
+                    {/* Filter Pills */}
+                    <motion.div variants={fadeUp} className="flex flex-wrap gap-2">
+                        {CATEGORIES.map((cat) => {
+                            const isActive = selectedCategory === cat;
+                            return (
+                                <button
+                                    key={cat}
+                                    type="button"
+                                    onClick={() => setSelectedCategory(cat)}
+                                    className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                                        isActive
+                                            ? "bg-deep-black text-ivory-cream shadow-md"
+                                            : "border border-black/20 bg-white/80 text-neutral-800 hover:border-luxury-gold/50 hover:bg-white"
+                                    }`}
+                                >
+                                    {cat}
+                                </button>
+                            );
+                        })}
                     </motion.div>
                 </motion.div>
 
@@ -259,7 +248,7 @@ export function CaseStudies() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.1 }}
                     variants={stagger(0.12)}
-                    className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-2"
+                    className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-2"
                 >
                     {filteredStudies.map((study) => (
                         <motion.div
@@ -277,9 +266,9 @@ export function CaseStudies() {
                                     setSelectedId(study.id);
                                 }
                             }}
-                            className="group relative flex flex-col overflow-hidden border border-black/[0.08] bg-white p-5 sm:p-6 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-black cursor-pointer"
+                            className="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-luxury-gold/50 hover:shadow-xl hover:shadow-luxury-gold/10 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
                         >
-                            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-neutral-100">
+                            <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl bg-neutral-100">
                                 {study.videoPreview && hoveredId === study.id ? (
                                     <video
                                         src={study.videoPreview}
@@ -295,41 +284,40 @@ export function CaseStudies() {
                                         alt={study.title}
                                         fill
                                         sizes="(max-width: 640px) 100vw, 50vw"
-                                        className="object-cover transition-transform duration-700 ease-out"
+                                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                     />
                                 )}
                                 {/* Play icon overlay for video entries */}
-                                {study.videoPreview && (
+                                {study.videoPreview && hoveredId !== study.id && (
                                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#111111]">
-                                            <svg className="h-5 w-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-deep-black/70 backdrop-blur-sm border border-luxury-gold/40 transition-transform duration-300 group-hover:scale-110">
+                                            <svg className="h-6 w-6 text-luxury-gold ml-1" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M8 5v14l11-7z" />
                                             </svg>
                                         </div>
                                     </div>
                                 )}
-                                {/* Metric badge */}
-                                <div className="absolute bottom-0 left-0 right-0 px-4 pb-3 pt-8 bg-gradient-to-t from-black/75 to-transparent">
-                                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/50">{study.metricLabel}</span>
-                                    <p className="font-display text-base font-bold text-white">{study.metric}</p>
+                                <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-deep-black/90 px-3.5 py-1.5 backdrop-blur-md">
+                                    <span className="font-display text-sm font-bold text-luxury-gold">{study.metric}</span>
+                                    <span className="font-mono text-[10px] uppercase text-ivory-cream">{study.metricLabel}</span>
                                 </div>
                             </div>
 
-                            <div className="mt-4 flex flex-col gap-1.5">
-                                <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#6F6F6A]">
-                                    <span>{study.category}</span>
-                                    <span>&middot;</span>
-                                    <span>Dir. {study.director}</span>
+                            <div className="mt-6 flex flex-col gap-2">
+                                <div className="flex items-center justify-between">
+                                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-luxury-gold">
+                                        {study.client} &middot; {study.category}
+                                    </span>
+                                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 transition-colors group-hover:text-deep-black">
+                                        View Case &rarr;
+                                    </span>
                                 </div>
-                                <h3 className="font-display text-xl font-bold uppercase tracking-[-0.02em] leading-tight text-[#111111] sm:text-2xl">
+                                <h3 className="font-display text-xl font-bold leading-snug text-deep-black sm:text-2xl">
                                     {study.title}
                                 </h3>
-                                <p className="text-[13px] leading-relaxed text-[#6F6F6A] line-clamp-2">
+                                <p className="text-sm leading-relaxed text-neutral-800 font-medium line-clamp-2">
                                     {study.summary}
                                 </p>
-                                <span className="mt-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#111111]">
-                                    View Project →
-                                </span>
                             </div>
                         </motion.div>
                     ))}
@@ -354,40 +342,40 @@ export function CaseStudies() {
                                 role="dialog"
                                 aria-modal="true"
                                 aria-label={activeStudy.title}
-                                className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-y-auto rounded-xl bg-white p-5 sm:p-8 mx-2"
+                                className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-y-auto rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
                             >
                                 <button
                                     type="button"
                                     onClick={() => setSelectedId(null)}
                                     aria-label="Close modal"
-                                    className="absolute top-4 right-4 sm:top-6 sm:right-6 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-[#111111] transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="absolute top-6 right-6 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-800 transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-luxury-gold"
                                 >
                                     <CloseIcon />
                                 </button>
 
-                                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#B8955A] font-bold">
+                                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-luxury-gold font-bold">
                                     <span>{activeStudy.client}</span>
                                     <span>&middot;</span>
                                     <span>{activeStudy.category}</span>
                                 </div>
 
-                                <h3 className="mt-2 font-display text-xl font-bold uppercase tracking-[-0.02em] text-[#111111] sm:text-2xl">
+                                <h3 className="mt-2 font-display text-2xl font-bold text-deep-black sm:text-3xl">
                                     {activeStudy.title}
                                 </h3>
 
-                                <div className="mt-4 flex items-center gap-4 border border-black/[0.08] bg-[#F7F6F2] p-4">
-                                    <span className="font-display text-3xl font-bold text-[#111111] sm:text-4xl">{activeStudy.metric}</span>
-                                    <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#6F6F6A]">{activeStudy.metricLabel}</span>
+                                <div className="mt-4 flex items-center gap-4 rounded-2xl border border-luxury-gold/30 bg-[#faf7f0] p-4">
+                                    <span className="font-display text-3xl font-bold text-luxury-gold sm:text-4xl">{activeStudy.metric}</span>
+                                    <span className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-700">{activeStudy.metricLabel}</span>
                                 </div>
 
                                 {/* Local Video Player */}
                                 {activeStudy.videoPreview && (
-                                    <div className="mt-6 overflow-hidden rounded-lg border border-black/10 bg-black">
+                                    <div className="mt-6 overflow-hidden rounded-2xl border border-black/10 bg-black shadow-lg">
                                         <video
                                             src={activeStudy.videoPreview}
                                             controls
                                             playsInline
-                                            className="w-full max-h-[50dvh] object-contain"
+                                            className="w-full max-h-[420px] object-contain"
                                             poster={activeStudy.imageSrc}
                                         />
                                     </div>
@@ -396,7 +384,7 @@ export function CaseStudies() {
                                 {/* Instagram Embed for non-local entries */}
                                 {!activeStudy.videoPreview && activeStudy.instagramUrl && (
                                     <div className="mt-6 flex flex-col items-center">
-                                        <div className="relative w-full max-w-[320px] aspect-[9/16] overflow-hidden rounded-lg border border-black/10 bg-black">
+                                        <div className="relative w-full max-w-[340px] aspect-[9/16] overflow-hidden rounded-2xl border border-black/10 bg-black shadow-lg">
                                             <iframe
                                                 src={getEmbedUrl(activeStudy.instagramUrl)}
                                                 className="h-full w-full border-0"
@@ -421,8 +409,8 @@ export function CaseStudies() {
                                         <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-700">Key Results Achieved</h4>
                                         <ul className="mt-2 space-y-1.5">
                                             {activeStudy.results.map((res, i) => (
-                                                <li key={i} className="flex items-center gap-2 text-sm text-[#111111]">
-                                                    <span className="text-[#B8955A] font-bold">✓</span> {res}
+                                                <li key={i} className="flex items-center gap-2 text-sm font-semibold text-deep-black">
+                                                    <span className="text-luxury-gold">✓</span> {res}
                                                 </li>
                                             ))}
                                         </ul>
@@ -436,7 +424,7 @@ export function CaseStudies() {
                                             href={activeStudy.instagramUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 border border-black/15 bg-white px-4 py-2 text-xs font-semibold text-[#111111] transition-colors hover:border-black focus:outline-none min-h-[44px]"
+                                            className="flex items-center gap-1.5 rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-semibold text-neutral-800 transition-colors hover:border-luxury-gold hover:text-luxury-gold focus:outline-none"
                                         >
                                             <span>View on Instagram ↗</span>
                                         </a>
